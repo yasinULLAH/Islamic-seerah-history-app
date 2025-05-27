@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سیرت النبی ﷺ - اہم واقعات</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap');
+
+        :root {
+            --bg-color: #f4f4f4;
+            --text-color: #333;
+            --card-bg-color: #fff;
+            --border-color: #ddd;
+            --header-bg-color: #8c0000; /* Deep Red Accent */
+            --header-text-color: #fff;
+            --button-bg-color: #8c0000;
+            --button-text-color: #fff;
+            --accent-color: #8c0000;
+            --timeline-segment-bg: #e0e0e0;
+            --timeline-segment-hover-bg: #c0c0c0;
+        }
+
+        .dark-mode {
+            --bg-color: #1a1a1a;
+            --text-color: #f0f0f0;
+            --card-bg-color: #2c2c2c;
+            --border-color: #444;
+            --header-bg-color: #5a0000; /* Darker Red for dark mode */
+            --header-text-color: #f0f0f0;
+            --button-bg-color: #5a0000;
+            --button-text-color: #f0f0f0;
+            --accent-color: #c00000; /* Brighter Red for dark mode accent */
+            --timeline-segment-bg: #3a3a3a;
+            --timeline-segment-hover-bg: #4a4a4a;
+        }
+
+        body {
+            font-family: 'Noto Nastaliq Urdu', Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.8;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        header {
+            background-color: var(--header-bg-color);
+            color: var(--header-text-color);
+            padding: 1rem;
+            text-align: center;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+        #theme-toggle {
+            background-color: var(--button-text-color); /* Swapped for contrast on header */
+            color: var(--button-bg-color);
+            border: 1px solid var(--button-bg-color);
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            border-radius: 5px;
+            font-family: 'Noto Nastaliq Urdu', sans-serif;
+            font-size: 0.9rem;
+        }
+        .dark-mode #theme-toggle {
+            background-color: var(--text-color);
+            color: var(--bg-color);
+            border-color: var(--text-color);
+        }
+
+
+        .controls-container {
+            padding: 1rem;
+            background-color: var(--card-bg-color);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .controls-container input[type="text"],
+        .controls-container select {
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-family: 'Noto Nastaliq Urdu', sans-serif;
+            font-size: 1rem;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            flex-grow: 1;
+        }
+        .controls-container input[type="text"]::placeholder {
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+
+        .controls-container button, .restore-button-label {
+            background-color: var(--button-bg-color);
+            color: var(--button-text-color);
+            border: none;
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            border-radius: 5px;
+            font-family: 'Noto Nastaliq Urdu', sans-serif;
+            font-size: 1rem;
+            text-align: center;
+        }
+        .restore-button-label {
+            display: inline-block;
+        }
+
+
+        #infographics-area {
+            padding: 1rem;
+            background-color: var(--bg-color);
+        }
+        #infographics-area h2 {
+            text-align: center;
+            color: var(--accent-color);
+            margin-bottom: 1.5rem;
+        }
+        #timeline-container, #stats-container {
+            background-color: var(--card-bg-color);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+        #timeline-container h3, #stats-container h3 {
+            margin-top: 0;
+            color: var(--accent-color);
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+        }
+        #timeline {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            padding: 0.5rem 0;
+        }
+        .timeline-segment {
+            background-color: var(--timeline-segment-bg);
+            color: var(--text-color);
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            border: 1px solid var(--border-color);
+        }
+        .timeline-segment:hover {
+            background-color: var(--timeline-segment-hover-bg);
+        }
+        #stats p {
+            margin: 0.5rem 0;
+            font-size: 1rem;
+        }
+
+
+        #events-container {
+            padding: 1rem;
+        }
+
+        #loading-message {
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 2rem;
+            color: var(--accent-color);
+        }
+
+        .event-card {
+            background-color: var(--card-bg-color);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .dark-mode .event-card {
+            box-shadow: 0 2px 5px rgba(255,255,255,0.05);
+        }
+
+        .event-card h3 {
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+            color: var(--accent-color);
+            font-size: 1.5rem;
+        }
+
+        .event-card p {
+            margin: 0.3rem 0;
+        }
+        .event-card .meta-info {
+            font-size: 0.9rem;
+            color: var(--text-color);
+            opacity: 0.8;
+            margin-bottom: 1rem;
+        }
+        .event-card .meta-info span {
+            margin-left: 1rem; /* RTL: margin-right */
+        }
+
+        footer {
+            text-align: center;
+            padding: 1rem;
+            background-color: var(--card-bg-color);
+            border-top: 1px solid var(--border-color);
+            font-size: 0.9rem;
+            margin-top: 2rem;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 1.5rem;
+            }
+            .controls-container {
+                flex-direction: column;
+            }
+            .controls-container input[type="text"],
+            .controls-container select,
+            .controls-container button,
+            .restore-button-label {
+                width: 100%;
+                box-sizing: border-box;
+            }
+            #timeline {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .timeline-segment {
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>سیرت النبی ﷺ - اہم واقعات</h1>
+        <button id="theme-toggle">ڈارک موڈ</button>
+    </header>
+
+    <div class="controls-container">
+        <input type="text" id="search-input" placeholder="واقعہ یا تفصیل تلاش کریں...">
+        <select id="filter-period">
+            <option value="">تمام ادوار</option>
+            <!-- Options will be populated by JS -->
+        </select>
+        <button id="backup-button">ڈیٹا بیک اپ کریں</button>
+        <label for="restore-input" class="restore-button-label">ڈیٹا بحال کریں</label>
+        <input type="file" id="restore-input" accept=".json" style="display: none;">
+    </div>
+
+    <div id="infographics-area">
+        <h2>خلاصہ معلومات</h2>
+        <div id="timeline-container">
+            <h3>اہم ادوار (ٹائم لائن)</h3>
+            <div id="timeline">
+                <!-- Timeline segments will be injected here -->
+            </div>
+        </div>
+        <div id="stats-container">
+            <h3>واقعات کی تعداد بلحاظ دور</h3>
+            <div id="stats">
+                <!-- Stats will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <main id="events-container">
+        <p id="loading-message">ڈیٹا لوڈ ہو رہا ہے...</p>
+        <!-- Event cards will be injected here -->
+    </main>
+
+    <footer>
+        <p>ایک کاوش از: یاسین اللہ، پاکستانی</p>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // --- Constants ---
+            const DB_NAME = 'SeerahEventsDB';
+            const DB_VERSION = 1;
+            const STORE_NAME = 'events';
+            const HISTORY_CSV_PATH = './history.csv';
+            const HISTORY_UPDATE_CSV_PATH = './historyupdate.csv';
+
+            // --- DOM Elements ---
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const searchInput = document.getElementById('search-input');
+            const filterPeriodSelect = document.getElementById('filter-period');
+            const eventsContainer = document.getElementById('events-container');
+            const loadingMessage = document.getElementById('loading-message');
+            const timelineDiv = document.getElementById('timeline');
+            const statsDiv = document.getElementById('stats');
+            const backupButton = document.getElementById('backup-button');
+            const restoreInput = document.getElementById('restore-input');
+
+            // --- Global State ---
+            let db;
+            let allEventsData = [];
+            let currentFilters = {
+                searchTerm: '',
+                period: ''
+            };
+
+            // --- IndexedDB Functions ---
+            function openDB() {
+                return new Promise((resolve, reject) => {
+                    const request = indexedDB.open(DB_NAME, DB_VERSION);
+
+                    request.onupgradeneeded = (event) => {
+                        const dbInstance = event.target.result;
+                        if (!dbInstance.objectStoreNames.contains(STORE_NAME)) {
+                            dbInstance.createObjectStore(STORE_NAME, { keyPath: 'id', autoIncrement: true });
+                        }
+                    };
+
+                    request.onsuccess = (event) => {
+                        resolve(event.target.result);
+                    };
+
+                    request.onerror = (event) => {
+                        console.error('IndexedDB error:', event.target.error);
+                        reject('IndexedDB error: ' + event.target.error);
+                    };
+                });
+            }
+
+            function addDataToDB(dbInstance, events) {
+                return new Promise((resolve, reject) => {
+                    if (!events || events.length === 0) {
+                        resolve(); // Nothing to add
+                        return;
+                    }
+                    const transaction = dbInstance.transaction([STORE_NAME], 'readwrite');
+                    const store = transaction.objectStore(STORE_NAME);
+                    let count = 0;
+
+                    events.forEach(event => {
+                        // Simple check to prevent adding undefined/null objects if CSV parsing had issues
+                        if (event && typeof event === 'object' && event.eventTitle) {
+                            const request = store.add(event);
+                            request.onsuccess = () => {
+                                count++;
+                                if (count === events.length) {
+                                    resolve();
+                                }
+                            };
+                            request.onerror = (e) => {
+                                // Log error but continue; could be duplicate shumar if it was keyPath
+                                // With autoIncrement, this error is less likely unless data is malformed
+                                console.warn('Error adding event to DB:', e.target.error, event);
+                            };
+                        } else {
+                            console.warn('Skipping invalid event data:', event);
+                            count++; // Still increment to complete promise if this was the only "event"
+                             if (count === events.length) {
+                                resolve();
+                            }
+                        }
+                    });
+
+                    transaction.oncomplete = () => {
+                         // This might resolve before all individual add requests are done if events.length is large.
+                         // The individual request.onsuccess check is more reliable for completion.
+                         // For simplicity, keeping it here. Better would be Promise.all(addRequests).
+                        resolve();
+                    };
+                    transaction.onerror = (event) => {
+                        console.error('Transaction error:', event.target.error);
+                        reject('Transaction error: ' + event.target.error);
+                    };
+                });
+            }
+            
+            function getAllEventsFromDB(dbInstance) {
+                return new Promise((resolve, reject) => {
+                    const transaction = dbInstance.transaction([STORE_NAME], 'readonly');
+                    const store = transaction.objectStore(STORE_NAME);
+                    const request = store.getAll();
+
+                    request.onsuccess = (event) => {
+                        resolve(event.target.result);
+                    };
+
+                    request.onerror = (event) => {
+                        console.error('Error fetching events from DB:', event.target.error);
+                        reject('Error fetching events: ' + event.target.error);
+                    };
+                });
+            }
+
+            function clearStoreFromDB(dbInstance) {
+                return new Promise((resolve, reject) => {
+                    const transaction = dbInstance.transaction([STORE_NAME], 'readwrite');
+                    const store = transaction.objectStore(STORE_NAME);
+                    const request = store.clear();
+
+                    request.onsuccess = () => {
+                        resolve();
+                    };
+                    request.onerror = (event) => {
+                        console.error('Error clearing store:', event.target.error);
+                        reject('Error clearing store: ' + event.target.error);
+                    };
+                });
+            }
+
+            // --- CSV Parsing & Fetching ---
+            function parseCSV(csvText) {
+                const lines = csvText.trim().split('\n');
+                if (lines.length < 2) return []; // No data beyond header
+
+                const headers = lines[0].trim().split(',').map(h => h.trim());
+                const data = [];
+
+                const headerMapping = {
+                    'شمار': 'shumar',
+                    'عیسوی سال (تقریباً)': 'gregorianYear',
+                    'ہجری سال / دور': 'hijriPeriod',
+                    'واقعہ (اردو)': 'eventTitle',
+                    'مختصر تفصیل (اردو)': 'eventDetails'
+                };
+                
+                const jsHeaders = headers.map(h => headerMapping[h] || h);
+
+                for (let i = 1; i < lines.length; i++) {
+                    const values = lines[i].trim().split(',');
+                    if (values.length === headers.length) {
+                        const entry = {};
+                        jsHeaders.forEach((header, index) => {
+                            entry[header] = values[index].trim();
+                        });
+                        data.push(entry);
+                    }
+                }
+                return data;
+            }
+
+            async function fetchAndProcessCSV(filePath, isUpdate = false) {
+                try {
+                    const response = await fetch(filePath);
+                    if (!response.ok) {
+                        if (response.status === 404 && isUpdate) {
+                            console.log(`Optional update file ${filePath} not found. Skipping.`);
+                            return; // Not an error if update file is missing
+                        }
+                        throw new Error(`HTTP error! status: ${response.status} for ${filePath}`);
+                    }
+                    const csvText = await response.text();
+                    const events = parseCSV(csvText);
+                    if (events.length > 0) {
+                        await addDataToDB(db, events);
+                        console.log(`${events.length} events from ${filePath} added/updated in DB.`);
+                    } else {
+                        console.log(`No new events to add from ${filePath}.`);
+                    }
+                } catch (error) {
+                    console.error(`Error fetching or processing CSV ${filePath}:`, error);
+                    if (!isUpdate) { // Only show error to user for primary history file
+                        loadingMessage.textContent = `فائل ${filePath} لوڈ کرنے میں خرابی۔ براہ کرم انٹرنیٹ کنکشن چیک کریں یا فائل کی موجودگی یقینی بنائیں۔`;
+                    }
+                }
+            }
+
+            // --- Rendering Functions ---
+            function renderEvents(eventsToRender) {
+                eventsContainer.innerHTML = ''; // Clear previous events
+                if (eventsToRender.length === 0 && !loadingMessage.textContent.includes('خرابی')) {
+                    eventsContainer.innerHTML = '<p>کوئی واقعات نہیں ملے۔ براہ کرم فلٹر یا تلاش کی ترتیبات تبدیل کریں۔</p>';
+                    return;
+                }
+
+                const fragment = document.createDocumentFragment();
+                eventsToRender.forEach(event => {
+                    const card = document.createElement('div');
+                    card.className = 'event-card';
+                    card.innerHTML = `
+                        <h3>${event.eventTitle}</h3>
+                        <div class="meta-info">
+                            <span><strong>شمار:</strong> ${event.shumar || 'N/A'}</span>
+                            <span><strong>عیسوی سال:</strong> ${event.gregorianYear}</span>
+                            <span><strong>ہجری سال / دور:</strong> ${event.hijriPeriod}</span>
+                        </div>
+                        <p>${event.eventDetails}</p>
+                    `;
+                    fragment.appendChild(card);
+                });
+                eventsContainer.appendChild(fragment);
+                loadingMessage.style.display = 'none';
+            }
+
+            function populateFilterDropdown(allEvents) {
+                const periods = [...new Set(allEvents.map(event => event.hijriPeriod))].sort();
+                periods.forEach(period => {
+                    const option = document.createElement('option');
+                    option.value = period;
+                    option.textContent = period;
+                    filterPeriodSelect.appendChild(option);
+                });
+            }
+
+            function renderTimeline(allEvents) {
+                timelineDiv.innerHTML = '';
+                const periods = [...new Set(allEvents.map(event => event.hijriPeriod))].sort();
+                periods.forEach(period => {
+                    const segment = document.createElement('div');
+                    segment.className = 'timeline-segment';
+                    segment.textContent = period;
+                    segment.dataset.period = period;
+                    segment.addEventListener('click', () => {
+                        filterPeriodSelect.value = period;
+                        currentFilters.period = period;
+                        applyFiltersAndSearch();
+                    });
+                    timelineDiv.appendChild(segment);
+                });
+            }
+
+            function renderStats(allEvents) {
+                statsDiv.innerHTML = '';
+                const periodCounts = allEvents.reduce((acc, event) => {
+                    acc[event.hijriPeriod] = (acc[event.hijriPeriod] || 0) + 1;
+                    return acc;
+                }, {});
+
+                const sortedPeriods = Object.keys(periodCounts).sort();
+
+                sortedPeriods.forEach(period => {
+                    const p = document.createElement('p');
+                    p.textContent = `${period}: ${periodCounts[period]} واقعات`;
+                    statsDiv.appendChild(p);
+                });
+                 if (sortedPeriods.length === 0) {
+                    statsDiv.innerHTML = '<p>اعداد و شمار کے لیے کوئی ڈیٹا دستیاب نہیں۔</p>';
+                }
+            }
+
+            // --- Filtering & Searching Logic ---
+            function applyFiltersAndSearch() {
+                const searchTerm = currentFilters.searchTerm.toLowerCase();
+                const period = currentFilters.period;
+
+                const filteredEvents = allEventsData.filter(event => {
+                    const matchesSearch = !searchTerm ||
+                        event.eventTitle.toLowerCase().includes(searchTerm) ||
+                        event.eventDetails.toLowerCase().includes(searchTerm);
+                    const matchesPeriod = !period || event.hijriPeriod === period;
+                    return matchesSearch && matchesPeriod;
+                });
+                renderEvents(filteredEvents);
+            }
+
+            // --- Theme Management ---
+            function initTheme() {
+                const savedTheme = localStorage.getItem('theme');
+                if (savedTheme === 'dark') {
+                    document.body.classList.add('dark-mode');
+                    themeToggleBtn.textContent = 'لائٹ موڈ';
+                } else {
+                    document.body.classList.remove('dark-mode');
+                    themeToggleBtn.textContent = 'ڈارک موڈ';
+                }
+            }
+
+            function toggleTheme() {
+                document.body.classList.toggle('dark-mode');
+                if (document.body.classList.contains('dark-mode')) {
+                    localStorage.setItem('theme', 'dark');
+                    themeToggleBtn.textContent = 'لائٹ موڈ';
+                } else {
+                    localStorage.setItem('theme', 'light');
+                    themeToggleBtn.textContent = 'ڈارک موڈ';
+                }
+            }
+
+            // --- Backup & Restore Functions ---
+            async function handleBackup() {
+                if (!db) {
+                    alert('ڈیٹا بیس ابھی تک لوڈ نہیں ہوا۔ براہ کرم انتظار کریں۔');
+                    return;
+                }
+                try {
+                    const eventsToBackup = await getAllEventsFromDB(db);
+                    if (eventsToBackup.length === 0) {
+                        alert('بیک اپ کے لیے کوئی ڈیٹا موجود نہیں۔');
+                        return;
+                    }
+                    const jsonData = JSON.stringify(eventsToBackup, null, 2);
+                    const blob = new Blob([jsonData], { type: 'application/json' });
+                    const url = URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'seerat_un_nabi_backup.json';
+                    document.body.appendChild(a);
+                    a.click();
+                    document.body.removeChild(a);
+                    URL.revokeObjectURL(url);
+                    alert('ڈیٹا کامیابی سے بیک اپ ہو گیا۔');
+                } catch (error) {
+                    console.error('Backup error:', error);
+                    alert('بیک اپ کے دوران خرابی پیش آئی: ' + error.message);
+                }
+            }
+
+            async function handleRestore(event) {
+                const file = event.target.files[0];
+                if (!file) return;
+
+                if (!db) {
+                    alert('ڈیٹا بیس ابھی تک لوڈ نہیں ہوا۔ براہ کرم انتظار کریں۔');
+                    return;
+                }
+
+                const reader = new FileReader();
+                reader.onload = async (e) => {
+                    try {
+                        const jsonData = e.target.result;
+                        const eventsToRestore = JSON.parse(jsonData);
+
+                        if (!Array.isArray(eventsToRestore)) {
+                            throw new Error('فائل کی ساخت درست نہیں۔ یہ ایک ایرے ہونی چاہیے۔');
+                        }
+                        
+                        // Basic validation of event structure (optional, but good)
+                        if (eventsToRestore.length > 0 && (!eventsToRestore[0].eventTitle || !eventsToRestore[0].hijriPeriod)) {
+                             throw new Error('فائل میں واقعات کا فارمیٹ درست نہیں۔');
+                        }
+
+
+                        if (confirm('کیا آپ واقعی موجودہ ڈیٹا کو مٹا کر نیا ڈیٹا بحال کرنا چاہتے ہیں؟')) {
+                            await clearStoreFromDB(db);
+                            await addDataToDB(db, eventsToRestore);
+                            allEventsData = await getAllEventsFromDB(db); // Refresh local data
+                            populateFilterDropdown(allEventsData);
+                            renderTimeline(allEventsData);
+                            renderStats(allEventsData);
+                            applyFiltersAndSearch(); // Render restored data
+                            alert('ڈیٹا کامیابی سے بحال ہو گیا۔');
+                        }
+                    } catch (error) {
+                        console.error('Restore error:', error);
+                        alert('ڈیٹا بحال کرنے میں خرابی: ' + error.message);
+                    } finally {
+                        restoreInput.value = ''; // Reset file input
+                    }
+                };
+                reader.readAsText(file);
+            }
+
+            // --- Initialization ---
+            async function initializeApp() {
+                initTheme(); // Apply theme first
+
+                try {
+                    db = await openDB();
+                    console.log('Database opened successfully.');
+
+                    // Check if DB is empty to load history.csv
+                    const currentEvents = await getAllEventsFromDB(db);
+                    if (currentEvents.length === 0) {
+                        console.log('Database is empty. Loading initial data from history.csv...');
+                        loadingMessage.textContent = 'ابتدائی ڈیٹا لوڈ ہو رہا ہے...';
+                        await fetchAndProcessCSV(HISTORY_CSV_PATH, false);
+                    } else {
+                         console.log(`Found ${currentEvents.length} events in DB. Skipping initial load from history.csv.`);
+                    }
+
+                    // Always check for historyupdate.csv
+                    loadingMessage.textContent = 'اپڈیٹس چیک کی جا رہی ہیں...';
+                    await fetchAndProcessCSV(HISTORY_UPDATE_CSV_PATH, true);
+                    
+                    allEventsData = await getAllEventsFromDB(db);
+                    console.log(`Total events loaded: ${allEventsData.length}`);
+
+                    if (allEventsData.length > 0) {
+                        populateFilterDropdown(allEventsData);
+                        renderTimeline(allEventsData);
+                        renderStats(allEventsData);
+                        applyFiltersAndSearch();
+                        loadingMessage.style.display = 'none';
+                    } else if (!loadingMessage.textContent.includes('خرابی')) {
+                         loadingMessage.textContent = 'کوئی واقعات دستیاب نہیں۔ CSV فائلیں چیک کریں۔';
+                    }
+
+                } catch (error) {
+                    console.error('Initialization error:', error);
+                    loadingMessage.textContent = 'ایپلی کیشن شروع کرنے میں خرابی: ' + error;
+                }
+
+                // Event Listeners
+                themeToggleBtn.addEventListener('click', toggleTheme);
+                searchInput.addEventListener('input', (e) => {
+                    currentFilters.searchTerm = e.target.value;
+                    applyFiltersAndSearch();
+                });
+                filterPeriodSelect.addEventListener('change', (e) => {
+                    currentFilters.period = e.target.value;
+                    applyFiltersAndSearch();
+                });
+                backupButton.addEventListener('click', handleBackup);
+                restoreInput.addEventListener('change', handleRestore);
+            }
+
+            // Start the application
+            initializeApp();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1652 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سیرت النبی ﷺ - پیش رفتہ بصری تجزیہ</title>
+    <style>
+        /* Basic Reset */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Font and RTL */
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400..700&display=swap');
+
+        body {
+            font-family: 'Noto Nastaliq Urdu', sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            padding: 20px;
+            transition: background-color 0.3s, color 0.3s;
+            direction: rtl;
+            text-align: right;
+        }
+
+        /* Dark Mode Variables */
+        :root {
+            --bg-color: #f8f9fa;
+            --text-color: #212529;
+            --card-bg: #ffffff;
+            --card-border: #e9ecef;
+            --primary-color: #007bff;
+            --primary-hover: #0056b3;
+            --secondary-color: #6c757d;
+            --secondary-hover: #5a6268;
+            --input-bg: #ffffff;
+            --input-border: #ced4da;
+            --modal-bg: rgba(0, 0, 0, 0.5);
+            --modal-content-bg: #ffffff;
+            --modal-content-border: #dee2e6;
+            --timeline-line: #ced4da;
+            --timeline-marker: #007bff;
+            --chart-bar: #007bff;
+            --chart-label: #212529;
+        }
+
+        body.dark-mode {
+            --bg-color: #212529;
+            --text-color: #f8f9fa;
+            --card-bg: #343a40;
+            --card-border: #454d55;
+            --primary-color: #007bff; /* Keep primary bright */
+            --primary-hover: #0056b3;
+            --secondary-color: #adb5bd;
+            --secondary-hover: #ced4da;
+            --input-bg: #495057;
+            --input-border: #6c757d;
+            --modal-bg: rgba(0, 0, 0, 0.7);
+            --modal-content-bg: #343a40;
+            --modal-content-border: #454d55;
+            --timeline-line: #495057;
+            --timeline-marker: #007bff;
+            --chart-bar: #007bff;
+            --chart-label: #f8f9fa;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 2rem;
+            margin: 0;
+        }
+
+        #theme-toggle {
+            background-color: var(--secondary-color);
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        #theme-toggle:hover {
+            background-color: var(--secondary-hover);
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+        }
+
+        .controls input[type="text"],
+        .controls select,
+        .controls button {
+            padding: 10px;
+            border: 1px solid var(--input-border);
+            border-radius: 5px;
+            background-color: var(--input-bg);
+            color: var(--text-color);
+            font-family: 'Noto Nastaliq Urdu', sans-serif;
+            font-size: 1rem;
+        }
+
+         .controls input[type="text"] {
+             flex-grow: 1;
+             min-width: 200px;
+         }
+
+         .controls select {
+             min-width: 150px;
+         }
+
+        .controls button {
+            cursor: pointer;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            transition: background-color 0.3s;
+        }
+
+        .controls button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .controls label {
+            align-self: center;
+        }
+
+        #significance-filter {
+            width: 100px;
+            vertical-align: middle;
+        }
+
+        #significance-value {
+            display: inline-block;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .view-switcher {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .view-switcher button {
+            flex-grow: 1;
+            padding: 12px 20px;
+            border: none;
+            background-color: transparent;
+            color: var(--text-color);
+            cursor: pointer;
+            font-family: 'Noto Nastaliq Urdu', sans-serif;
+            font-size: 1rem;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .view-switcher button.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .view-switcher button:not(.active):hover {
+             background-color: var(--card-border);
+        }
+
+        .view {
+            display: none;
+        }
+
+        .view.active {
+            display: block;
+        }
+
+        #loading-indicator, #no-results {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+            margin-top: 50px;
+        }
+
+        /* Event List View */
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .event-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .event-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 1.3rem;
+        }
+
+        .event-card p {
+            margin-bottom: 8px;
+            font-size: 0.95rem;
+        }
+
+        .event-card .meta {
+            font-size: 0.85rem;
+            color: var(--secondary-color);
+        }
+
+        /* Modal */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1000; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: var(--modal-bg); /* Black w/ opacity */
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: var(--modal-content-bg);
+            margin: 5% auto; /* 5% from the top and centered */
+            padding: 20px;
+            border: 1px solid var(--modal-content-border);
+            border-radius: 10px;
+            width: 90%; /* Could be more responsive */
+            max-width: 700px;
+            position: relative;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .close-button {
+            color: var(--secondary-color);
+            position: absolute;
+            top: 10px;
+            left: 10px; /* Position on the left for RTL */
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        .modal-content h2 {
+            margin-top: 0;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .modal-content p {
+            margin-bottom: 10px;
+        }
+
+        .modal-content strong {
+             color: var(--secondary-color);
+        }
+
+        /* Visualizations */
+        #timeline-container {
+            overflow-x: auto;
+            padding-bottom: 20px; /* Space for scrollbar */
+        }
+
+        #timeline-svg {
+            display: block;
+            width: 100%; /* Will be adjusted by JS */
+            height: 200px; /* Fixed height, adjust as needed */
+            border: 1px solid var(--card-border);
+            background-color: var(--card-bg);
+            border-radius: 8px;
+        }
+
+        .timeline-line {
+            stroke: var(--timeline-line);
+            stroke-width: 2;
+        }
+
+        .timeline-marker {
+            fill: var(--timeline-marker);
+            cursor: pointer;
+            transition: r 0.2s;
+        }
+        .timeline-marker:hover {
+            r: 8;
+        }
+
+        .timeline-label {
+            font-size: 12px;
+            fill: var(--text-color);
+            text-anchor: middle;
+        }
+
+         #map-container {
+             position: relative;
+             width: 100%;
+             height: 500px; /* Fixed height */
+             border: 1px solid var(--card-border);
+             background-color: var(--card-bg);
+             border-radius: 8px;
+             overflow: hidden; /* Hide parts outside SVG */
+         }
+
+        #map-svg {
+             display: block;
+             width: 100%;
+             height: 100%;
+        }
+
+        .map-location-circle {
+             fill: var(--secondary-color);
+             opacity: 0.5;
+        }
+
+        .map-event-marker {
+            fill: var(--primary-color);
+            cursor: pointer;
+            transition: r 0.2s;
+        }
+        .map-event-marker:hover {
+            r: 8;
+        }
+
+        .map-label {
+             font-size: 10px;
+             fill: var(--chart-label);
+             text-anchor: middle;
+             pointer-events: none; /* Allow clicks on markers */
+        }
+
+        #charts-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .chart-item {
+             background-color: var(--card-bg);
+             border: 1px solid var(--card-border);
+             border-radius: 8px;
+             padding: 15px;
+        }
+
+        .chart-item h3 {
+             text-align: center;
+             margin-bottom: 15px;
+             color: var(--primary-color);
+        }
+
+        .chart-svg {
+             display: block;
+             width: 100%;
+             height: 300px; /* Fixed height */
+        }
+
+        .chart-bar {
+            fill: var(--chart-bar);
+            transition: fill 0.2s;
+            cursor: pointer;
+        }
+        .chart-bar:hover {
+             fill: var(--primary-hover);
+        }
+
+        .chart-label-text {
+             font-size: 12px;
+             fill: var(--chart-label);
+        }
+
+        /* Significance Stars */
+        .significance-stars {
+            display: inline-block;
+            color: gold; /* Or any star color */
+        }
+        .significance-stars::before {
+            content: '★★★★★'; /* Unicode stars */
+            letter-spacing: -1px; /* Adjust spacing */
+            overflow: hidden;
+            display: inline-block;
+            width: 0; /* Will be set by JS */
+            direction: ltr; /* Force LTR for stars */
+            text-align: left;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                gap: 10px;
+            }
+            header h1 {
+                font-size: 1.5rem;
+            }
+            .controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+             .controls input[type="text"],
+             .controls select,
+             .controls button {
+                 width: 100%;
+             }
+             #significance-filter {
+                 width: auto;
+             }
+             .view-switcher button {
+                 padding: 10px;
+                 font-size: 0.9rem;
+             }
+             .modal-content {
+                 margin: 10% auto;
+                 width: 95%;
+             }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>سیرت النبی ﷺ - پیش رفتہ بصری تجزیہ</h1>
+            <button id="theme-toggle">ڈارک موڈ</button>
+        </header>
+
+        <div class="controls">
+            <input type="text" id="search-input" placeholder="تلاش کریں...">
+
+            <select id="hijri-filter">
+                <option value="">تمام ادوار</option>
+            </select>
+
+            <select id="tag-filter" multiple size="3">
+                 <!-- Options populated from data -->
+            </select>
+             <label for="significance-filter">اہمیت سکور:</label>
+            <input type="range" id="significance-filter" min="1" max="5" value="1">
+            <span id="significance-value">1+</span>
+
+            <button id="reset-filters">فلٹرز صاف کریں</button>
+
+            <button id="backup-button">بیک اپ ڈیٹا</button>
+            <input type="file" id="restore-file-input" accept=".json" style="display: none;">
+            <button id="restore-button">بحال کریں ڈیٹا</button>
+        </div>
+
+        <div class="view-switcher">
+            <button data-view="list" class="active">فہرست</button>
+            <button data-view="timeline">ٹائم لائن</button>
+            <button data-view="map">نقشہ</button>
+            <button data-view="charts">چارٹس</button>
+        </div>
+
+        <main id="main-content">
+            <div id="loading-indicator">ڈیٹا لوڈ ہو رہا ہے...</div>
+            <div id="no-results" style="display: none;">کوئی نتائج نہیں ملے۔</div>
+
+            <div id="event-list-view" class="view active">
+                <div id="event-list" class="card-container">
+                    <!-- Event cards will be rendered here -->
+                </div>
+            </div>
+
+            <div id="timeline-view" class="view">
+                 <div id="timeline-container">
+                      <svg id="timeline-svg"></svg>
+                 </div>
+            </div>
+
+            <div id="map-view" class="view">
+                 <div id="map-container">
+                      <svg id="map-svg"></svg>
+                 </div>
+            </div>
+
+            <div id="charts-view" class="view">
+                 <div id="charts-container">
+                     <div class="chart-item">
+                         <h3>واقعات بلحاظ ٹیگز</h3>
+                         <svg id="tags-chart-svg" class="chart-svg"></svg>
+                     </div>
+                     <div class="chart-item">
+                         <h3>واقعات بلحاظ اہمیت سکور</h3>
+                         <svg id="significance-chart-svg" class="chart-svg"></svg>
+                     </div>
+                 </div>
+            </div>
+        </main>
+
+        <!-- Event Details Modal -->
+        <div id="event-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-button">×</span>
+                <h2 id="modal-event-title"></h2>
+                <p><strong>عیسوی سال:</strong> <span id="modal-ad-year"></span></p>
+                <p><strong>ہجری سال / دور:</strong> <span id="modal-hijri-year"></span></p>
+                <p><strong>مختصر تفصیل:</strong> <span id="modal-brief"></span></p>
+                <p><strong>تفصیلی وضاحت:</strong> <span id="modal-details"></span></p>
+                <p><strong>متعلقہ شخصیات:</strong> <span id="modal-personalities"></span></p>
+                <p><strong>مقام:</strong> <span id="modal-location"></span></p>
+                <p><strong>اہمیت سکور:</strong> <span id="modal-significance"></span> <span class="significance-stars" id="modal-significance-stars"></span></p>
+                <p><strong>ٹیگز:</strong> <span id="modal-tags"></span></p>
+                <!-- Image placeholder -->
+                <!-- <img id="modal-image" src="" alt="تصویری حوالہ" style="max-width: 100%; display: none;"> -->
+            </div>
+        </div>
+
+    </div> <!-- .container -->
+
+    <script>
+        // Author: Yasin Ullah
+        // Origin: Pakistan
+
+        // --- Sample Data (Embedded CSV Strings) ---
+        // In a real application, these would be fetched from external files.
+        // For this single-file demo, they are included as constants.
+        const historyCSV = `شمار,عیسوی سال (تقریباً),ہجری سال / دور,واقعہ (اردو),مختصر تفصیل (اردو)
+1,570,قبل از ہجرت,ولادت باسعادت,آپ ﷺ کی ولادت مکہ مکرمہ میں ہوئی۔
+2,610,مکی دور,پہلی وحی کا نزول,غار حرا میں حضرت جبرائیلؑ کے ذریعے پہلی وحی نازل ہوئی۔
+3,622,1 ہجری,ہجرت مدینہ,مکہ سے مدینہ کی طرف ہجرت کا آغاز۔
+4,624,2 ہجری,غزوہ بدر,مسلمانوں اور کفار مکہ کے درمیان پہلا بڑا معرکہ۔
+6,625,3 ہجری,غزوہ احد,احد کے مقام پر قریش مکہ سے جنگ۔
+7,627,5 ہجری,غزوہ خندق,مدینہ کے دفاع کے لیے خندق کھودی گئی۔
+`;
+
+        const detailsCSV = `شمار,تفصیلی وضاحت,متعلقہ شخصیات,مقام,نقشہ_کوآرڈینیٹس,اہمیت_اسکور,تصویری_حوالہ,ٹیگز
+1,"آپ ﷺ کی ولادت عام الفیل کے سال ہوئی۔ والدہ کا نام حضرت آمنہ بنت وہب اور والد کا نام حضرت عبداللہ بن عبدالمطلب تھا۔",حضرت آمنہ,مکہ مکرمہ,"21.3891,39.8579",5,"makkah_birth.jpg","ولادت,مکی دور"
+2,"رمضان المبارک میں غار حرا میں عبادت کے دوران حضرت جبرائیلؑ تشریف لائے اور سورہ علق کی ابتدائی آیات پڑھائیں۔ یہ نبوت کا آغاز تھا۔",حضرت جبرائیل,غار حرا,"21.4592,39.8876",5,"ghar_hira.jpg","وحی,نبوت,مکی دور"
+3,"قریش کے ظلم و ستم سے تنگ آکر اور مدینہ کے انصار کی دعوت پر مسلمانوں نے مدینہ کی طرف ہجرت کی۔ آپ ﷺ اور حضرت ابوبکرؓ نے بعد میں ہجرت کی۔",حضرت ابوبکر,مدینہ منورہ,"24.4705,39.6126",5,"hijra.jpg","ہجرت,مدنی دور"
+4,"بدر کے مقام پر قریش مکہ کے ایک بڑے لشکر کا سامنا ہوا۔ مسلمانوں کی تعداد کم تھی لیکن اللہ کی مدد سے فتح حاصل ہوئی۔",حضرت ابوجہل,بدر,"23.7362,38.8145",5,"badr.jpg","غزوہ,مدنی دور"
+6,"قریش مکہ نے احد کے مقام پر مسلمانوں پر حملہ کیا۔ ابتدائی فتح کے بعد تیر اندازوں کی غلطی کی وجہ سے نقصان اٹھانا پڑا۔",حضرت حمزہ,احد,"24.5038,39.6058",4,"uhud.jpg","غزوہ,مدنی دور"
+7,"قریش اور دیگر قبائل نے مدینہ پر بڑے لشکر کے ساتھ حملہ کیا۔ مسلمانوں نے شہر کے گرد خندق کھود کر دفاع کیا۔",حضرت سلمان فارسی,مدینہ منورہ,"24.4705,39.6126",4,"khandaq.jpg","غزوہ,مدنی دور"
+`;
+
+        const historyUpdateCSV = `شمار,عیسوی سال (تقریباً),ہجری سال / دور,واقعہ (اردو),مختصر تفصیل (اردو)
+5,628,6 ہجری,صلح حدیبیہ,مسلمانوں اور قریش مکہ کے درمیان دس سالہ صلح کا معاہدہ۔
+8,630,8 ہجری,فتح مکہ,آپ ﷺ نے مکہ کو فتح کیا اور خانہ کعبہ کو بتوں سے پاک کیا۔
+`;
+        // Note: Event 5 and 8 from historyUpdateCSV do not have corresponding entries in detailsCSV.
+        // The merge logic should handle this gracefully, leaving detail fields empty/null.
+
+        // --- IndexedDB Setup ---
+        const DB_NAME = 'SeerahEventsDB_v2';
+        const DB_VERSION = 1;
+        const STORE_NAME = 'enriched_events';
+        let db;
+
+        async function initDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, DB_VERSION);
+
+                request.onupgradeneeded = function(event) {
+                    const db = event.target.result;
+                    if (!db.objectStoreNames.contains(STORE_NAME)) {
+                        const objectStore = db.createObjectStore(STORE_NAME, { keyPath: 'شمار' });
+                        // Create indexes for filtering/sorting
+                        objectStore.createIndex('hijri_year', 'ہجری سال / دور', { unique: false });
+                        objectStore.createIndex('tags', 'ٹیگز', { unique: false, multiEntry: true });
+                        objectStore.createIndex('significance', 'اہمیت_اسکور', { unique: false });
+                        objectStore.createIndex('location', 'مقام', { unique: false });
+                        objectStore.createIndex('personalities', 'متعلقہ شخصیات', { unique: false, multiEntry: true });
+                    }
+                };
+
+                request.onsuccess = function(event) {
+                    db = event.target.result;
+                    console.log('IndexedDB opened successfully');
+                    resolve(db);
+                };
+
+                request.onerror = function(event) {
+                    console.error('IndexedDB error:', event.target.errorCode);
+                    reject(event.target.error);
+                };
+            });
+        }
+
+        async function addEventToDB(event) {
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction([STORE_NAME], 'readwrite');
+                const objectStore = transaction.objectStore(STORE_NAME);
+                const request = objectStore.put(event); // Use put to handle potential updates (same شمار)
+
+                request.onsuccess = () => resolve();
+                request.onerror = (event) => reject(event.target.error);
+            });
+        }
+
+        async function getAllEventsFromDB() {
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction([STORE_NAME], 'readonly');
+                const objectStore = transaction.objectStore(STORE_NAME);
+                const request = objectStore.getAll();
+
+                request.onsuccess = (event) => resolve(event.target.result);
+                request.onerror = (event) => reject(event.target.error);
+            });
+        }
+
+        async function clearDB() {
+             return new Promise((resolve, reject) => {
+                 const transaction = db.transaction([STORE_NAME], 'readwrite');
+                 const objectStore = transaction.objectStore(STORE_NAME);
+                 const request = objectStore.clear();
+
+                 request.onsuccess = () => resolve();
+                 request.onerror = (event) => reject(event.target.error);
+             });
+        }
+
+
+        // --- Data Loading and Parsing ---
+
+        // Simple CSV Parser (handles basic cases and quoted fields)
+        function parseCSV(csvText) {
+            const rows = csvText.trim().split('\n');
+            if (rows.length === 0) return [];
+
+            const headers = rows[0].split(',').map(h => h.trim());
+            const data = [];
+
+            // Regex to split by comma, respecting quoted fields
+            const csvRegex = /,(?=(?:(?:[^"]*"){2})*[^"]*$)/;
+
+            for (let i = 1; i < rows.length; i++) {
+                const row = rows[i];
+                if (!row.trim()) continue; // Skip empty rows
+
+                const values = row.split(csvRegex).map(value => {
+                    // Remove quotes if present and trim
+                    value = value.trim();
+                    if (value.startsWith('"') && value.endsWith('"')) {
+                        value = value.substring(1, value.length - 1).replace(/""/g, '"'); // Handle escaped quotes "" -> "
+                    }
+                    return value;
+                });
+
+                if (values.length !== headers.length) {
+                     console.warn(`Skipping row ${i+1} due to column mismatch (${values.length} vs ${headers.length}): ${row}`);
+                     continue; // Skip malformed rows
+                }
+
+                const item = {};
+                headers.forEach((header, index) => {
+                    item[header] = values[index];
+                });
+                data.push(item);
+            }
+            return data;
+        }
+
+        // Simulates fetching CSV data from a URL
+        async function fetchCSV(csvString) {
+             // In a real app: const response = await fetch(url);
+             // const text = await response.text();
+             // return parseCSV(text);
+             console.log(`Simulating fetch for CSV...`);
+             return parseCSV(csvString);
+        }
+
+        // Merges history and details data
+        function mergeEventData(historyData, detailsData) {
+            const detailsMap = new Map(detailsData.map(item => [item['شمار'], item]));
+            const mergedData = historyData.map(historyItem => {
+                const detailItem = detailsMap.get(historyItem['شمار']) || {};
+                const merged = { ...historyItem, ...detailItem };
+
+                // Ensure correct data types and handle missing fields
+                merged['شمار'] = parseInt(merged['شمار'], 10);
+                merged['اہمیت_اسکور'] = parseInt(merged['اہمیت_اسکور'], 10) || 0; // Default to 0 if missing/invalid
+                merged['متعلقہ شخصیات'] = merged['متعلقہ شخصیات'] ? merged['متعلقہ شخصیات'].split(',').map(p => p.trim()).filter(p => p) : [];
+                merged['ٹیگز'] = merged['ٹیگز'] ? merged['ٹیگز'].split(',').map(t => t.trim()).filter(t => t) : [];
+
+                // Add placeholder fields if missing from details
+                if (merged['تفصیلی وضاحت'] === undefined) merged['تفصیلی وضاحت'] = '';
+                if (merged['مقام'] === undefined) merged['مقام'] = '';
+                if (merged['نقشہ_کوآرڈینیٹس'] === undefined) merged['نقشہ_کوآرڈینیٹس'] = '';
+                if (merged['تصویری_حوالہ'] === undefined) merged['تصویری_حوالہ'] = '';
+
+
+                return merged;
+            });
+            return mergedData;
+        }
+
+        async function loadInitialData() {
+            showLoading(true);
+            try {
+                console.log('Loading initial data...');
+                const historyData = await fetchCSV(historyCSV);
+                const detailsData = await fetchCSV(detailsCSV);
+                const mergedData = mergeEventData(historyData, detailsData);
+
+                const transaction = db.transaction([STORE_NAME], 'readwrite');
+                const objectStore = transaction.objectStore(STORE_NAME);
+
+                for (const event of mergedData) {
+                    objectStore.put(event); // Use put to add or update
+                }
+
+                return new Promise((resolve, reject) => {
+                    transaction.oncomplete = () => {
+                        console.log('Initial data loaded and stored.');
+                        resolve();
+                    };
+                    transaction.onerror = (event) => {
+                        console.error('Error storing initial data:', event.target.error);
+                        reject(event.target.error);
+                    };
+                });
+
+            } catch (error) {
+                console.error('Failed to load or store initial data:', error);
+                alert('ڈیٹا لوڈ کرنے میں ناکامی۔');
+            } finally {
+                 showLoading(false);
+            }
+        }
+
+        async function loadUpdateData() {
+             showLoading(true);
+             try {
+                 console.log('Checking for update data...');
+                 // Simulate fetch - in real app, check if historyupdate.csv exists
+                 const updateData = await fetchCSV(historyUpdateCSV); // This will parse the embedded string
+                 console.log(`Found ${updateData.length} update events.`);
+
+                 if (updateData.length > 0) {
+                     // For simplicity, assume update events might not have details initially
+                     // We will add them as basic events. Merge logic handles missing details fields.
+                     const mergedUpdateData = mergeEventData(updateData, []); // Merge with empty details
+
+                     const transaction = db.transaction([STORE_NAME], 'readwrite');
+                     const objectStore = transaction.objectStore(STORE_NAME);
+
+                     let addedCount = 0;
+                     for (const event of mergedUpdateData) {
+                         // Check if event with this ID already exists to avoid duplicates if not intended
+                         // Or just use put which updates if exists, adds if new.
+                         // The prompt says "append", which implies adding new ones.
+                         // Let's check if it exists first to truly "append" only new IDs.
+                         try {
+                             const existing = await new Promise((res, rej) => {
+                                 const req = objectStore.get(event['شمار']);
+                                 req.onsuccess = (e) => res(e.target.result);
+                                 req.onerror = (e) => rej(e.target.error);
+                             });
+
+                             if (!existing) {
+                                 await new Promise((res, rej) => {
+                                     const req = objectStore.add(event); // Use add for new keys
+                                     req.onsuccess = () => { addedCount++; res(); };
+                                     req.onerror = (e) => {
+                                        // Handle ConstraintError if ID already exists (shouldn't happen with add if check passes)
+                                        if (e.target.error.name === 'ConstraintError') {
+                                            console.warn(`Event ID ${event['شمار']} already exists, skipping append.`);
+                                            res(); // Resolve even if already exists, not a critical error for append logic
+                                        } else {
+                                            rej(e.target.error);
+                                        }
+                                     };
+                                 });
+                             } else {
+                                  console.log(`Event ID ${event['شمار']} already exists, not appending.`);
+                             }
+                         } catch (e) {
+                             console.error(`Error checking or adding event ID ${event['شمار']}:`, e);
+                         }
+                     }
+
+                     return new Promise((resolve, reject) => {
+                         transaction.oncomplete = () => {
+                             console.log(`${addedCount} update events appended.`);
+                             resolve();
+                         };
+                         transaction.onerror = (event) => {
+                             console.error('Error storing update data:', event.target.error);
+                             reject(event.target.error);
+                         };
+                     });
+                 } else {
+                     console.log('No update data found or parsed.');
+                 }
+
+             } catch (error) {
+                 console.warn('Failed to load update data (this might be expected if file is missing):', error);
+                 // This error is not critical, just means no updates were applied.
+             } finally {
+                  showLoading(false);
+             }
+        }
+
+
+        // --- State and Filtering ---
+        let allEvents = [];
+        let filteredEvents = [];
+        let currentView = 'list';
+
+        const searchInput = document.getElementById('search-input');
+        const hijriFilter = document.getElementById('hijri-filter');
+        const tagFilter = document.getElementById('tag-filter');
+        const significanceFilter = document.getElementById('significance-filter');
+        const significanceValueSpan = document.getElementById('significance-value');
+        const resetFiltersButton = document.getElementById('reset-filters');
+        const viewSwitcherButtons = document.querySelectorAll('.view-switcher button');
+        const eventListView = document.getElementById('event-list-view');
+        const timelineView = document.getElementById('timeline-view');
+        const mapView = document.getElementById('map-view');
+        const chartsView = document.getElementById('charts-view');
+        const eventListContainer = document.getElementById('event-list');
+        const loadingIndicator = document.getElementById('loading-indicator');
+        const noResultsIndicator = document.getElementById('no-results');
+        const mainContent = document.getElementById('main-content');
+        //const eventModal = document.getElementById('event-modal');
+
+        function filterEvents() {
+            showLoading(true);
+            const searchTerm = searchInput.value.toLowerCase();
+            const selectedHijriYear = hijriFilter.value;
+            const selectedTags = Array.from(tagFilter.selectedOptions).map(option => option.value);
+            const minSignificance = parseInt(significanceFilter.value, 10);
+
+            filteredEvents = allEvents.filter(event => {
+                // Search
+                const matchesSearch = searchTerm === '' ||
+                    (event['واقعہ (اردو)'] && event['واقعہ (اردو)'].toLowerCase().includes(searchTerm)) ||
+                    (event['مختصر تفصیل (اردو)'] && event['مختصر تفصیل (اردو)'].toLowerCase().includes(searchTerm)) ||
+                    (event['تفصیلی وضاحت'] && event['تفصیلی وضاحت'].toLowerCase().includes(searchTerm)) ||
+                    (event['مقام'] && event['مقام'].toLowerCase().includes(searchTerm)) ||
+                    (event['متعلقہ شخصیات'] && event['متعلقہ شخصیات'].some(p => p.toLowerCase().includes(searchTerm))) ||
+                    (event['ٹیگز'] && event['ٹیگز'].some(t => t.toLowerCase().includes(searchTerm)));
+
+                // Hijri Filter
+                const matchesHijri = selectedHijriYear === '' || event['ہجری سال / دور'] === selectedHijriYear;
+
+                // Tags Filter (match ANY selected tag, or all if none selected)
+                const matchesTags = selectedTags.length === 0 || (event['ٹیگز'] && selectedTags.some(tag => event['ٹیگز'].includes(tag)));
+
+                // Significance Filter
+                const matchesSignificance = event['اہمیت_اسکور'] >= minSignificance;
+
+                return matchesSearch && matchesHijri && matchesTags && matchesSignificance;
+            });
+
+            // Sort events by AD year for timeline/list consistency
+            filteredEvents.sort((a, b) => {
+                const yearA = parseInt(a['عیسوی سال (تقریباً)'], 10) || 0;
+                const yearB = parseInt(b['عیسوی سال (تقریباً)'], 10) || 0;
+                return yearA - yearB;
+            });
+
+
+            renderView(currentView);
+            showLoading(false);
+        }
+
+        function populateFilters() {
+            const hijriYears = new Set();
+            const tags = new Set();
+
+            allEvents.forEach(event => {
+                if (event['ہجری سال / دور']) hijriYears.add(event['ہجری سال / دور']);
+                if (event['ٹیگز']) event['ٹیگز'].forEach(tag => tags.add(tag));
+            });
+
+            // Populate Hijri Year filter
+            hijriFilter.innerHTML = '<option value="">تمام ادوار</option>';
+            Array.from(hijriYears).sort().forEach(year => {
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = year;
+                hijriFilter.appendChild(option);
+            });
+
+            // Populate Tags filter
+            tagFilter.innerHTML = ''; // Clear existing options
+            Array.from(tags).sort().forEach(tag => {
+                const option = document.createElement('option');
+                option.value = tag;
+                option.textContent = tag;
+                tagFilter.appendChild(option);
+            });
+
+             // Update significance display
+             significanceValueSpan.textContent = significanceFilter.value + '+';
+        }
+
+        function resetFilters() {
+            searchInput.value = '';
+            hijriFilter.value = '';
+            tagFilter.selectedIndex = -1; // Deselect all
+            significanceFilter.value = 1;
+            significanceValueSpan.textContent = '1+';
+            filterEvents();
+        }
+
+        // --- Rendering Views ---
+
+        function showLoading(show) {
+            loadingIndicator.style.display = show ? 'block' : 'none';
+             mainContent.style.display = show ? 'none' : 'block'; // Hide content while loading
+        }
+
+         function showNoResults(show) {
+             noResultsIndicator.style.display = show ? 'block' : 'none';
+         }
+
+        function renderView(view) {
+            currentView = view;
+
+            // Hide all views
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+             // Deactivate all switcher buttons
+            viewSwitcherButtons.forEach(button => button.classList.remove('active'));
+
+            // Show active view and button
+            document.getElementById(`${view}-view`).classList.add('active');
+            document.querySelector(`.view-switcher button[data-view="${view}"]`).classList.add('active');
+
+            // Render content based on the active view
+            showNoResults(filteredEvents.length === 0);
+
+            if (filteredEvents.length === 0) {
+                // Clear containers if no results
+                eventListContainer.innerHTML = '';
+                document.getElementById('timeline-svg').innerHTML = '';
+                document.getElementById('map-svg').innerHTML = '';
+                document.getElementById('tags-chart-svg').innerHTML = '';
+                document.getElementById('significance-chart-svg').innerHTML = '';
+                return;
+            }
+
+            switch (view) {
+                case 'list':
+                    renderEventList(filteredEvents);
+                    break;
+                case 'timeline':
+                    renderTimeline(filteredEvents);
+                    break;
+                case 'map':
+                    renderMap(filteredEvents);
+                    break;
+                case 'charts':
+                    renderCharts(filteredEvents);
+                    break;
+            }
+        }
+
+        function renderEventList(events) {
+            eventListContainer.innerHTML = ''; // Clear previous cards
+            const fragment = document.createDocumentFragment();
+
+            events.forEach(event => {
+                const card = document.createElement('div');
+                card.classList.add('event-card');
+                card.dataset.id = event['شمار']; // Store ID for modal
+
+                card.innerHTML = `
+                    <div class="meta">${event['عیسوی سال (تقریباً)']} عیسوی / ${event['ہجری سال / دور']}</div>
+                    <h3>${event['واقعہ (اردو)']}</h3>
+                    <p>${event['مختصر تفصیل (اردو)']}</p>
+                `;
+                fragment.appendChild(card);
+            });
+
+            eventListContainer.appendChild(fragment);
+        }
+
+        // --- Modal ---
+        const eventModal = document.getElementById('event-modal');
+        const modalCloseButton = eventModal.querySelector('.close-button');
+        const modalTitle = document.getElementById('modal-event-title');
+        const modalAdYear = document.getElementById('modal-ad-year');
+        const modalHijriYear = document.getElementById('modal-hijri-year');
+        const modalBrief = document.getElementById('modal-brief');
+        const modalDetails = document.getElementById('modal-details');
+        const modalPersonalities = document.getElementById('modal-personalities');
+        const modalLocation = document.getElementById('modal-location');
+        const modalSignificance = document.getElementById('modal-significance');
+        const modalSignificanceStars = document.getElementById('modal-significance-stars');
+        const modalTags = document.getElementById('modal-tags');
+        // const modalImage = document.getElementById('modal-image'); // Placeholder
+
+        function showModal(event) {
+            modalTitle.textContent = event['واقعہ (اردو)'];
+            modalAdYear.textContent = event['عیسوی سال (تقریباً)'] || 'دستیاب نہیں';
+            modalHijriYear.textContent = event['ہجری سال / دور'] || 'دستیاب نہیں';
+            modalBrief.textContent = event['مختصر تفصیل (اردو)'] || 'دستیاب نہیں';
+            modalDetails.textContent = event['تفصیلی وضاحت'] || 'مزید تفصیلات دستیاب نہیں۔';
+            modalPersonalities.textContent = event['متعلقہ شخصیات'] && event['متعلقہ شخصیات'].length > 0 ? event['متعلقہ شخصیات'].join(', ') : 'دستیاب نہیں';
+            modalLocation.textContent = event['مقام'] || 'دستیاب نہیں';
+            modalSignificance.textContent = event['اہمیت_اسکور'] || '0';
+            // Render significance stars
+            const score = parseInt(event['اہمیت_اسکور'], 10) || 0;
+            modalSignificanceStars.style.width = `${(score / 5) * 100}%`;
+
+            modalTags.textContent = event['ٹیگز'] && event['ٹیگز'].length > 0 ? event['ٹیگز'].join(', ') : 'دستیاب نہیں';
+
+            // Image placeholder logic
+            // if (event['تصویری_حوالہ']) {
+            //     modalImage.src = event['تصویری_حوالہ']; // Use actual path if available
+            //     modalImage.style.display = 'block';
+            // } else {
+            //     modalImage.style.display = 'none';
+            // }
+
+            eventModal.style.display = 'block';
+        }
+
+        function hideModal() {
+            eventModal.style.display = 'none';
+        }
+
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            if (event.target === eventModal) {
+                hideModal();
+            }
+        }
+
+
+        // --- Visualizations (SVG) ---
+
+        // Timeline Visualization
+        function renderTimeline(events) {
+            const svg = document.getElementById('timeline-svg');
+            svg.innerHTML = ''; // Clear previous drawing
+
+            if (events.length === 0) return;
+
+            const years = events.map(e => parseInt(e['عیسوی سال (تقریباً)'], 10)).filter(y => !isNaN(y));
+            if (years.length === 0) return;
+
+            const minYear = Math.min(...years);
+            const maxYear = Math.max(...years);
+            const yearRange = maxYear - minYear;
+
+            const svgWidth = Math.max(800, yearRange * 10); // Dynamic width based on range, min 800px
+            svg.style.width = `${svgWidth}px`;
+            const svgHeight = parseInt(svg.getAttribute('height'), 10); // Get height from CSS/attribute
+            const padding = 50; // Padding on left/right
+            const timelineY = svgHeight / 2; // Y-coordinate for the main line
+
+            // Scale function: maps year to x-coordinate
+            const xScale = (year) => padding + (parseInt(year, 10) - minYear) / yearRange * (svgWidth - 2 * padding);
+
+            // Draw main timeline line
+            const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+            line.setAttribute('x1', padding);
+            line.setAttribute('y1', timelineY);
+            line.setAttribute('x2', svgWidth - padding);
+            line.setAttribute('y2', timelineY);
+            line.classList.add('timeline-line');
+            svg.appendChild(line);
+
+            // Draw year ticks and labels (e.g., every 10 years)
+            const tickInterval = Math.max(1, Math.floor(yearRange / 10)); // Adjust interval based on range
+            for (let year = minYear; year <= maxYear; year += tickInterval) {
+                 const x = xScale(year);
+                 // Draw tick mark
+                 const tick = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+                 tick.setAttribute('x1', x);
+                 tick.setAttribute('y1', timelineY - 5);
+                 tick.setAttribute('x2', x);
+                 tick.setAttribute('y2', timelineY + 5);
+                 tick.classList.add('timeline-line');
+                 svg.appendChild(tick);
+
+                 // Draw year label
+                 const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                 label.setAttribute('x', x);
+                 label.setAttribute('y', timelineY + 20);
+                 label.classList.add('timeline-label');
+                 label.textContent = year + ' عیسوی';
+                 svg.appendChild(label);
+            }
+
+
+            // Draw event markers
+            events.forEach(event => {
+                const year = parseInt(event['عیسوی سال (تقریباً)'], 10);
+                if (isNaN(year)) return;
+
+                const x = xScale(year);
+
+                const marker = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                marker.setAttribute('cx', x);
+                marker.setAttribute('cy', timelineY);
+                marker.setAttribute('r', 6); // Radius
+                marker.classList.add('timeline-marker');
+                marker.dataset.id = event['شمار']; // Store ID
+
+                // Add tooltip/title
+                const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+                title.textContent = `${event['واقعہ (اردو)']}\n(${event['عیسوی سال (تقریباً)']} عیسوی / ${event['ہجری سال / دور']})`;
+                marker.appendChild(title);
+
+                svg.appendChild(marker);
+
+                // Add click listener to marker
+                marker.addEventListener('click', () => {
+                    showModal(event);
+                });
+            });
+        }
+
+        // Simple Schematic Map Visualization
+         const locationSvgCoords = {
+            'مکہ مکرمہ': { x: 400, y: 500 },
+            'مدینہ منورہ': { x: 450, y: 200 },
+            'بدر': { x: 350, y: 300 },
+            'احد': { x: 460, y: 180 }, // Near Medina
+            'خندق': { x: 440, y: 210 }, // Near Medina
+            'طائف': { x: 500, y: 550 }, // South-east of Mecca
+            'حدیبیہ': { x: 380, y: 480 }, // West of Mecca
+            'غار حرا': { x: 410, y: 490 } // Near Mecca
+            // Add more as needed...
+        };
+
+        function renderMap(events) {
+             const svg = document.getElementById('map-svg');
+             svg.innerHTML = ''; // Clear previous drawing
+
+             const svgWidth = svg.clientWidth;
+             const svgHeight = svg.clientHeight;
+
+             // Draw base map elements (optional, could be just points)
+             // For a simple schematic, just draw location circles and labels
+             const drawnLocations = new Set();
+             for (const location in locationSvgCoords) {
+                 const coords = locationSvgCoords[location];
+                 if (coords.x > svgWidth || coords.y > svgHeight) {
+                     console.warn(`Location ${location} coordinates (${coords.x}, ${coords.y}) are outside SVG bounds (${svgWidth}, ${svgHeight}).`);
+                     continue; // Skip if outside bounds
+                 }
+
+                 // Draw circle for the location
+                 const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                 circle.setAttribute('cx', coords.x);
+                 circle.setAttribute('cy', coords.y);
+                 circle.setAttribute('r', 10); // Size of location circle
+                 circle.classList.add('map-location-circle');
+                 svg.appendChild(circle);
+
+                 // Draw text label for the location
+                 const label = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                 label.setAttribute('x', coords.x);
+                 label.setAttribute('y', coords.y - 15); // Position above circle
+                 label.setAttribute('text-anchor', 'middle');
+                 label.classList.add('map-label');
+                 label.textContent = location;
+                 svg.appendChild(label);
+
+                 drawnLocations.add(location);
+             }
+
+
+             // Draw event markers at location points
+             events.forEach(event => {
+                 const location = event['مقام'];
+                 const coords = locationSvgCoords[location];
+
+                 if (coords && coords.x <= svgWidth && coords.y <= svgHeight) {
+                     // Offset events slightly if multiple at the same location?
+                     // For simplicity, just place them directly on the location point for now.
+                     const marker = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+                     marker.setAttribute('cx', coords.x);
+                     marker.setAttribute('cy', coords.y);
+                     marker.setAttribute('r', 6); // Size of event marker
+                     marker.classList.add('map-event-marker');
+                     marker.dataset.id = event['شمار']; // Store ID
+
+                     // Add tooltip/title
+                     const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+                     title.textContent = `${event['واقعہ (اردو)']}\n(${event['عیسوی سال (تقریباً)']} عیسوی / ${event['ہجری سال / دور']})`;
+                     marker.appendChild(title);
+
+                     svg.appendChild(marker);
+
+                     // Add click listener to marker
+                     marker.addEventListener('click', () => {
+                         showModal(event);
+                     });
+                 } else if (location) {
+                     console.warn(`Coordinates for location "${location}" not found or outside SVG bounds for event ID ${event['شمار']}.`);
+                     // Optionally, list events without known locations below the map
+                 }
+             });
+        }
+
+        // Charts Visualization (Simple Bar Charts)
+        function renderCharts(events) {
+            renderTagsChart(events);
+            renderSignificanceChart(events);
+        }
+
+        function renderTagsChart(events) {
+            const svg = document.getElementById('tags-chart-svg');
+            svg.innerHTML = ''; // Clear previous drawing
+
+            const counts = {};
+            events.forEach(event => {
+                if (event['ٹیگز']) {
+                    event['ٹیگز'].forEach(tag => {
+                        counts[tag] = (counts[tag] || 0) + 1;
+                    });
+                }
+            });
+
+            const sortedTags = Object.entries(counts).sort((a, b) => b[1] - a[1]); // Sort by count descending
+
+            if (sortedTags.length === 0) return;
+
+            const svgWidth = svg.clientWidth;
+            const svgHeight = svg.clientHeight;
+            const chartPadding = { top: 20, right: 20, bottom: 60, left: 40 }; // Adjusted for RTL labels
+            const chartAreaWidth = svgWidth - chartPadding.left - chartPadding.right;
+            const chartAreaHeight = svgHeight - chartPadding.top - chartPadding.bottom;
+            const barWidth = chartAreaWidth / sortedTags.length * 0.8; // 80% of available space per bar
+            const barSpacing = chartAreaWidth / sortedTags.length * 0.2; // 20% spacing
+
+            const maxCount = Math.max(...sortedTags.map(item => item[1]));
+            const yScale = (count) => chartAreaHeight - (count / maxCount) * chartAreaHeight;
+
+            // Draw Bars
+            sortedTags.forEach(([tag, count], index) => {
+                const x = chartPadding.left + index * (barWidth + barSpacing);
+                const y = chartPadding.top + yScale(count);
+                const height = chartAreaHeight - yScale(count);
+
+                const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                rect.setAttribute('x', x);
+                rect.setAttribute('y', y);
+                rect.setAttribute('width', barWidth);
+                rect.setAttribute('height', height);
+                rect.classList.add('chart-bar');
+                rect.dataset.tag = tag; // Store tag for potential interaction
+
+                // Add tooltip/title
+                const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+                title.textContent = `${tag}: ${count} واقعات`;
+                rect.appendChild(title);
+
+                svg.appendChild(rect);
+
+                // Add click listener to bar (e.g., to filter)
+                rect.addEventListener('click', () => {
+                    // Simple filter: select this tag
+                    Array.from(tagFilter.options).forEach(option => {
+                        option.selected = option.value === tag;
+                    });
+                    filterEvents();
+                });
+
+
+                // Draw Labels below bars
+                const labelText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                labelText.setAttribute('x', x + barWidth / 2);
+                labelText.setAttribute('y', svgHeight - chartPadding.bottom + 15); // Position below chart area
+                labelText.setAttribute('text-anchor', 'middle');
+                labelText.classList.add('chart-label-text');
+                labelText.textContent = tag;
+                 // Rotate labels if too long
+                 if (barWidth < 30 && tag.length > 5) { // Heuristic for long labels
+                     labelText.setAttribute('transform', `rotate(-45, ${x + barWidth / 2}, ${svgHeight - chartPadding.bottom + 15})`);
+                     labelText.setAttribute('text-anchor', 'end'); // Adjust anchor for rotation
+                 }
+                svg.appendChild(labelText);
+
+                 // Draw count label above bars
+                 const countText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                 countText.setAttribute('x', x + barWidth / 2);
+                 countText.setAttribute('y', y - 5); // Position above bar
+                 countText.setAttribute('text-anchor', 'middle');
+                 countText.classList.add('chart-label-text');
+                 countText.textContent = count;
+                 svg.appendChild(countText);
+            });
+
+             // Draw Y-axis (optional)
+             // const yAxisLine = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+             // yAxisLine.setAttribute('x1', chartPadding.left);
+             // yAxisLine.setAttribute('y1', chartPadding.top);
+             // yAxisLine.setAttribute('x2', chartPadding.left);
+             // yAxisLine.setAttribute('y2', svgHeight - chartPadding.bottom);
+             // yAxisLine.setAttribute('stroke', var(--chart-label)); // Use a color variable
+             // svg.appendChild(yAxisLine);
+        }
+
+        function renderSignificanceChart(events) {
+             const svg = document.getElementById('significance-chart-svg');
+             svg.innerHTML = ''; // Clear previous drawing
+
+             const counts = { 1: 0, 2: 0, 3: 0, 4: 0, 5: 0 };
+             events.forEach(event => {
+                 const score = parseInt(event['اہمیت_اسکور'], 10);
+                 if (score >= 1 && score <= 5) {
+                     counts[score]++;
+                 }
+             });
+
+             const scores = [1, 2, 3, 4, 5];
+             const sortedScores = scores.map(s => [s, counts[s]]); // Array of [score, count]
+
+             if (sortedScores.every(item => item[1] === 0)) return; // No data
+
+             const svgWidth = svg.clientWidth;
+             const svgHeight = svg.clientHeight;
+             const chartPadding = { top: 20, right: 20, bottom: 40, left: 40 };
+             const chartAreaWidth = svgWidth - chartPadding.left - chartPadding.right;
+             const chartAreaHeight = svgHeight - chartPadding.top - chartPadding.bottom;
+             const barWidth = chartAreaWidth / sortedScores.length * 0.8;
+             const barSpacing = chartAreaWidth / sortedScores.length * 0.2;
+
+             const maxCount = Math.max(...sortedScores.map(item => item[1]));
+             const yScale = (count) => chartAreaHeight - (count / maxCount) * chartAreaHeight;
+
+             // Draw Bars
+             sortedScores.forEach(([score, count], index) => {
+                 const x = chartPadding.left + index * (barWidth + barSpacing);
+                 const y = chartPadding.top + yScale(count);
+                 const height = chartAreaHeight - yScale(count);
+
+                 const rect = document.createElementNS('http://www.w3.org/2000/svg', 'rect');
+                 rect.setAttribute('x', x);
+                 rect.setAttribute('y', y);
+                 rect.setAttribute('width', barWidth);
+                 rect.setAttribute('height', height);
+                 rect.classList.add('chart-bar');
+                 rect.dataset.score = score; // Store score
+
+                 // Add tooltip/title
+                 const title = document.createElementNS('http://www.w3.org/2000/svg', 'title');
+                 title.textContent = `اہمیت سکور ${score}: ${count} واقعات`;
+                 rect.appendChild(title);
+
+                 svg.appendChild(rect);
+
+                 // Add click listener to bar (e.g., to filter)
+                 rect.addEventListener('click', () => {
+                     // Simple filter: set min significance
+                     significanceFilter.value = score;
+                     significanceValueSpan.textContent = score + '+';
+                     filterEvents();
+                 });
+
+                 // Draw Labels below bars
+                 const labelText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                 labelText.setAttribute('x', x + barWidth / 2);
+                 labelText.setAttribute('y', svgHeight - chartPadding.bottom + 15);
+                 labelText.setAttribute('text-anchor', 'middle');
+                 labelText.classList.add('chart-label-text');
+                 labelText.textContent = score;
+                 svg.appendChild(labelText);
+
+                 // Draw count label above bars
+                 const countText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
+                 countText.setAttribute('x', x + barWidth / 2);
+                 countText.setAttribute('y', y - 5); // Position above bar
+                 countText.setAttribute('text-anchor', 'middle');
+                 countText.classList.add('chart-label-text');
+                 countText.textContent = count;
+                 svg.appendChild(countText);
+             });
+        }
+
+
+        // --- Backup and Restore ---
+        const backupButton = document.getElementById('backup-button');
+        const restoreButton = document.getElementById('restore-button');
+        const restoreFileInput = document.getElementById('restore-file-input');
+
+        async function backupData() {
+            try {
+                showLoading(true);
+                const data = await getAllEventsFromDB();
+                const jsonString = JSON.stringify(data, null, 2);
+                const blob = new Blob([jsonString], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'seerah_events_backup.json';
+                document.body.appendChild(a); // Append to body is required in some browsers
+                a.click();
+
+                document.body.removeChild(a); // Clean up
+                URL.revokeObjectURL(url); // Free up memory
+                console.log('Data backup initiated.');
+            } catch (error) {
+                console.error('Backup failed:', error);
+                alert('بیک اپ بنانے میں ناکامی۔');
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        function restoreData() {
+            // Trigger the hidden file input click
+            restoreFileInput.click();
+        }
+
+        restoreFileInput.addEventListener('change', async (event) => {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const confirmRestore = confirm('کیا آپ واقعی ڈیٹا بحال کرنا چاہتے ہیں؟ موجودہ ڈیٹا حذف ہو جائے گا۔');
+            if (!confirmRestore) return;
+
+            showLoading(true);
+            const reader = new FileReader();
+
+            reader.onload = async (e) => {
+                try {
+                    const jsonString = e.target.result;
+                    const data = JSON.parse(jsonString);
+
+                    if (!Array.isArray(data)) {
+                        throw new Error('Invalid data format: Expected an array.');
+                    }
+
+                    // Basic validation: check if objects look like events
+                    if (data.length > 0 && data.some(item => typeof item['شمار'] === 'undefined')) {
+                         throw new Error('Invalid data format: Missing event ID (شمار).');
+                    }
+
+                    await clearDB(); // Clear existing data
+                    console.log('Existing data cleared.');
+
+                    const transaction = db.transaction([STORE_NAME], 'readwrite');
+                    const objectStore = transaction.objectStore(STORE_NAME);
+
+                    for (const event of data) {
+                         // Ensure data types are correct before storing
+                         event['شمار'] = parseInt(event['شمار'], 10);
+                         event['اہمیت_اسکور'] = parseInt(event['اہمیت_اسکور'], 10) || 0;
+                         if (typeof event['متعلقہ شخصیات'] === 'string') { // Convert string to array if needed
+                             event['متعلقہ شخصیات'] = event['متعلقہ شخصیات'].split(',').map(p => p.trim()).filter(p => p);
+                         } else if (!Array.isArray(event['متعلقہ شخصیات'])) {
+                             event['متعلقہ شخصیات'] = [];
+                         }
+                         if (typeof event['ٹیگز'] === 'string') { // Convert string to array if needed
+                              event['ٹیگز'] = event['ٹیگز'].split(',').map(t => t.trim()).filter(t => t);
+                         } else if (!Array.isArray(event['ٹیگز'])) {
+                              event['ٹیگز'] = [];
+                         }
+
+                        objectStore.put(event); // Use put to add
+                    }
+
+                    transaction.oncomplete = async () => {
+                        console.log('Data restore completed.');
+                        alert('ڈیٹا کامیابی سے بحال ہو گیا۔');
+                        // Reload data and refresh UI
+                        await loadAllDataAndRender();
+                    };
+                     transaction.onerror = (event) => {
+                        console.error('Error during restore transaction:', event.target.error);
+                        alert('ڈیٹا بحال کرنے میں خرابی پیش آئی۔');
+                     };
+
+                } catch (error) {
+                    console.error('Restore failed:', error);
+                    alert(`ڈیٹا بحال کرنے میں ناکامی: ${error.message}`);
+                } finally {
+                    showLoading(false);
+                    restoreFileInput.value = ''; // Clear the file input
+                }
+            };
+
+            reader.onerror = (e) => {
+                console.error('FileReader error:', e);
+                alert('فائل پڑھنے میں ناکامی۔');
+                showLoading(false);
+                 restoreFileInput.value = '';
+            };
+
+            reader.readAsText(file);
+        });
+
+
+        // --- Dark Mode ---
+        const themeToggle = document.getElementById('theme-toggle');
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const isDarkMode = document.body.classList.contains('dark-mode');
+            localStorage.setItem('darkMode', isDarkMode);
+            themeToggle.textContent = isDarkMode ? 'لائٹ موڈ' : 'ڈارک موڈ';
+        }
+
+        function applySavedTheme() {
+            const savedTheme = localStorage.getItem('darkMode');
+            if (savedTheme === 'true') {
+                document.body.classList.add('dark-mode');
+                 themeToggle.textContent = 'لائٹ موڈ';
+            } else {
+                 themeToggle.textContent = 'ڈارک موڈ';
+            }
+        }
+
+
+        // --- Event Listeners ---
+        function setupEventListeners() {
+            // View switcher
+            viewSwitcherButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    renderView(button.dataset.view);
+                });
+            });
+
+            // Search input (with debounce)
+            let searchTimeout;
+            searchInput.addEventListener('input', () => {
+                clearTimeout(searchTimeout);
+                searchTimeout = setTimeout(filterEvents, 300); // Debounce by 300ms
+            });
+
+            // Filter changes
+            hijriFilter.addEventListener('change', filterEvents);
+            tagFilter.addEventListener('change', filterEvents);
+            significanceFilter.addEventListener('input', () => {
+                 significanceValueSpan.textContent = significanceFilter.value + '+';
+                 // Optional: debounce significance filter change if performance is an issue
+                 filterEvents(); // Filter immediately on range change
+            });
+            resetFiltersButton.addEventListener('click', resetFilters);
+
+            // Event card click (for list view)
+            eventListContainer.addEventListener('click', (event) => {
+                const card = event.target.closest('.event-card');
+                if (card) {
+                    const eventId = parseInt(card.dataset.id, 10);
+                    const eventData = allEvents.find(e => e['شمار'] === eventId);
+                    if (eventData) {
+                        showModal(eventData);
+                    }
+                }
+            });
+
+            // Modal close button
+            modalCloseButton.addEventListener('click', hideModal);
+
+            // Dark mode toggle
+            themeToggle.addEventListener('click', toggleDarkMode);
+
+            // Backup/Restore buttons
+            backupButton.addEventListener('click', backupData);
+            restoreButton.addEventListener('click', restoreData);
+        }
+
+
+        // --- Initial Load ---
+        async function loadAllDataAndRender() {
+            showLoading(true);
+            try {
+                await initDB();
+                const existingEvents = await getAllEventsFromDB();
+
+                if (existingEvents.length === 0) {
+                    console.log('DB is empty, loading initial data.');
+                    await loadInitialData();
+                } else {
+                    console.log(`DB contains ${existingEvents.length} events.`);
+                }
+
+                 // Always attempt to load update data after initial check/load
+                 await loadUpdateData();
+
+                // Fetch all data again after potential updates
+                allEvents = await getAllEventsFromDB();
+                console.log(`Total events loaded from DB: ${allEvents.length}`);
+
+                if (allEvents.length === 0) {
+                     showNoResults(true);
+                     mainContent.style.display = 'block'; // Show main area even if empty
+                } else {
+                     showNoResults(false);
+                }
+
+
+                populateFilters();
+                filterEvents(); // Apply initial filters (none selected) and render
+
+            } catch (error) {
+                console.error('Error during initial data load and render:', error);
+                alert('ایپلیکیشن لوڈ کرنے میں خرابی پیش آئی۔');
+                 showLoading(false);
+                 showNoResults(true);
+                 mainContent.style.display = 'block';
+            } finally {
+                showLoading(false);
+            }
+        }
+
+        // Wait for the DOM to be fully loaded before initializing
+        document.addEventListener('DOMContentLoaded', () => {
+            applySavedTheme(); // Apply theme immediately
+            setupEventListeners();
+            loadAllDataAndRender();
+        });
+
+    </script>
+
+</body>
+</html>

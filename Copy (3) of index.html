@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سیرت النبی ﷺ - جامع انفوگرافک تاریخ</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap');
+
+        :root {
+            --primary-color: #8c0000; /* Deep Red */
+            --secondary-color: #d4a373; /* Tan/Beige */
+            --background-color-light: #fdfaf6;
+            --text-color-light: #333;
+            --card-bg-light: #fff;
+            --border-color-light: #e0e0e0;
+
+            --background-color-dark: #2c3e50; /* Dark Blue-Gray */
+            --text-color-dark: #ecf0f1;
+            --card-bg-dark: #34495e;
+            --border-color-dark: #4a6177;
+            --primary-color-dark-accent: #e74c3c; /* Lighter Red for Dark Mode */
+        }
+
+        body {
+            font-family: 'Noto Nastaliq Urdu', serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color-light);
+            color: var(--text-color-light);
+            line-height: 1.8;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            --background-color-light: var(--background-color-dark);
+            --text-color-light: var(--text-color-dark);
+            --card-bg-light: var(--card-bg-dark);
+            --border-color-light: var(--border-color-dark);
+            --primary-color: var(--primary-color-dark-accent);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 2px solid var(--primary-color);
+            margin-bottom: 20px;
+        }
+
+        header h1 {
+            color: var(--primary-color);
+            margin: 0;
+            font-size: 2em;
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+            padding: 15px;
+            background-color: var(--card-bg-light);
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color-light);
+        }
+
+        .controls input[type="text"],
+        .controls select {
+            padding: 10px;
+            border: 1px solid var(--border-color-light);
+            border-radius: 5px;
+            font-family: 'Noto Nastaliq Urdu', serif;
+            font-size: 1em;
+            background-color: var(--background-color-light);
+            color: var(--text-color-light);
+            min-width: 200px;
+        }
+        
+        .theme-toggle, .view-toggle button {
+            padding: 10px 15px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: 'Noto Nastaliq Urdu', serif;
+            font-size: 0.9em;
+            transition: background-color 0.2s;
+        }
+        .theme-toggle:hover, .view-toggle button:hover {
+            opacity: 0.9;
+        }
+        .view-toggle button.active {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+        }
+
+
+        #event-display-area {
+            display: grid;
+            gap: 20px;
+        }
+        
+        .event-module {
+            background-color: var(--card-bg-light);
+            border: 1px solid var(--border-color-light);
+            border-right: 5px solid var(--primary-color);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.07);
+            transition: transform 0.2s ease-in-out;
+        }
+        .event-module:hover {
+            transform: translateY(-5px);
+        }
+
+        .event-module h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+            font-size: 1.5em;
+            margin-bottom: 10px;
+        }
+        .event-module .meta {
+            font-size: 0.9em;
+            color: #777;
+            margin-bottom: 10px;
+        }
+        body.dark-mode .event-module .meta { color: #bbb; }
+
+        .event-module .details-section {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px dashed var(--border-color-light);
+        }
+        .event-module .details-section strong {
+            color: var(--primary-color);
+        }
+        .event-module .key-points ul {
+            padding-right: 20px; /* For Urdu list bullets */
+            margin-top: 5px;
+        }
+        .event-module .key-points li {
+            margin-bottom: 5px;
+            font-size: 0.95em;
+        }
+        .event-module .tags span {
+            background-color: var(--secondary-color);
+            color: var(--background-color-light);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 0.8em;
+            margin-left: 5px;
+            display: inline-block;
+            margin-bottom: 5px;
+        }
+        body.dark-mode .event-module .tags span {
+            color: var(--text-color-dark);
+        }
+
+        .bookmark-btn {
+            background: none;
+            border: none;
+            font-size: 1.5em;
+            cursor: pointer;
+            color: #ccc;
+            float: left; /* For LTR context, float right. For RTL, float left */
+            margin-left: 10px;
+        }
+        .bookmark-btn.bookmarked {
+            color: var(--secondary-color);
+        }
+
+        .loader, .message {
+            text-align: center;
+            font-size: 1.2em;
+            padding: 30px;
+            color: var(--primary-color);
+        }
+
+        /* Timeline Styles */
+        #timeline-view {
+            overflow-x: auto;
+            padding: 20px;
+            background-color: var(--card-bg-light);
+            border-radius: 8px;
+        }
+        .timeline-container {
+            position: relative;
+            min-width: 2000px; /* Adjust as needed */
+            height: 200px; /* Adjust as needed */
+            padding: 20px 0;
+        }
+        .timeline-line {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: var(--secondary-color);
+            transform: translateY(-50%);
+        }
+        .timeline-event-marker {
+            position: absolute;
+            top: 50%;
+            width: 12px;
+            height: 12px;
+            background-color: var(--primary-color);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .timeline-event-marker:hover {
+            transform: translate(-50%, -50%) scale(1.5);
+        }
+        .timeline-event-marker .tooltip {
+            visibility: hidden;
+            width: 150px;
+            background-color: var(--text-color-light);
+            color: var(--background-color-light);
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px;
+            position: absolute;
+            z-index: 1;
+            bottom: 150%;
+            left: 50%;
+            margin-left: -75px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.8em;
+        }
+        body.dark-mode .timeline-event-marker .tooltip {
+             background-color: var(--text-color-dark);
+            color: var(--background-color-dark);
+        }
+        .timeline-event-marker:hover .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+        .period-label {
+            position: absolute;
+            top: 10px;
+            font-weight: bold;
+            font-size: 0.9em;
+            color: var(--primary-color);
+            width: max-content;
+        }
+
+
+        /* Map View (Very Basic SVG Placeholder) */
+        #map-view { text-align:center; padding: 20px; background-color: var(--card-bg-light); border-radius: 8px;}
+        #map-svg { border: 1px solid var(--border-color-light); background-color: #eef; }
+        .map-marker { cursor: pointer; }
+        .map-marker:hover { opacity: 0.7; }
+
+        /* Charts View (Simple DIV based bars) */
+        #charts-view { display: flex; flex-wrap: wrap; gap: 20px; }
+        .chart-container {
+            flex: 1;
+            min-width: 250px;
+            padding: 15px;
+            background-color: var(--card-bg-light);
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        .chart-container h4 { margin-top:0; color: var(--primary-color); }
+        .bar-chart .bar {
+            background-color: var(--secondary-color);
+            margin-bottom: 5px;
+            padding: 5px;
+            color: white;
+            font-size:0.8em;
+            text-align: left;
+            border-radius: 3px;
+            white-space: nowrap;
+        }
+        body.dark-mode .bar-chart .bar { color: var(--text-color-dark); }
+
+
+        /* Thematic Journeys (Placeholder) */
+        #journeys-view { padding: 20px; background-color: var(--card-bg-light); border-radius: 8px;}
+        .journey-button {
+            display: block;
+            margin-bottom: 10px;
+            padding: 10px;
+            background-color: var(--secondary-color);
+            color: var(--text-color-light);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-align: right;
+        }
+        body.dark-mode .journey-button { color: var(--text-color-dark); }
+
+        /* Glossary (Placeholder) */
+        #glossary-view { padding: 20px; background-color: var(--card-bg-light); border-radius: 8px; }
+        .glossary-item { margin-bottom: 10px; }
+        .glossary-item strong { color: var(--primary-color); }
+
+        /* Hidden by default views */
+        #timeline-view, #map-view, #charts-view, #journeys-view, #glossary-view { display: none; }
+
+        @media (max-width: 768px) {
+            header { flex-direction: column; align-items: flex-end; }
+            header h1 { font-size: 1.5em; margin-bottom:10px; }
+            .controls { flex-direction: column; }
+            .controls input[type="text"], .controls select { width: 100%; box-sizing: border-box; }
+            .event-module { padding: 15px; }
+            .event-module h3 { font-size: 1.3em; }
+        }
+#timeline-view {
+    overflow-x: auto; /* This might hide tooltips that go outside, but needed for scroll */
+    padding: 20px;
+    background-color: var(--card-bg-light);
+    border-radius: 8px;
+    position: relative; /* Add this to make z-index work within this container context */
+    z-index: 1; /* Establish a stacking context */
+}
+
+.timeline-container {
+    position: relative;
+    min-width: 2000px; 
+    height: 200px; 
+    padding: 20px 0;
+    /* z-index: 1; /* Potentially add if needed for specific child stacking */
+}
+
+.timeline-event-marker {
+    position: absolute;
+    top: 50%;
+    width: 12px;
+    height: 12px;
+    background-color: var(--primary-color);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+    transition: transform 0.2s;
+    z-index: 10; /* Ensure markers are above the line */
+}
+
+.timeline-event-marker .tooltip {
+    visibility: hidden;
+    width: 180px; /* Slightly wider for more text */
+    background-color: var(--text-color-light);
+    color: var(--background-color-light);
+    text-align: center;
+    border-radius: 6px;
+    padding: 8px; /* More padding */
+    position: absolute; /* Crucial for positioning */
+    z-index: 1000; /* High z-index to be on top of almost everything */
+    bottom: 150%; /* Initial position above marker */
+    left: 50%;
+    transform: translateX(-50%); /* Center horizontally */
+    opacity: 0;
+    transition: opacity 0.3s, visibility 0.3s; /* Smooth transition for visibility too */
+    pointer-events: none; /* So it doesn't interfere with marker clicks */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Add a subtle shadow */
+}
+
+body.dark-mode .timeline-event-marker .tooltip {
+    background-color: var(--text-color-dark);
+    color: var(--background-color-dark);
+}
+
+.timeline-event-marker:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+}
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>سیرت النبی ﷺ - جامع انفوگرافک تاریخ</h1>
+            <button id="themeToggle" class="theme-toggle">ڈارک موڈ</button>
+        </header>
+
+        <div class="controls">
+            <input type="text" id="searchInput" placeholder="واقعہ، تفصیل، شخصیت، ٹیگ تلاش کریں...">
+            <select id="filterPeriod">
+                <option value="">تمام ادوار</option>
+                <option value="قبل از نبوت">قبل از نبوت</option>
+                <option value="نبوی">مکی دور (نبوی)</option>
+                <option value="ہجری">مدنی دور (ہجری)</option>
+            </select>
+            <select id="filterTag">
+                <option value="">تمام ٹیگز</option>
+                <!-- Tags will be populated by JS -->
+            </select>
+            <select id="filterSignificance">
+                <option value="">تمام اہمیت</option>
+                <option value="5">اہم ترین (5)</option>
+                <option value="4">بہت اہم (4)</option>
+                <option value="3">اہم (3)</option>
+                <option value="2">کم اہم (2)</option>
+                <option value="1">معمولی (1)</option>
+            </select>
+            <div class="view-toggle">
+                 <button data-view="list-view" class="active">فہرست</button>
+                 <button data-view="timeline-view">ٹائم لائن</button>
+                 <button data-view="map-view">نقشہ</button>
+                 <button data-view="charts-view">چارٹس</button>
+                 <button data-view="journeys-view">سفرنامے</button>
+                 <button data-view="glossary-view">فرہنگ</button>
+            </div>
+        </div>
+        
+        <div id="list-view">
+            <div id="event-display-area" class="loader">ڈیٹا لوڈ ہو رہا ہے...</div>
+        </div>
+        <div id="timeline-view">
+            <p class="message">ٹائم لائن لوڈ ہو رہی ہے...</p>
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+                <div id="timeline-events-markers"></div>
+                <div id="timeline-period-labels"></div>
+            </div>
+        </div>
+        <div id="map-view">
+             <p class="message">نقشہ لوڈ ہو رہا ہے...</p>
+             <svg id="map-svg" width="100%" height="400px" viewBox="0 0 800 400">
+                <!-- Basic map background (e.g., a rectangle) -->
+                <rect width="100%" height="100%" fill="#ddeeff" />
+                <!-- Markers will be added by JS -->
+             </svg>
+        </div>
+        <div id="charts-view">
+            <p class="message">چارٹس لوڈ ہو رہے ہیں...</p>
+            <!-- Chart containers will be populated here -->
+        </div>
+        <div id="journeys-view">
+            <h4>موضوعاتی سفرنامے (نمونہ)</h4>
+            <button class="journey-button" data-journey="hijrat">ہجرت کا سفر</button>
+            <button class="journey-button" data-journey="treaties">اہم معاہدے</button>
+            <div id="journey-events-area"></div>
+        </div>
+        <div id="glossary-view">
+            <h4>اہم اصطلاحات (نمونہ)</h4>
+            <div class="glossary-item"><strong>غزوہ:</strong> وہ جنگ جس میں نبی کریم ﷺ نے خود شرکت فرمائی۔</div>
+            <div class="glossary-item"><strong>سریہ:</strong> وہ جنگی مہم جس میں نبی کریم ﷺ نے خود شرکت نہیں فرمائی بلکہ کسی صحابی کو امیر بنا کر بھیجا۔</div>
+        </div>
+
+    </div>
+
+    <script>
+        const DB_NAME = 'SeerahInfographicDB_v1';
+        const STORE_NAME = 'enriched_events';
+        const DB_VERSION = 1;
+        let db;
+        let allEvents = [];
+        let uniqueTags = new Set();
+        let bookmarkedEventIds = new Set(JSON.parse(localStorage.getItem('bookmarkedEvents')) || []);
+
+        const historyCsvPath = 'history.csv'; // CREATE THIS FILE LOCALLY
+        const detailsCsvPath = 'details.csv'; // CREATE THIS FILE LOCALLY
+        const historyUpdateCsvPath = 'historyupdate.csv'; // CREATE THIS FILE LOCALLY (Optional)
+
+        // --- DOM Elements ---
+        const eventDisplayArea = document.getElementById('event-display-area');
+        const searchInput = document.getElementById('searchInput');
+        const filterPeriod = document.getElementById('filterPeriod');
+        const filterTag = document.getElementById('filterTag');
+        const filterSignificance = document.getElementById('filterSignificance');
+        const themeToggle = document.getElementById('themeToggle');
+        const viewToggleButtons = document.querySelectorAll('.view-toggle button');
+        const views = {
+            'list-view': document.getElementById('list-view'),
+            'timeline-view': document.getElementById('timeline-view'),
+            'map-view': document.getElementById('map-view'),
+            'charts-view': document.getElementById('charts-view'),
+            'journeys-view': document.getElementById('journeys-view'),
+            'glossary-view': document.getElementById('glossary-view'),
+        };
+
+
+        // --- IndexedDB Functions ---
+        function openDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, DB_VERSION);
+                request.onupgradeneeded = event => {
+                    db = event.target.result;
+                    if (!db.objectStoreNames.contains(STORE_NAME)) {
+                        db.createObjectStore(STORE_NAME, { keyPath: 'شمار' });
+                    }
+                };
+                request.onsuccess = event => {
+                    db = event.target.result;
+                    resolve(db);
+                };
+                request.onerror = event => reject('IndexedDB error: ' + event.target.errorCode);
+            });
+        }
+
+        function addDataToDB(data, storeName = STORE_NAME) {
+            return new Promise((resolve, reject) => {
+                if (!db) { reject("DB not open"); return; }
+                const transaction = db.transaction(storeName, 'readwrite');
+                const store = transaction.objectStore(storeName);
+                let completedCount = 0;
+                if (data.length === 0) {
+                    resolve(); // Resolve immediately if there's no data to add
+                    return;
+                }
+                data.forEach(item => {
+                    const request = store.put(item);
+                    request.onsuccess = () => {
+                        completedCount++;
+                        if (completedCount === data.length) resolve();
+                    };
+                    request.onerror = (event) => {
+                        console.error('Error adding item to DB:', item, event.target.error);
+                        completedCount++; 
+                        if (completedCount === data.length) resolve(); 
+                    };
+                });
+                transaction.oncomplete = () => resolve(); // This might be redundant if all puts resolve
+                transaction.onerror = event => reject('Transaction error: ' + event.target.error);
+            });
+        }
+        
+        function getAllDataFromDB(storeName = STORE_NAME) {
+            return new Promise((resolve, reject) => {
+                if (!db) { reject("DB not open"); return; }
+                const transaction = db.transaction(storeName, 'readonly');
+                const store = transaction.objectStore(storeName);
+                const request = store.getAll();
+                request.onsuccess = event => resolve(event.target.result);
+                request.onerror = event => reject('Error fetching data: ' + event.target.error);
+            });
+        }
+
+        async function isDBEmpty(storeName = STORE_NAME) {
+            const data = await getAllDataFromDB(storeName);
+            return data.length === 0;
+        }
+
+        // --- CSV Parsing ---
+        function parseCSV(csvText) {
+            if (!csvText || csvText.trim() === '') return [];
+            const lines = csvText.trim().split('\n');
+            if (lines.length < 2) return []; 
+            const headers = lines[0].split(',').map(h => h.trim());
+            return lines.slice(1).map(line => {
+                const values = line.split(',').map(v => v.trim());
+                const obj = {};
+                headers.forEach((header, index) => {
+                    obj[header] = values[index] || '';
+                });
+                return obj;
+            });
+        }
+
+        async function fetchAndParseCSV(filePath) {
+            try {
+                const response = await fetch(filePath);
+                if (!response.ok) {
+                    if (response.status === 404 && (filePath.includes('update') || filePath.includes('details'))) { // Be lenient with details too
+                        console.log(`${filePath} not found, skipping.`);
+                        return []; 
+                    }
+                    throw new Error(`HTTP error ${response.status} for ${filePath}`);
+                }
+                const csvText = await response.text();
+                return parseCSV(csvText);
+            } catch (error) {
+                console.error(`Failed to fetch or parse ${filePath}:`, error);
+                if (filePath.includes('update') || filePath.includes('details')) return []; 
+                eventDisplayArea.innerHTML = `<div class="message">اہم ڈیٹا فائل (${filePath}) لوڈ کرنے میں ناکامی۔ براہ کرم فائلیں درست جگہ پر رکھیں اور صفحہ ریفریش کریں۔</div>`;
+                throw error; 
+            }
+        }
+
+        // --- Data Loading & Processing ---
+        async function loadInitialData() {
+            if (await isDBEmpty()) {
+                eventDisplayArea.innerHTML = '<div class="loader">ابتدائی ڈیٹا بیس میں لوڈ کیا جا رہا ہے...</div>';
+                try {
+                    const historyData = await fetchAndParseCSV(historyCsvPath);
+                    if (historyData.length === 0 && historyCsvPath === 'history.csv') { // Critical file check
+                        eventDisplayArea.innerHTML = `<div class="message">${historyCsvPath} خالی ہے یا لوڈ نہیں ہو سکی۔ ایپ کام نہیں کر سکتی۔</div>`;
+                        return; // Stop if primary history is empty
+                    }
+                    const detailsDataArray = await fetchAndParseCSV(detailsCsvPath);
+                    
+                    const detailsMap = new Map();
+                    detailsDataArray.forEach(detail => detailsMap.set(detail['شمار'], detail));
+
+                    const enrichedData = historyData.map(event => {
+                        const details = detailsMap.get(event['شمار']) || {};
+                        return { ...event, ...details };
+                    });
+
+                    await addDataToDB(enrichedData);
+                    console.log('Initial data loaded into IndexedDB');
+                } catch (error) {
+                    console.error('Error during initial data load:', error);
+                    eventDisplayArea.innerHTML = `<div class="message">ابتدائی ڈیٹا لوڈنگ میں خرابی۔ تفصیلات کے لیے کنسول دیکھیں۔</div>`;
+                    return; 
+                }
+            }
+        }
+
+        async function loadUpdateData() {
+             console.log('Checking for updates...'); // Changed loader message timing
+            try {
+                const updateData = await fetchAndParseCSV(historyUpdateCsvPath);
+                if (updateData.length > 0) {
+                    await addDataToDB(updateData);
+                    console.log(`${updateData.length} events from update file added/updated.`);
+                } else {
+                    console.log('No new updates found or update file empty.');
+                }
+            } catch (error) {
+                 console.error('Error loading update data:', error);
+            }
+        }
+        
+        // --- UI Rendering & Infographic Generation ---
+        function renderEventModule(event) {
+            const module = document.createElement('div');
+            module.className = 'event-module';
+            module.dataset.id = event['شمار'];
+
+            const bookmarkState = bookmarkedEventIds.has(event['شمار']) ? 'bookmarked' : '';
+            const bookmarkIcon = bookmarkedEventIds.has(event['شمار']) ? '★' : '☆';
+
+            let tagsHtml = '';
+            if (event['ٹیگز']) {
+                const tags = event['ٹیگز'].split('|').map(t => t.trim()).filter(t => t); // Filter out empty tags
+                tagsHtml = tags.map(tag => `<span>${tag}</span>`).join('');
+                tags.forEach(tag => uniqueTags.add(tag));
+            }
+            
+            let keyPointsHtml = '';
+            if(event['کلیدی_نکات_انفوگرافک']) {
+                const points = event['کلیدی_نکات_انفوگرافک'].split('|').map(p => p.trim()).filter(p => p); // Filter out empty points
+                keyPointsHtml = `<ul>${points.map(p => `<li>${p}</li>`).join('')}</ul>`;
+            }
+
+            // ***** CORRECTED SIGNIFICANCE HTML *****
+            let significanceHtml = '';
+            if (event['اہمیت_اسکور']) {
+                const scoreVal = event['اہمیت_اسکور'].trim(); // Trim whitespace
+                if (scoreVal !== '') { // Check if it's not just whitespace
+                    const score = parseInt(scoreVal);
+                    if (!isNaN(score)) {
+                        const filledStars = Math.max(0, Math.min(5, score)); // Clamp score between 0 and 5
+                        const emptyStars = Math.max(0, 5 - filledStars);
+                        significanceHtml = ` | <strong>اہمیت:</strong> ${'★'.repeat(filledStars)}${'☆'.repeat(emptyStars)}`;
+                    } else {
+                        console.warn(`Invalid 'اہمیت_اسکور' for event شمار ${event['شمار']}: ${event['اہمیت_اسکور']}`);
+                    }
+                }
+            }
+            // ***** END OF CORRECTION *****
+
+
+            module.innerHTML = `
+                <button class="bookmark-btn ${bookmarkState}" data-id="${event['شمار']}">${bookmarkIcon}</button>
+                <h3>${event['واقعہ (اردو)'] || 'N/A'}</h3>
+                <div class="meta">
+                    <span><strong>سال:</strong> ${event['عیسوی سال (تقریباً)'] || 'N/A'}</span> |
+                    <span><strong>دور:</strong> ${event['ہجری سال / دور'] || 'N/A'}</span>
+                    ${significanceHtml}
+                </div>
+                <p>${event['مختصر تفصیل (اردو)'] || ''}</p>
+                <div class="details-section">
+                    ${event['تفصیلی وضاحت'] ? `<p><strong>تفصیلی وضاحت:</strong> ${event['تفصیلی وضاحت']}</p>` : ''}
+                    ${event['متعلقہ شخصیات'] ? `<p><strong>متعلقہ شخصیات:</strong> ${event['متعلقہ شخصیات']}</p>` : ''}
+                    ${event['مقام'] ? `<p><strong>مقام:</strong> ${event['مقام']}</p>` : ''}
+                    ${keyPointsHtml ? `<div class="key-points"><strong>کلیدی نکات:</strong>${keyPointsHtml}</div>` : ''}
+                    ${tagsHtml ? `<div class="tags">${tagsHtml}</div>` : ''}
+                </div>
+            `;
+            module.querySelector('.bookmark-btn').addEventListener('click', toggleBookmark);
+            return module;
+        }
+
+        function displayEvents(eventsToRender) {
+            eventDisplayArea.innerHTML = ''; 
+            if (eventsToRender.length === 0) {
+                eventDisplayArea.innerHTML = '<div class="message">کوئی واقعات نہیں ملے۔</div>';
+                return;
+            }
+            const fragment = document.createDocumentFragment();
+            eventsToRender.forEach(event => {
+                fragment.appendChild(renderEventModule(event));
+            });
+            eventDisplayArea.appendChild(fragment);
+            populateTagFilter();
+        }
+
+        function populateTagFilter() {
+            const currentSelectedTag = filterTag.value;
+            filterTag.innerHTML = '<option value="">تمام ٹیگز</option>'; 
+            uniqueTags.forEach(tag => {
+                if(tag && tag.trim() !== '') { // Ensure tag is not empty
+                    const option = document.createElement('option');
+                    option.value = tag;
+                    option.textContent = tag;
+                    filterTag.appendChild(option);
+                }
+            });
+            if (currentSelectedTag && uniqueTags.has(currentSelectedTag)) {
+                filterTag.value = currentSelectedTag;
+            }
+        }
+
+        // --- Search & Filtering Logic ---
+        function applyFiltersAndSearch() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            const selectedPeriod = filterPeriod.value;
+            const selectedTag = filterTag.value;
+            const selectedSignificance = filterSignificance.value;
+
+            const filteredEvents = allEvents.filter(event => {
+                const matchesSearch = !searchTerm ||
+                    (event['واقعہ (اردو)'] && event['واقعہ (اردو)'].toLowerCase().includes(searchTerm)) ||
+                    (event['مختصر تفصیل (اردو)'] && event['مختصر تفصیل (اردو)'].toLowerCase().includes(searchTerm)) ||
+                    (event['تفصیلی وضاحت'] && event['تفصیلی وضاحت'].toLowerCase().includes(searchTerm)) ||
+                    (event['متعلقہ شخصیات'] && event['متعلقہ شخصیات'].toLowerCase().includes(searchTerm)) ||
+                    (event['ٹیگز'] && event['ٹیگز'].toLowerCase().includes(searchTerm));
+
+                const matchesPeriod = !selectedPeriod || event['ہجری سال / دور'] === selectedPeriod;
+                const matchesTag = !selectedTag || (event['ٹیگز'] && event['ٹیگز'].split('|').map(t => t.trim()).includes(selectedTag));
+                const matchesSignificance = !selectedSignificance || event['اہمیت_اسکور'] == selectedSignificance; 
+
+                return matchesSearch && matchesPeriod && matchesTag && matchesSignificance;
+            });
+            displayCurrentView(filteredEvents);
+        }
+
+        // --- Theme Management ---
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            themeToggle.textContent = document.body.classList.contains('dark-mode') ? 'لائٹ موڈ' : 'ڈارک موڈ';
+            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+        }
+
+        function loadThemePreference() {
+            const preferredTheme = localStorage.getItem('theme');
+            if (preferredTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                themeToggle.textContent = 'لائٹ موڈ';
+            } else {
+                 themeToggle.textContent = 'ڈارک موڈ';
+            }
+        }
+        
+        // --- Bookmarking ---
+        function toggleBookmark(e) {
+            const eventId = e.target.dataset.id;
+            if (bookmarkedEventIds.has(eventId)) {
+                bookmarkedEventIds.delete(eventId);
+                e.target.classList.remove('bookmarked');
+                e.target.textContent = '☆';
+            } else {
+                bookmarkedEventIds.add(eventId);
+                e.target.classList.add('bookmarked');
+                e.target.textContent = '★';
+            }
+            localStorage.setItem('bookmarkedEvents', JSON.stringify(Array.from(bookmarkedEventIds)));
+        }
+
+        // --- View Switching ---
+        let currentViewId = 'list-view';
+        function switchView(viewId, dataToDisplay = allEvents) {
+            Object.values(views).forEach(view => view.style.display = 'none');
+            if(views[viewId]) {
+                 if(viewId === 'list-view') views[viewId].style.display = 'grid'; // Special case for grid
+                 else views[viewId].style.display = 'block';
+
+
+                viewToggleButtons.forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.view === viewId);
+                });
+                currentViewId = viewId;
+                displayCurrentView(dataToDisplay); 
+            } else {
+                console.error("View not found:", viewId);
+                views['list-view'].style.display = 'grid'; 
+            }
+        }
+
+        function displayCurrentView(data) {
+             if (currentViewId === 'list-view') displayEvents(data);
+             else if (currentViewId === 'timeline-view') renderTimeline(data);
+             else if (currentViewId === 'map-view') renderMap(data);
+             else if (currentViewId === 'charts-view') renderCharts(data);
+             else if (currentViewId === 'journeys-view') {
+                document.getElementById('journey-events-area').innerHTML = '<p>ایک سفر نامہ منتخب کریں۔</p>'; // Reset journey display
+             }
+             else if (currentViewId === 'glossary-view') {} 
+        }
+
+        // --- INFOGRAPHIC VISUALIZATIONS (Basic Implementations) ---
+        function renderTimeline(events) {
+            const timelineMarkersContainer = document.getElementById('timeline-events-markers');
+            const periodLabelsContainer = document.getElementById('timeline-period-labels');
+            const timelineMessage = views['timeline-view'].querySelector('.message');
+            timelineMarkersContainer.innerHTML = '';
+            periodLabelsContainer.innerHTML = '';
+            timelineMessage.style.display = 'none';
+
+            if (!events || events.length === 0) {
+                timelineMessage.style.display = 'block';
+                timelineMessage.textContent = 'ٹائم لائن کے لیے کوئی واقعات نہیں ہیں۔';
+                return;
+            }
+
+            const years = events.map(e => {
+                const yearMatch = e['عیسوی سال (تقریباً)'] ? e['عیسوی سال (تقریباً)'].match(/\d{3,4}/) : null;
+                return yearMatch ? parseInt(yearMatch[0]) : NaN;
+            }).filter(y => !isNaN(y));
+            
+            if(years.length === 0) {
+                timelineMessage.style.display = 'block';
+                timelineMessage.textContent = 'ٹائم لائن کے لیے کوئی قابلِ سال واقعات نہیں ہیں۔';
+                return;
+            }
+            const minYear = Math.min(...years);
+            const maxYear = Math.max(...years);
+            const yearSpan = maxYear - minYear || 1; 
+            
+            const timelineContainerWidth = document.querySelector('.timeline-container').offsetWidth;
+
+            const sortedEvents = [...events].sort((a,b) => {
+                const yearAMatch = a['عیسوی سال (تقریباً)'] ? a['عیسوی سال (تقریباً)'].match(/\d{3,4}/) : null;
+                const yearBMatch = b['عیسوی سال (تقریباً)'] ? b['عیسوی سال (تقریباً)'].match(/\d{3,4}/) : null;
+                const yearA = yearAMatch ? parseInt(yearAMatch[0]) : Infinity;
+                const yearB = yearBMatch ? parseInt(yearBMatch[0]) : Infinity;
+                return yearA - yearB;
+            });
+
+            sortedEvents.forEach(event => {
+                const yearMatch = event['عیسوی سال (تقریباً)'] ? event['عیسوی سال (تقریباً)'].match(/\d{3,4}/) : null;
+                if (!yearMatch) return;
+                const year = parseInt(yearMatch[0]);
+                
+                const position = yearSpan === 0 ? 50 : ((year - minYear) / yearSpan) * 100; 
+                
+                const marker = document.createElement('div');
+                marker.className = 'timeline-event-marker';
+                marker.style.left = `${Math.max(0, Math.min(100, position))}%`; // Clamp position
+                marker.dataset.eventId = event['شمار'];
+                marker.innerHTML = `<span class="tooltip">${event['واقعہ (اردو)']} (${event['عیسوی سال (تقریباً)']})</span>`;
+                
+                marker.addEventListener('click', () => {
+                    const eventModule = document.querySelector(`.event-module[data-id="${event['شمار']}"]`);
+                    if (eventModule) {
+                        switchView('list-view', allEvents); // Pass allEvents to ensure filters are reset for this direct navigation
+                        setTimeout(() => eventModule.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100); // Slight delay
+                    }
+                });
+                timelineMarkersContainer.appendChild(marker);
+                marker.addEventListener('mouseenter', (e) => {
+    const tooltip = e.target.querySelector('.tooltip');
+    if (!tooltip) return;
+
+    // Make it visible first to get its dimensions, then check bounds
+    tooltip.style.visibility = 'visible';
+    tooltip.style.opacity = '1';
+
+    const timelineViewRect = views['timeline-view'].getBoundingClientRect();
+    const tooltipRect = tooltip.getBoundingClientRect();
+
+    // Check horizontal overflow
+    if (tooltipRect.right > timelineViewRect.right - 10) { // 10px buffer
+        tooltip.style.left = 'auto';
+        tooltip.style.right = '5%'; // Position from the right edge of the marker
+        tooltip.style.transform = 'translateX(0)'; // Reset transform if positioning from right
+    } else if (tooltipRect.left < timelineViewRect.left + 10) {
+        tooltip.style.left = '5%'; // Position from the left edge of the marker
+        tooltip.style.transform = 'translateX(0)';
+    } else {
+        // Reset to default centered position if within bounds
+        tooltip.style.left = '50%';
+        tooltip.style.right = 'auto';
+        tooltip.style.transform = 'translateX(-50%)';
+    }
+
+    // Optional: Check vertical overflow (less common for bottom-positioned tooltips)
+     if (tooltipRect.top < timelineViewRect.top) {
+        tooltip.style.bottom = 'auto';
+        tooltip.style.top = '150%'; // Position below marker
+     } else {
+        tooltip.style.bottom = '150%';
+        tooltip.style.top = 'auto';
+     }
+});
+marker.addEventListener('mouseleave', (e) => {
+    const tooltip = e.target.querySelector('.tooltip');
+    if (tooltip) {
+        tooltip.style.visibility = 'hidden';
+        tooltip.style.opacity = '0';
+        // Reset any dynamic positioning styles if needed, or rely on CSS hover
+        tooltip.style.left = '50%'; // Reset to default
+        tooltip.style.right = 'auto';
+        tooltip.style.transform = 'translateX(-50%)';
+    }
+});
+            });
+
+            const periods = { "قبل از نبوت": minYear, "نبوی": 610, "ہجری": 622, "وصال": maxYear };
+            for (const periodName in periods) {
+                const periodYear = periods[periodName];
+                if (periodYear >= minYear && periodYear <= maxYear) {
+                    const position = yearSpan === 0 ? (periodName === "قبل از نبوت" ? 0 : 100) : ((periodYear - minYear) / yearSpan) * 100;
+                    const label = document.createElement('div');
+                    label.className = 'period-label';
+                    label.textContent = periodName;
+                    label.style.right = `${Math.max(0, Math.min(100, 100 - position))}%`; 
+                    periodLabelsContainer.appendChild(label);
+                }
+            }
+            document.querySelector("#timeline-view").scrollLeft = -999999999999999999999999999999; // Reset scroll position
+        }
+
+        function renderMap(events) {
+            const mapSvg = document.getElementById('map-svg');
+            const mapMessage = views['map-view'].querySelector('.message');
+            mapSvg.innerHTML = '<rect width="100%" height="100%" fill="#ddeeff" />'; 
+            mapMessage.style.display = 'none';
+
+            const eventsWithCoords = events.filter(e => e['نقشہ_کوآرڈینیٹس'] && e['نقشہ_کوآرڈینیٹس'].includes(','));
+            if (eventsWithCoords.length === 0) {
+                 mapMessage.style.display = 'block';
+                 mapMessage.textContent = 'نقشے کے لیے کوئی مقامات دستیاب نہیں ہیں۔';
+                return;
+            }
+            const latMin=15, latMax=35, longMin=30, longMax=60; 
+            const svgWidth = mapSvg.clientWidth || 800;
+            const svgHeight = mapSvg.clientHeight || 400;
+
+
+            eventsWithCoords.forEach(event => {
+                const coords = event['نقشہ_کوآرڈینیٹس'].split(',');
+                if (coords.length !== 2) return;
+
+                const lat = parseFloat(coords[0].trim());
+                const lon = parseFloat(coords[1].trim());
+
+                if (isNaN(lat) || isNaN(lon)) return;
+
+                const x = ((lon - longMin) / (longMax - longMin)) * svgWidth;
+                const y = ((latMax - lat) / (latMax - latMin)) * svgHeight; 
+
+                if (x >= 0 && x <= svgWidth && y >= 0 && y <= svgHeight) {
+                    const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+                    circle.setAttribute("cx", x);
+                    circle.setAttribute("cy", y);
+                    circle.setAttribute("r", "6"); // Slightly larger
+                    circle.setAttribute("fill", "var(--primary-color)");
+                    circle.setAttribute("stroke", "var(--card-bg-light)");
+                    circle.setAttribute("stroke-width", "1");
+                    circle.classList.add("map-marker");
+                    
+                    const title = document.createElementNS("http://www.w3.org/2000/svg", "title");
+                    title.textContent = `${event['واقعہ (اردو)']} (${event['مقام'] || 'نامعلوم مقام'})`;
+                    circle.appendChild(title);
+
+                    circle.addEventListener('click', () => {
+                         const eventModule = document.querySelector(`.event-module[data-id="${event['شمار']}"]`);
+                        if (eventModule) {
+                            switchView('list-view', allEvents);
+                            setTimeout(() => eventModule.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+                        }
+                    });
+                    mapSvg.appendChild(circle);
+                }
+            });
+        }
+
+        function renderCharts(events) {
+            const chartsViewContainer = document.getElementById('charts-view');
+            const chartMessage = views['charts-view'].querySelector('.message');
+            chartsViewContainer.innerHTML = ''; 
+            chartMessage.style.display = 'none';
+
+            if (!events || events.length === 0) {
+                chartMessage.style.display = 'block';
+                chartMessage.textContent = 'چارٹس کے لیے کوئی ڈیٹا نہیں۔';
+                return;
+            }
+
+            const eventsByPeriod = events.reduce((acc, event) => {
+                const period = event['ہجری سال / دور'] || 'نامعلوم';
+                acc[period] = (acc[period] || 0) + 1;
+                return acc;
+            }, {});
+            if(Object.keys(eventsByPeriod).length > 0) chartsViewContainer.appendChild(createBarChart("واقعات بلحاظ دور", eventsByPeriod));
+
+            const eventsBySignificance = events.reduce((acc, event) => {
+                const sigScore = event['اہمیت_اسکور'] ? `اہمیت ${event['اہمیت_اسکور']}` : 'نامعلوم اہمیت';
+                acc[sigScore] = (acc[sigScore] || 0) + 1;
+                return acc;
+            }, {});
+             if(Object.keys(eventsBySignificance).length > 0) chartsViewContainer.appendChild(createBarChart("واقعات بلحاظ اہمیت", eventsBySignificance));
+            
+            const eventsByTag = {};
+            events.forEach(event => {
+                if (event['ٹیگز']) {
+                    event['ٹیگز'].split('|').map(t=>t.trim()).filter(t=>t).forEach(tag => {
+                        eventsByTag[tag] = (eventsByTag[tag] || 0) + 1;
+                    });
+                }
+            });
+            const sortedTags = Object.entries(eventsByTag).sort(([,a],[,b]) => b-a).slice(0,7); // Top 7 tags
+            const topTagsData = Object.fromEntries(sortedTags);
+            if(Object.keys(topTagsData).length > 0) {
+                chartsViewContainer.appendChild(createBarChart("واقعات بلحاظ ٹیگز (ٹاپ 7)", topTagsData));
+            }
+        }
+        
+        function createBarChart(title, data) {
+            const chartDiv = document.createElement('div');
+            chartDiv.className = 'chart-container';
+            let chartHtml = `<h4>${title}</h4><div class="bar-chart">`;
+            const values = Object.values(data).filter(v => typeof v === 'number');
+            const maxValue = values.length > 0 ? Math.max(...values) : 0;
+
+            for (const [key, value] of Object.entries(data)) {
+                if (typeof value !== 'number') continue; // Skip non-numeric values
+                const percentage = maxValue > 0 ? (value / maxValue) * 100 : 0;
+                chartHtml += `<div class="bar" style="width: ${Math.max(5, percentage)}%;" title="${key}: ${value}">${key}: ${value}</div>`; // Min width 5%
+            }
+            chartHtml += `</div>`;
+            chartDiv.innerHTML = chartHtml;
+            return chartDiv;
+        }
+
+        // --- Thematic Journeys (Basic) ---
+        const journeyButtons = document.querySelectorAll('.journey-button');
+        journeyButtons.forEach(button => {
+            button.addEventListener('click', (e) => {
+                const journeyKey = e.target.dataset.journey;
+                let journeyEvents = [];
+                if (journeyKey === 'hijrat') {
+                    journeyEvents = allEvents.filter(event => 
+                        (event['واقعہ (اردو)'] && event['واقعہ (اردو)'].toLowerCase().includes('ہجرت')) ||
+                        (event['ٹیگز'] && event['ٹیگز'].toLowerCase().includes('ہجرت'))
+                    ).sort((a,b) => (parseInt(a['شمار']) || 0) - (parseInt(b['شمار']) || 0) ); // Sort by Shumar
+                } else if (journeyKey === 'treaties') {
+                     journeyEvents = allEvents.filter(event => 
+                        (event['واقعہ (اردو)'] && (event['واقعہ (اردو)'].toLowerCase().includes('معاہدہ') || event['واقعہ (اردو)'].toLowerCase().includes('صلح'))) ||
+                        (event['ٹیگز'] && event['ٹیگز'].toLowerCase().includes('معاہدہ'))
+                    ).sort((a,b) => (parseInt(a['شمار']) || 0) - (parseInt(b['شمار']) || 0) );
+                }
+                const journeyArea = document.getElementById('journey-events-area');
+                journeyArea.innerHTML = '';
+                if (journeyEvents.length > 0) {
+                    journeyEvents.forEach(ev => journeyArea.appendChild(renderEventModule(ev)));
+                } else {
+                    journeyArea.innerHTML = '<p>اس سفر نامے کے لیے کوئی واقعات نہیں ملے۔</p>';
+                }
+            });
+        });
+
+
+        // --- Initialization ---
+        document.addEventListener('DOMContentLoaded', async () => {
+            eventDisplayArea.innerHTML = '<div class="loader">ایپلیکیشن شروع ہو رہی ہے...</div>';
+            loadThemePreference();
+            try {
+                await openDB();
+                await loadInitialData(); 
+                await loadUpdateData(); 
+
+                allEvents = await getAllDataFromDB();
+                if(allEvents.length === 0) {
+                     eventDisplayArea.innerHTML = '<div class="message">ڈیٹا بیس میں کوئی واقعات نہیں ملے۔ براہ کرم CSV فائلیں چیک کریں۔</div>';
+                     return;
+                }
+
+                allEvents.sort((a,b) => { 
+                    const yearAMatch = a['عیسوی سال (تقریباً)'] ? a['عیسوی سال (تقریباً)'].match(/\d{3,4}/) : null;
+                    const yearBMatch = b['عیسوی سال (تقریباً)'] ? b['عیسوی سال (تقریباً)'].match(/\d{3,4}/) : null;
+                    const yearA = yearAMatch ? parseInt(yearAMatch[0]) : Infinity; // Events without year go last
+                    const yearB = yearBMatch ? parseInt(yearBMatch[0]) : Infinity;
+                    if(yearA !== yearB) return yearA - yearB;
+                    const shumarA = parseInt(a['شمار']) || Infinity;
+                    const shumarB = parseInt(b['شمار']) || Infinity;
+                    return shumarA - shumarB;
+                });
+
+                allEvents.forEach(event => {
+                    if (event['ٹیگز']) {
+                        event['ٹیگز'].split('|').map(t => t.trim()).filter(t => t).forEach(tag => uniqueTags.add(tag));
+                    }
+                });
+                populateTagFilter(); 
+                
+                switchView('list-view', allEvents); 
+
+            } catch (error) {
+                console.error('Initialization failed:', error);
+                eventDisplayArea.innerHTML = `<div class="message">ایپلیکیشن شروع کرنے میں ناکامی: ${error.message} تفصیلات کے لیے کنسول چیک کریں۔</div>`;
+            }
+
+            searchInput.addEventListener('input', () => debounce(applyFiltersAndSearch, 300)());
+            filterPeriod.addEventListener('change', applyFiltersAndSearch);
+            filterTag.addEventListener('change', applyFiltersAndSearch);
+            filterSignificance.addEventListener('change', applyFiltersAndSearch);
+            themeToggle.addEventListener('click', toggleTheme);
+            viewToggleButtons.forEach(button => {
+                button.addEventListener('click', (e) => switchView(e.target.dataset.view, allEvents));
+            });
+        });
+
+        // Debounce utility
+        let debounceTimer;
+        function debounce(func, delay) {
+            return function(...args) {
+                clearTimeout(debounceTimer);
+                debounceTimer = setTimeout(() => func.apply(this, args), delay);
+            };
+        }
+document.querySelector("#timeline-view").scrollLeft = -999999999990000
+    </script>
+</body>
+</html>

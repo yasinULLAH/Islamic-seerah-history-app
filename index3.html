@@ -1,0 +1,1480 @@
+
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سیرت النبی ﷺ - انفوگرافک تاریخ</title>
+    <meta name="description" content="سیرت النبی ﷺ کے تاریخی واقعات کا انفوگرافک انداز میں پیشکش">
+    <meta name="author" content="Yasin Ullah (Pakistan)">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400..700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --background-color: #f0f2f5;
+            --text-color: #333;
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --card-background: #fff;
+            --border-color: #ddd;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --timeline-color: #007bff;
+            --infographic-highlight: #28a745;
+            --infographic-secondary: #ffc107;
+        }
+
+        .dark-mode {
+            --background-color: #1e1e1e;
+            --text-color: #e0e0e0;
+            --primary-color: #00aaff;
+            --secondary-color: #adb5bd;
+            --card-background: #2b2b2b;
+            --border-color: #444;
+            --shadow-color: rgba(0, 0, 0, 0.5);
+            --timeline-color: #00aaff;
+            --infographic-highlight: #20c997;
+            --infographic-secondary: #ffda6a;
+        }
+
+        body {
+            font-family: 'Noto Nastaliq Urdu', calibri;
+            direction: rtl;
+            text-align: right;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.8; /* Improved readability for Urdu */
+            transition: background-color 0.3s, color 0.3s;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+
+        header {
+            background-color: var(--card-background);
+            color: var(--text-color);
+            padding: 15px 0;
+            box-shadow: var(--shadow-color) 0 2px 4px;
+            margin-bottom: 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+            color: var(--primary-color);
+        }
+
+        header p {
+            margin: 5px 0 0;
+            font-size: 0.9em;
+            color: var(--secondary-color);
+        }
+
+        .controls {
+            background-color: var(--card-background);
+            padding: 15px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: var(--shadow-color) 0 2px 4px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            align-items: center;
+        }
+
+        .controls label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .controls input[type="text"],
+        .controls select,
+        .controls button, #dark-mode-toggle {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            box-sizing: border-box; /* Include padding in width */
+            font-family: 'Noto Nastaliq Urdu', calibri;
+            background-color: var(--background-color);
+            color: var(--text-color);
+        }
+button#dark-mode-toggle {
+    width: 100px;
+}
+        .controls button, #dark-mode-toggle{
+            background-color: var(--primary-color);
+            color: white;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .controls button:hover {
+            background-color: darken(var(--primary-color), 10%); /* Needs SASS or manual color calc */
+            filter: brightness(90%); /* Simple alternative */
+        }
+
+        .mode-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+
+        .mode-toggle button {
+            width: auto;
+            padding: 5px 10px;
+            font-size: 0.9em;
+            background-color: var(--secondary-color);
+        }
+        .mode-toggle button:hover {
+             filter: brightness(90%);
+        }
+
+
+        .infographic-section {
+            background-color: var(--card-background);
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: var(--shadow-color) 0 2px 4px;
+        }
+
+        .infographic-section h2 {
+            margin-top: 0;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        /* Timeline Visualization */
+        .timeline-container {
+            overflow-x: auto;
+            padding-bottom: 15px; /* Space for scrollbar */
+        }
+
+        .timeline {
+            display: flex;
+            position: relative;
+            padding: 20px 0;
+            min-width: fit-content; /* Ensure horizontal scroll */
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            right: 0; /* RTL */
+            left: 0;
+            border-top: 2px dashed var(--timeline-color);
+            transform: translateY(-50%);
+        }
+
+        .timeline-event {
+            position: relative;
+            flex: 1;
+            min-width: 150px; /* Minimum width for each event block */
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease, background-color 0.3s ease;
+            border-radius: 5px;
+            margin: 0 5px;
+            z-index: 1; /* Above the line */
+        }
+
+        .timeline-event:hover {
+            transform: translateY(-5px);
+            background-color: rgba(var(--primary-color-rgb, 0, 123, 255), 0.1); /* Use RGB for transparency */
+        }
+
+        .timeline-event .year {
+            font-weight: bold;
+            color: var(--infographic-highlight);
+            font-size: 0.9em;
+            margin-bottom: 5px;
+        }
+
+        .timeline-event .title {
+            font-size: 1em;
+            color: var(--text-color);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .timeline-event::after {
+            content: '';
+            position: absolute;
+            top: calc(50% - 5px); /* Position marker on the line */
+            right: calc(50% - 5px); /* RTL */
+            width: 10px;
+            height: 10px;
+            background-color: var(--timeline-color);
+            border-radius: 50%;
+            z-index: 2;
+        }
+
+
+        /* Map Visualization (Placeholder/Visual) */
+        .map-visual {
+            position: relative;
+            width: 100%;
+            height: 400px; /* Or aspect-ratio */
+            background-image: url('Arabian_Peninsula_Map.svg'); /* Example static map image */
+            background-size: cover;
+            background-position: center;
+            border-radius: 8px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+body > div.container > div:nth-child(4), body > div.container > div:nth-child(5){
+
+    display: none;
+}
+        .map-location-marker {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: red; /* Example marker color */
+            border-radius: 50%;
+            border: 2px solid white;
+            cursor: pointer;
+            transform: translate(-50%, -50%); /* Center marker on coords */
+            z-index: 10;
+        }
+
+        .map-location-marker:hover {
+            transform: translate(-50%, -50%) scale(1.2);
+        }
+
+        /* Charts Visualization (CSS/SVG based) */
+        .charts-visual {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .chart {
+            background-color: var(--background-color);
+            padding: 15px;
+            border-radius: 8px;
+            box-shadow: var(--shadow-color) 0 1px 3px;
+        }
+
+        .chart h4 {
+            margin-top: 0;
+            color: var(--infographic-highlight);
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .bar-chart {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .bar-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .bar-label {
+            flex-shrink: 0;
+            width: 80px; /* Fixed width for labels */
+            font-size: 0.9em;
+            color: var(--secondary-color);
+            text-align: left; /* Align labels left in RTL */
+        }
+
+        .bar {
+            flex-grow: 1;
+            height: 20px;
+            background-color: var(--primary-color);
+            border-radius: 3px;
+            transition: width 0.5s ease;
+            text-align: left; /* Text inside bar */
+            color: white;
+            font-size: 0.8em;
+            line-height: 20px;
+            padding-left: 5px;
+            overflow: hidden;
+        }
+
+        /* Event List / Infographic Segments */
+        .event-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .event-card {
+            background-color: var(--card-background);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: var(--shadow-color) 0 4px 8px;
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-color) 0 8px 16px;
+        }
+
+        .event-card h3 {
+            margin-top: 0;
+            color: var(--primary-color);
+            font-size: 1.4em;
+            margin-bottom: 10px;
+        }
+
+        .event-card .meta-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9em;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 10px;
+        }
+
+        .event-card .meta-info span {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .event-card .meta-info span::before {
+             /* Simple icons using unicode or pseudo-elements */
+             content: '📅'; /* Default icon */
+             font-size: 1.1em;
+        }
+        .event-card .meta-info span:nth-child(2)::before { content: '⏳'; }
+        .event-card .meta-info span:nth-child(3)::before { content: '⭐'; color: var(--infographic-secondary); }
+
+
+        .event-card .summary {
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+
+        .event-card .tags {
+            font-size: 0.8em;
+            color: var(--infographic-highlight);
+            margin-top: auto; /* Push tags to the bottom */
+        }
+
+        .event-card .tags span {
+            display: inline-block;
+            background-color: rgba(var(--infographic-highlight-rgb, 40, 167, 69), 0.1);
+            padding: 3px 8px;
+            border-radius: 12px;
+            margin-left: 5px; /* RTL */
+            margin-bottom: 5px;
+        }
+
+        /* Modal for Details */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 100; /* High z-index */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0, 0, 0, 0.6); /* Black with opacity */
+            justify-content: center;
+            align-items: center;
+            padding-top: 60px; /* To avoid header */
+            
+        }
+
+        .modal-content {
+    background-color: var(--card-background);
+    margin: auto;
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 800px;
+    width: 90%;
+    box-shadow: var(--shadow-color) 0 5px 15px;
+    position: relative;
+    overflow-y: auto;
+    margin-top: -88px;
+    padding-bottom: 90px;
+}
+
+        .close-button {
+            color: var(--secondary-color);
+            position: absolute;
+            top: 15px;
+            left: 20px; /* RTL */
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .close-button:hover,
+        .close-button:focus {
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        .modal-content h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+            font-size: 1.6em;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .modal-content p {
+            margin-bottom: 15px;
+        }
+
+        .modal-content strong {
+            color: var(--infographic-highlight);
+        }
+
+        .modal-content .detail-section {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px dashed var(--border-color);
+        }
+         .modal-content .detail-section:last-child {
+             border-bottom: none;
+             padding-bottom: 0;
+             margin-bottom: 0;
+         }
+
+        .modal-content .detail-section h4 {
+            color: var(--infographic-secondary);
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+
+        /* Backup/Restore Modals */
+        .backup-restore-modal .modal-content {
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .backup-restore-modal .modal-content input[type="file"] {
+            margin-bottom: 15px;
+            padding: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            width: calc(100% - 22px); /* Adjust for padding/border */
+        }
+
+        .backup-restore-modal .modal-content button {
+            padding: 10px 20px;
+            margin: 5px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+         .backup-restore-modal .modal-content button:hover {
+             filter: brightness(90%);
+         }
+
+        /* Message Area */
+        #message-area {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 8px;
+            background-color: var(--infographic-secondary);
+            color: var(--text-color); /* Or a dark color */
+            display: none; /* Hidden by default */
+            text-align: center;
+        }
+        #message-area.error {
+             background-color: #dc3545;
+             color: white;
+        }
+        #message-area.success {
+             background-color: #28a745;
+             color: white;
+        }
+
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .controls {
+                grid-template-columns: 1fr;
+            }
+            .mode-toggle {
+                justify-content: center;
+            }
+            .event-list {
+                grid-template-columns: 1fr;
+            }
+            .timeline-event {
+                 min-width: 100px;
+            }
+            .modal-content {
+                padding: 20px;
+            }
+             .modal-content h3 {
+                 font-size: 1.4em;
+             }
+             .modal-content .detail-section h4 {
+                 font-size: 1em;
+             }
+        }
+
+        /* Utility classes for icons in modal */
+        .icon::before {
+            margin-left: 8px; /* Space after icon in RTL */
+            font-size: 1.2em;
+            vertical-align: middle;
+        }
+        .icon-date::before { content: '📅'; }
+        .icon-hijri::before { content: '⏳'; }
+        .icon-location::before { content: '📍'; }
+        .icon-importance::before { content: '⭐'; color: var(--infographic-secondary); }
+        .icon-people::before { content: '👥'; }
+        .icon-tags::before { content: '🏷️'; }
+        .icon-details::before { content: '📖'; }
+
+        /* Ensure RGB variables exist for transparency */
+        body:not(.dark-mode) {
+            --primary-color-rgb: 0, 123, 255;
+            --infographic-highlight-rgb: 40, 167, 69;
+        }
+        .dark-mode {
+            --primary-color-rgb: 0, 170, 255;
+            --infographic-highlight-rgb: 32, 201, 151;
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <h1>سیرت النبی ﷺ - انفوگرافک تاریخ</h1>
+            <p>مؤلف: یاسین اللہ (پاکستان)</p>
+            <div class="mode-toggle">
+                <button id="dark-mode-toggle">ڈارک موڈ</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="controls">
+            <div>
+                <label for="search-input">تلاش کریں:</label>
+                <input type="text" id="search-input" placeholder="واقعہ، تفصیل، شخصیت، مقام، ٹیگز...">
+            </div>
+             <div>
+                 <label for="period-filter">دور/سال:</label>
+                 <input type="text" id="period-filter" placeholder="مثال: 610 عیسوی، ہجرت">
+             </div>
+             <div>
+                 <label for="tag-filter">ٹیگز:</label>
+                 <input type="text" id="tag-filter" placeholder="مثال: جنگ، معاہدہ">
+             </div>
+             <div>
+                 <label for="importance-filter">اہمیت (کم از کم):</label>
+                 <select id="importance-filter">
+                     <option value="">تمام</option>
+                     <option value="1">1+</option>
+                     <option value="2">2+</option>
+                     <option value="3">3+</option>
+                     <option value="4">4+</option>
+                     <option value="5">5 (انتہائی اہم)</option>
+                 </select>
+             </div>
+             <div>
+                 <label> </label> <!-- Placeholder for alignment -->
+                 <button id="backup-button">بیک اپ ڈیٹا</button>
+             </div>
+             <div>
+                 <label> </label> <!-- Placeholder for alignment -->
+                 <button id="restore-button">ڈیٹا بحال کریں</button>
+             </div>
+        </div>
+
+        <div id="message-area" class="infographic-section">پیغام یہاں ظاہر ہوگا</div>
+
+        <div class="infographic-section">
+            <h2>انفوگرافک ٹائم لائن</h2>
+            <div class="timeline-container">
+                 <div id="timeline" class="timeline">
+                     <!-- Timeline events will be rendered here -->
+                 </div>
+            </div>
+        </div>
+
+        <div class="infographic-section">
+            <h2>اہم مقامات</h2>
+            <div id="map-visual" class="map-visual">
+                 <!-- Map markers will be rendered here -->
+            </div>
+        </div>
+
+        <div class="infographic-section">
+            <h2>شماریاتی خلاصہ</h2>
+            <div id="charts-visual" class="charts-visual">
+                <!-- Charts will be rendered here -->
+            </div>
+        </div>
+
+        <div class="infographic-section">
+            <h2>تمام واقعات</h2>
+            <div id="event-list" class="event-list">
+                <!-- Event cards will be rendered here -->
+            </div>
+        </div>
+
+    </div> <!-- /container -->
+
+    <!-- Event Detail Modal -->
+    <div id="event-detail-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">×</span>
+            <h3 id="modal-event-title"></h3>
+            <p class="meta-info">
+                 <span id="modal-event-year"></span>
+                 <span id="modal-event-hijri"></span>
+                 <span id="modal-event-importance"></span>
+            </p>
+            <div class="detail-section">
+                 <h4><span class="icon icon-details"></span>تفصیل</h4>
+                 <p id="modal-event-summary"></p>
+                 <p id="modal-event-details"></p>
+            </div>
+            <div class="detail-section">
+                 <h4><span class="icon icon-location"></span>مقام</h4>
+                 <p id="modal-event-location"></p>
+            </div>
+            <div class="detail-section">
+                 <h4><span class="icon icon-people"></span>متعلقہ شخصیات</h4>
+                 <p id="modal-event-people"></p>
+            </div>
+             <div class="detail-section">
+                 <h4><span class="icon icon-tags"></span>ٹیگز</h4>
+                 <p id="modal-event-tags"></p>
+             </div>
+             <!-- Optional: Image reference -->
+             <!-- <div class="detail-section" id="modal-image-section" style="display:none;">
+                 <h4><span class="icon">🖼️</span>تصویری حوالہ</h4>
+                 <p id="modal-event-image"></p>
+             </div> -->
+        </div>
+    </div>
+
+    <!-- Backup Modal -->
+    <div id="backup-modal" class="modal backup-restore-modal">
+        <div class="modal-content">
+            <span class="close-button">×</span>
+            <h3>ڈیٹا بیک اپ</h3>
+            <p>اپنے ڈیٹا کا بیک اپ JSON فائل کے طور پر ڈاؤن لوڈ کریں۔</p>
+            <button id="confirm-backup-button">بیک اپ ڈاؤن لوڈ کریں</button>
+        </div>
+    </div>
+
+    <!-- Restore Modal -->
+    <div id="restore-modal" class="modal backup-restore-modal">
+        <div class="modal-content">
+            <span class="close-button">×</span>
+            <h3>ڈیٹا بحال کریں</h3>
+            <p>JSON بیک اپ فائل منتخب کریں اور ڈیٹا بحال کریں۔ یہ موجودہ ڈیٹا کو ہٹا دے گا۔</p>
+            <input type="file" id="restore-file-input" accept=".json">
+            <button id="confirm-restore-button" disabled>بحال کریں</button>
+        </div>
+    </div>
+
+
+    <script>
+        // Author: Yasin Ullah (Pakistan)
+        // App Name: سیرت النبی ﷺ - انفوگرافک تاریخ
+
+        const DB_NAME = 'SeeratInfographicDB';
+        const DB_VERSION = 1;
+        const STORE_NAME = 'enriched_events';
+
+        // --- CSV File Paths (Simulated or actual relative paths) ---
+        // In a real deployment, these would be actual paths on your server.
+        // For this single-file example, we'll simulate fetching or use dummy URLs.
+        // Using dummy URLs to simulate fetch behavior. Replace with real paths if needed.
+        const HISTORY_CSV_URL = 'history.csv'; // Replace with actual path
+        const DETAILS_CSV_URL = 'details.csv'; // Replace with actual path
+        const UPDATE_CSV_URL = 'historyupdate.csv'; // Replace with actual path
+
+        // --- IndexedDB Helper Functions ---
+        let db;
+
+        function openDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, DB_VERSION);
+
+                request.onupgradeneeded = (event) => {
+                    db = event.target.result;
+                    // Create object store if it doesn't exist
+                    if (!db.objectStoreNames.contains(STORE_NAME)) {
+                        db.createObjectStore(STORE_NAME, { keyPath: 'شمار' });
+                        console.log('IndexedDB store created:', STORE_NAME);
+                    }
+                };
+
+                request.onsuccess = (event) => {
+                    db = event.target.result;
+                    console.log('IndexedDB opened successfully');
+                    resolve(db);
+                };
+
+                request.onerror = (event) => {
+                    console.error('IndexedDB error:', event.target.error);
+                    showMessage(`ڈیٹا بیس کھولنے میں خرابی: ${event.target.error}`, 'error');
+                    reject(event.target.error);
+                };
+            });
+        }
+
+        function executeDBTransaction(storeName, mode, callback) {
+             return new Promise((resolve, reject) => {
+                 if (!db) {
+                     reject('Database not open');
+                     return;
+                 }
+                 const transaction = db.transaction(storeName, mode);
+                 const store = transaction.objectStore(storeName);
+
+                 transaction.oncomplete = () => resolve();
+                 transaction.onerror = (event) => {
+                     console.error(`Transaction error [${mode}] on ${storeName}:`, event.target.error);
+                     reject(event.target.error);
+                 };
+                 transaction.onabort = (event) => {
+                     console.warn(`Transaction aborted [${mode}] on ${storeName}:`, event.target.error);
+                     reject(event.target.error);
+                 };
+
+                 try {
+                     callback(store);
+                 } catch (e) {
+                     console.error(`Error during transaction callback [${mode}] on ${storeName}:`, e);
+                     reject(e);
+                 }
+             });
+         }
+
+
+        async function addData(storeName, data) {
+             await executeDBTransaction(storeName, 'readwrite', (store) => {
+                 if (Array.isArray(data)) {
+                     data.forEach(item => {
+                         try {
+                             store.put(item); // Use put to add or update
+                         } catch (e) {
+                             console.error("Error adding item to DB:", item, e);
+                         }
+                     });
+                 } else {
+                      try {
+                         store.put(data);
+                     } catch (e) {
+                         console.error("Error adding single item to DB:", data, e);
+                     }
+                 }
+             });
+        }
+
+        async function getAllData(storeName) {
+            return new Promise((resolve, reject) => {
+                executeDBTransaction(storeName, 'readonly', (store) => {
+                    const request = store.getAll();
+                    request.onsuccess = (event) => resolve(event.target.result);
+                    request.onerror = (event) => reject(event.target.error);
+                }).catch(reject);
+            });
+        }
+
+        async function clearStore(storeName) {
+             await executeDBTransaction(storeName, 'readwrite', (store) => {
+                 store.clear();
+             });
+        }
+
+        // --- Data Fetching & Processing ---
+
+        async function fetchCSV(url) {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const text = await response.text();
+                return parseCSV(text);
+            } catch (error) {
+                console.error(`Error fetching CSV from ${url}:`, error);
+                showMessage(`فائل لوڈ کرنے میں خرابی: ${url.split('/').pop()}`, 'error');
+                return null; // Return null on error
+            }
+        }
+
+        function parseCSV(text) {
+            const lines = text.trim().split('\n');
+            if (lines.length === 0) return [];
+
+            // Simple CSV parsing assumes:
+            // 1. First line is header.
+            // 2. No commas within fields (simplification).
+            // 3. No quoted fields (simplification).
+            const headers = lines[0].split(',').map(h => h.trim());
+            const data = [];
+
+            for (let i = 1; i < lines.length; i++) {
+                const values = lines[i].split(',').map(v => v.trim());
+                if (values.length !== headers.length) {
+                    console.warn(`Skipping malformed CSV line ${i + 1}:`, lines[i]);
+                    continue;
+                }
+                const item = {};
+                headers.forEach((header, index) => {
+                    // Attempt to convert numeric fields
+                    if (header === 'شمار' || header === 'اہمیت_اسکور') {
+                         const num = parseInt(values[index], 10);
+                         item[header] = isNaN(num) ? values[index] : num; // Keep original if not a number
+                    } else {
+                         item[header] = values[index];
+                    }
+                });
+                // Ensure 'شمار' is treated as the primary key type (number if possible)
+                 if (typeof item['شمار'] === 'string') {
+                     const idNum = parseInt(item['شمار'], 10);
+                     if (!isNaN(idNum)) item['شمار'] = idNum;
+                 }
+
+                data.push(item);
+            }
+            console.log("Parsed CSV data:", data);
+            return data;
+        }
+
+        function mergeData(historyData, detailsData) {
+            if (!historyData || !detailsData) return [];
+
+            const detailsMap = new Map(detailsData.map(item => [item['شمار'], item]));
+            const merged = historyData.map(historyItem => {
+                const detailsItem = detailsMap.get(historyItem['شمار']) || {};
+                // Merge, preferring history data for common fields if needed, but details should add
+                return {
+                    ...historyItem,
+                    ...detailsItem,
+                    // Ensure fields from details are present even if history has them
+                    'تفصیلی وضاحت': detailsItem['تفصیلی وضاحت'] || '',
+                    'متعلقہ شخصیات': detailsItem['متعلقہ شخصیات'] || '',
+                    'مقام': detailsItem['مقام'] || '',
+                    'نقشہ_کوآرڈینیٹس': detailsItem['نقشہ_کوآرڈینیٹس'] || '',
+                    'اہمیت_اسکور': detailsItem['اہمیت_اسکور'] || 0, // Default to 0
+                    'تصویری_حوالہ': detailsItem['تصویری_حوالہ'] || '',
+                    'ٹیگز': detailsItem['ٹیگز'] || ''
+                };
+            });
+             console.log("Merged data:", merged);
+            return merged;
+        }
+
+        async function loadInitialData() {
+            try {
+                const existingData = await getAllData(STORE_NAME);
+                if (existingData.length === 0) {
+                    showMessage('ابتدائی ڈیٹا لوڈ ہو رہا ہے...', 'info');
+                    const historyData = await fetchCSV(HISTORY_CSV_URL);
+                    const detailsData = await fetchCSV(DETAILS_CSV_URL);
+
+                    if (historyData && detailsData) {
+                        const merged = mergeData(historyData, detailsData);
+                        if (merged.length > 0) {
+                            await addData(STORE_NAME, merged);
+                            showMessage(`ابتدائی ${merged.length} واقعات ڈیٹا بیس میں شامل کیے گئے۔`, 'success');
+                        } else {
+                             showMessage('ابتدائی ڈیٹا فائلز خالی ہیں یا انضمام میں ناکامی۔', 'error');
+                        }
+                    } else {
+                         showMessage('ابتدائی ڈیٹا فائلز لوڈ کرنے میں ناکامی۔', 'error');
+                    }
+                } else {
+                    console.log('IndexedDB already contains data.');
+                }
+            } catch (error) {
+                console.error('Error loading initial data:', error);
+                showMessage(`ابتدائی ڈیٹا لوڈ کرنے میں خرابی: ${error}`, 'error');
+            }
+        }
+
+        async function applyUpdates() {
+            try {
+                showMessage('اپ ڈیٹس چیک ہو رہی ہیں...', 'info');
+                const updateData = await fetchCSV(UPDATE_CSV_URL);
+
+                if (updateData && updateData.length > 0) {
+                     // Assuming updateData contains full records, potentially with details
+                     // If historyupdate.csv only has history fields, you'd need to merge with existing details
+                     // For simplicity here, assuming updateData has the enriched structure or history fields
+                     // If it only has history fields, you'd need to fetch existing records by ID and merge.
+                     // Let's assume historyupdate.csv has at least the history fields and potentially detail fields.
+                     // We will just add/put these records, letting IndexedDB handle updates by key.
+                     // A more robust approach would fetch existing details if update CSV is incomplete.
+                     // Given the prompt mentions historyupdate.csv same as history.csv,
+                     // a full merge with details is needed if details exist for these IDs.
+                     // Let's refine: Fetch existing data for IDs in updateData, merge, then put.
+
+                     const existingEvents = await getAllData(STORE_NAME);
+                     const existingMap = new Map(existingEvents.map(e => [e['شمار'], e]));
+
+                     const updatedMergedData = updateData.map(updateItem => {
+                          const existingItem = existingMap.get(updateItem['شمار']);
+                          // Merge update data into existing data, or just use update data if new
+                          return existingItem ? { ...existingItem, ...updateItem } : updateItem;
+                     });
+
+                     await addData(STORE_NAME, updatedMergedData);
+                     showMessage(`${updateData.length} اپ ڈیٹس ڈیٹا بیس میں شامل یا اپ ڈیٹ کیے گئے۔`, 'success');
+
+                } else if (updateData && updateData.length === 0) {
+                     showMessage('کوئی نئی اپ ڈیٹس دستیاب نہیں۔', 'info');
+                } else {
+                    // fetchCSV already showed an error message
+                    // showMessage('اپ ڈیٹ فائل لوڈ کرنے میں ناکامی۔', 'error'); // Avoid duplicate message
+                }
+            } catch (error) {
+                console.error('Error applying updates:', error);
+                showMessage(`اپ ڈیٹس لاگو کرنے میں خرابی: ${error}`, 'error');
+            }
+        }
+
+
+        // --- UI Rendering ---
+
+        function renderEvents(events) {
+            const listElement = document.getElementById('event-list');
+            listElement.innerHTML = ''; // Clear current list
+
+            if (!events || events.length === 0) {
+                listElement.innerHTML = '<p style="text-align:center;">کوئی واقعہ نہیں ملا۔</p>';
+                return;
+            }
+
+            events.forEach(event => {
+                const card = document.createElement('div');
+                card.classList.add('event-card');
+                card.dataset.id = event['شمار']; // Store ID for modal
+
+                const tags = (event['ٹیگز'] || '').split(',').filter(tag => tag.trim() !== '').map(tag => `<span>${tag.trim()}</span>`).join('');
+                const importance = event['اہمیت_اسکور'] || 0;
+                const importanceStars = '⭐'.repeat(Math.min(5, Math.max(0, importance))); // Max 5 stars
+
+                card.innerHTML = `
+                    <h3>${event['واقعہ (اردو)'] || 'نامعلوم واقعہ'}</h3>
+                    <p class="meta-info">
+                         <span>📅 ${event['عیسوی سال (تقریباً)'] || 'نامعلوم سال'}</span>
+                         <span>⏳ ${event['ہجری سال / دور'] || 'نامعلوم دور'}</span>
+                         <span>⭐ ${importanceStars || 'کوئی نہیں'}</span>
+                    </p>
+                    <p class="summary">${event['مختصر تفصیل (اردو)'] || 'کوئی تفصیل نہیں۔'}</p>
+                    ${tags ? `<div class="tags">${tags}</div>` : ''}
+                `;
+                card.addEventListener('click', () => showEventDetail(event['شمار']));
+                listElement.appendChild(card);
+            });
+        }
+
+        function renderTimeline(events) {
+             const timelineElement = document.getElementById('timeline');
+             timelineElement.innerHTML = ''; // Clear current timeline
+
+             if (!events || events.length === 0) {
+                 timelineElement.innerHTML = '<p style="text-align:center; width: 100%;">کوئی واقعہ نہیں۔</p>';
+                 return;
+             }
+
+             // Sort events by year for timeline
+             const sortedEvents = [...events].sort((a, b) => {
+                 const yearA = parseInt(a['عیسوی سال (تقریباً)'], 10) || 0;
+                 const yearB = parseInt(b['عیسوی سال (تقریباً)'], 10) || 0;
+                 return yearA - yearB;
+             });
+
+             // Simple timeline rendering: just list events in order
+             sortedEvents.forEach(event => {
+                 const eventEl = document.createElement('div');
+                 eventEl.classList.add('timeline-event');
+                 eventEl.dataset.id = event['شمار'];
+                 eventEl.innerHTML = `
+                     <div class="year">${event['عیسوی سال (تقریباً)'] || '?'}</div>
+                     <div class="title">${event['واقعہ (اردو)'] || 'نامعلوم'}</div>
+                 `;
+                 eventEl.addEventListener('click', () => showEventDetail(event['شمار']));
+                 timelineElement.appendChild(eventEl);
+             });
+
+             // Optional: Add more sophisticated positioning based on year difference
+             // This requires calculating positions and might be complex for varying year ranges.
+             // For now, a simple ordered list of visual blocks suffices for the "infographic" feel.
+        }
+
+        function renderMapVisual(events) {
+            const mapElement = document.getElementById('map-visual');
+            // Clear existing markers if any
+            mapElement.querySelectorAll('.map-location-marker').forEach(marker => marker.remove());
+
+            if (!events || events.length === 0) {
+                 // Keep the background image, just no markers
+                 return;
+            }
+
+            // Simple marker placement:
+            // This requires mapping location names or coordinates to pixel positions on the static image.
+            // This is a simplification. A real map would use lat/lng and a map library.
+            // For this example, we'll use a hardcoded map of known locations -> approximate pixel positions
+            const locationCoords = {
+                'مکہ': { top: '60%', left: '50%' }, // Approximate relative positions on a generic Arabian map
+                'مدینہ': { top: '40%', left: '45%' },
+                'بدر': { top: '45%', left: '46%' }, // Near Medina
+                'احد': { top: '38%', left: '44%' }, // Near Medina
+                'خندق': { top: '40%', left: '45%' }, // Same as Medina/near
+                'حدیبیہ': { top: '55%', left: '48%' }, // Near Mecca
+                'خیبر': { top: '30%', left: '40%' }, // North of Medina
+                'تبوک': { top: '15%', left: '35%' }, // Far North
+                'طائف': { top: '65%', left: '52%' }, // South-East of Mecca
+                // Add more locations as needed based on your data
+            };
+
+            const placedLocations = new Set(); // Track locations already marked
+
+            events.forEach(event => {
+                const locations = (event['مقام'] || '').split(',').map(loc => loc.trim()).filter(loc => loc !== '');
+
+                locations.forEach(loc => {
+                    if (locationCoords[loc] && !placedLocations.has(loc)) {
+                        const marker = document.createElement('div');
+                        marker.classList.add('map-location-marker');
+                        marker.style.top = locationCoords[loc].top;
+                        marker.style.left = locationCoords[loc].left;
+                        marker.title = loc; // Tooltip
+
+                        // Optional: Add click listener to filter events by location
+                        // marker.addEventListener('click', () => filterByLocation(loc));
+
+                        mapElement.appendChild(marker);
+                        placedLocations.add(loc);
+                    }
+                });
+            });
+             // Note: This is a very basic visual representation.
+             // Multiple events at the same location share one marker.
+             // Clicking markers is not implemented here but could filter the event list.
+        }
+
+        function renderChartsVisual(events) {
+            const chartsElement = document.getElementById('charts-visual');
+            chartsElement.innerHTML = ''; // Clear current charts
+
+            if (!events || events.length === 0) {
+                 chartsElement.innerHTML = '<p style="text-align:center; width: 100%;">کوئی ڈیٹا نہیں۔</p>';
+                 return;
+            }
+
+            // Example Chart 1: Importance Score Distribution
+            const importanceCounts = {};
+            events.forEach(event => {
+                const score = event['اہمیت_اسکور'] || 0;
+                importanceCounts[score] = (importanceCounts[score] || 0) + 1;
+            });
+
+            const sortedImportanceScores = Object.keys(importanceCounts).sort((a, b) => parseInt(a, 10) - parseInt(b, 10));
+            const totalEvents = events.length;
+
+            let importanceChartHTML = `
+                 <div class="chart">
+                     <h4>اہمیت کے سکور کی تقسیم</h4>
+                     <div class="bar-chart">
+            `;
+            sortedImportanceScores.forEach(score => {
+                const count = importanceCounts[score];
+                const percentage = totalEvents > 0 ? (count / totalEvents) * 100 : 0;
+                importanceChartHTML += `
+                    <div class="bar-item">
+                        <div class="bar-label">سکور ${score}</div>
+                        <div class="bar" style="width: ${percentage}%;">${count}</div>
+                    </div>
+                `;
+            });
+            importanceChartHTML += `
+                     </div>
+                 </div>
+            `;
+            chartsElement.innerHTML += importanceChartHTML;
+
+
+            // Example Chart 2: Top Tags
+            const tagCounts = {};
+            events.forEach(event => {
+                const tags = (event['ٹیگز'] || '').split(',').map(tag => tag.trim()).filter(tag => tag !== '');
+                tags.forEach(tag => {
+                    tagCounts[tag] = (tagCounts[tag] || 0) + 1;
+                });
+            });
+
+            const sortedTags = Object.entries(tagCounts)
+                .sort(([, countA], [, countB]) => countB - countA) // Sort by count descending
+                .slice(0, 10); // Get top 10 tags
+
+            if (sortedTags.length > 0) {
+                 let tagsChartHTML = `
+                     <div class="chart">
+                         <h4>زیادہ استعمال ہونے والے ٹیگز</h4>
+                         <div class="bar-chart">
+                 `;
+                 const maxTagCount = sortedTags[0][1]; // Count of the most frequent tag
+                 sortedTags.forEach(([tag, count]) => {
+                     const percentage = maxTagCount > 0 ? (count / maxTagCount) * 100 : 0;
+                     tagsChartHTML += `
+                         <div class="bar-item">
+                             <div class="bar-label">${tag}</div>
+                             <div class="bar" style="width: ${percentage}%;">${count}</div>
+                         </div>
+                     `;
+                 });
+                 tagsChartHTML += `
+                          </div>
+                      </div>
+                 `;
+                 chartsElement.innerHTML += tagsChartHTML;
+            }
+        }
+
+
+        // --- Filtering and Search ---
+
+        let allEvents = []; // Cache all events loaded from DB
+
+        async function loadAndRenderAllEvents() {
+            try {
+                allEvents = await getAllData(STORE_NAME);
+                console.log("Loaded all events from DB:", allEvents.length);
+                renderEvents(allEvents);
+                renderTimeline(allEvents);
+                renderMapVisual(allEvents);
+                renderChartsVisual(allEvents);
+            } catch (error) {
+                console.error('Error loading and rendering all events:', error);
+                showMessage(`ڈیٹا لوڈ کرنے میں خرابی: ${error}`, 'error');
+            }
+        }
+
+        function applyFilters() {
+            const searchTerm = document.getElementById('search-input').value.toLowerCase();
+            const periodTerm = document.getElementById('period-filter').value.toLowerCase();
+            const tagTerm = document.getElementById('tag-filter').value.toLowerCase();
+            const importanceFilter = parseInt(document.getElementById('importance-filter').value, 10);
+
+            const filteredEvents = allEvents.filter(event => {
+                const matchesSearch = !searchTerm ||
+                    (event['واقعہ (اردو)'] && event['واقعہ (اردو)'].toLowerCase().includes(searchTerm)) ||
+                    (event['مختصر تفصیل (اردو)'] && event['مختصر تفصیل (اردو)'].toLowerCase().includes(searchTerm)) ||
+                    (event['تفصیلی وضاحت'] && event['تفصیلی وضاحت'].toLowerCase().includes(searchTerm)) ||
+                    (event['متعلقہ شخصیات'] && event['متعلقہ شخصیات'].toLowerCase().includes(searchTerm)) ||
+                    (event['مقام'] && event['مقام'].toLowerCase().includes(searchTerm)) ||
+                    (event['ٹیگز'] && event['ٹیگز'].toLowerCase().includes(searchTerm));
+
+                const matchesPeriod = !periodTerm ||
+                     (event['عیسوی سال (تقریباً)'] && event['عیسوی سال (تقریباً)'].toLowerCase().includes(periodTerm)) ||
+                     (event['ہجری سال / دور'] && event['ہجری سال / دور'].toLowerCase().includes(periodTerm));
+
+                const matchesTag = !tagTerm ||
+                     (event['ٹیگز'] && event['ٹیگز'].toLowerCase().includes(tagTerm));
+
+                const matchesImportance = isNaN(importanceFilter) ||
+                     (event['اہمیت_اسکور'] && event['اہمیت_اسکور'] >= importanceFilter);
+
+                return matchesSearch && matchesPeriod && matchesTag && matchesImportance;
+            });
+
+            renderEvents(filteredEvents);
+            // Optionally re-render timeline/map/charts based on filtered data
+            // renderTimeline(filteredEvents);
+            // renderMapVisual(filteredEvents);
+            // renderChartsVisual(filteredEvents);
+            // Note: Re-rendering timeline/map/charts on every filter change might be performance intensive
+            // Keeping them based on all data provides an overall view, while the list is filtered.
+            // Decide based on performance and desired UX. For now, only filter the list.
+        }
+
+        // --- Modal Handling ---
+
+        const detailModal = document.getElementById('event-detail-modal');
+        const backupModal = document.getElementById('backup-modal');
+        const restoreModal = document.getElementById('restore-modal');
+        const closeButtons = document.querySelectorAll('.modal .close-button');
+
+        closeButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                detailModal.style.display = 'none';
+                backupModal.style.display = 'none';
+                restoreModal.style.display = 'none';
+            });
+        });
+
+        window.addEventListener('click', (event) => {
+            if (event.target === detailModal) detailModal.style.display = 'none';
+            if (event.target === backupModal) backupModal.style.display = 'none';
+            if (event.target === restoreModal) restoreModal.style.display = 'none';
+        });
+
+        async function showEventDetail(eventId) {
+            try {
+                const event = allEvents.find(e => e['شمار'] === eventId);
+                if (!event) {
+                    console.error('Event not found for ID:', eventId);
+                    showMessage('واقعہ کی تفصیلات نہیں مل سکیں۔', 'error');
+                    return;
+                }
+
+                document.getElementById('modal-event-title').innerText = event['واقعہ (اردو)'] || 'نامعلوم واقعہ';
+                document.getElementById('modal-event-year').innerHTML = `<span class="icon icon-date"></span>${event['عیسوی سال (تقریباً)'] || 'نامعلوم سال'}`;
+                document.getElementById('modal-event-hijri').innerHTML = `<span class="icon icon-hijri"></span>${event['هجری سال / دور'] || 'نامعلوم دور'}`;
+                const importance = event['اہمیت_اسکور'] || 0;
+                const importanceStars = '⭐'.repeat(Math.min(5, Math.max(0, importance)));
+                document.getElementById('modal-event-importance').innerHTML = `<span class="icon icon-importance"></span>اہمیت: ${importanceStars || 'کوئی نہیں'} (${importance})`;
+
+                document.getElementById('modal-event-summary').innerText = event['مختصر تفصیل (اردو)'] || 'کوئی مختصر تفصیل نہیں۔';
+                document.getElementById('modal-event-details').innerText = event['تفصیلی وضاحت'] || 'کوئی تفصیلی وضاحت نہیں۔';
+                document.getElementById('modal-event-location').innerHTML = `<span class="icon icon-location"></span>${event['مقام'] || 'نامعلوم مقام'}`;
+                document.getElementById('modal-event-people').innerHTML = `<span class="icon icon-people"></span>${event['متعلقہ شخصیات'] || 'نامعلوم شخصیات'}`;
+                document.getElementById('modal-event-tags').innerHTML = `<span class="icon icon-tags"></span>${(event['ٹیگز'] || '').split(',').filter(tag => tag.trim() !== '').join(', ') || 'کوئی ٹیگز نہیں۔'}`;
+
+                // Handle image reference if needed
+                // const imageSection = document.getElementById('modal-image-section');
+                // const imageElement = document.getElementById('modal-event-image');
+                // if (event['تصویری_حوالہ']) {
+                //     imageElement.innerText = event['تصویری_حوالہ']; // Or create an <img> tag
+                //     imageSection.style.display = 'block';
+                // } else {
+                //     imageSection.style.display = 'none';
+                // }
+
+
+                detailModal.style.display = 'flex'; // Use flex to center
+            } catch (error) {
+                console.error('Error showing event detail:', error);
+                showMessage(`تفصیلات دکھانے میں خرابی: ${error}`, 'error');
+            }
+        }
+
+        // --- Backup/Restore ---
+
+        document.getElementById('backup-button').addEventListener('click', () => {
+            backupModal.style.display = 'flex';
+        });
+
+        document.getElementById('confirm-backup-button').addEventListener('click', async () => {
+            try {
+                showMessage('بیک اپ تیار ہو رہا ہے...', 'info');
+                const data = await getAllData(STORE_NAME);
+                const jsonString = JSON.stringify(data, null, 2); // Pretty print JSON
+
+                const blob = new Blob([jsonString], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `seerat_infographic_backup_${new Date().toISOString().split('T')[0]}.json`;
+                document.body.appendChild(a); // Append to body to make it clickable
+                a.click();
+
+                document.body.removeChild(a); // Clean up
+                URL.revokeObjectURL(url); // Free up memory
+
+                showMessage('بیک اپ کامیابی سے تیار ہوا۔', 'success');
+                backupModal.style.display = 'none';
+
+            } catch (error) {
+                console.error('Backup failed:', error);
+                showMessage(`بیک اپ بنانے میں خرابی: ${error}`, 'error');
+            }
+        });
+
+        document.getElementById('restore-button').addEventListener('click', () => {
+            restoreModal.style.display = 'flex';
+        });
+
+        const restoreFileInput = document.getElementById('restore-file-input');
+        const confirmRestoreButton = document.getElementById('confirm-restore-button');
+
+        restoreFileInput.addEventListener('change', (event) => {
+            // Enable the restore button only if a file is selected
+            confirmRestoreButton.disabled = !event.target.files || event.target.files.length === 0;
+        });
+
+        confirmRestoreButton.addEventListener('click', async () => {
+            const file = restoreFileInput.files[0];
+            if (!file) {
+                showMessage('بحالی کے لیے کوئی فائل منتخب نہیں کی گئی۔', 'error');
+                return;
+            }
+
+            if (!confirm('کیا آپ واقعی ڈیٹا بحال کرنا چاہتے ہیں؟ موجودہ ڈیٹا حذف ہو جائے گا۔')) {
+                return; // User cancelled
+            }
+
+            showMessage('ڈیٹا بحال ہو رہا ہے...', 'info');
+
+            const reader = new FileReader();
+            reader.onload = async (event) => {
+                try {
+                    const jsonString = event.target.result;
+                    const dataToRestore = JSON.parse(jsonString);
+
+                    if (!Array.isArray(dataToRestore)) {
+                         throw new Error('JSON فائل میں ڈیٹا Array فارمیٹ میں نہیں۔');
+                    }
+                    if (dataToRestore.length > 0 && dataToRestore.some(item => typeof item['شمار'] === 'undefined')) {
+                         throw new Error('JSON فائل میں واقعات کے لیے "شمار" فیلڈ موجود نہیں۔');
+                    }
+
+
+                    // Clear existing data
+                    await clearStore(STORE_NAME);
+                    console.log('IndexedDB store cleared.');
+
+                    // Add restored data
+                    await addData(STORE_NAME, dataToRestore);
+                    console.log(`Added ${dataToRestore.length} items from backup.`);
+
+                    showMessage('ڈیٹا کامیابی سے بحال ہوا۔', 'success');
+                    restoreModal.style.display = 'none';
+                    restoreFileInput.value = ''; // Clear file input
+                    confirmRestoreButton.disabled = true; // Disable button
+
+                    // Reload and render data after restore
+                    await loadAndRenderAllEvents();
+
+                } catch (error) {
+                    console.error('Restore failed:', error);
+                    showMessage(`ڈیٹا بحال کرنے میں خرابی: ${error}`, 'error');
+                    restoreFileInput.value = ''; // Clear file input
+                    confirmRestoreButton.disabled = true; // Disable button
+                }
+            };
+            reader.onerror = (error) => {
+                console.error('File reading error:', error);
+                 showMessage(`فائل پڑھنے میں خرابی: ${error}`, 'error');
+                 restoreFileInput.value = ''; // Clear file input
+                 confirmRestoreButton.disabled = true; // Disable button
+            };
+
+            reader.readAsText(file); // Read file as text
+        });
+
+
+        // --- Dark Mode Toggle ---
+
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        const body = document.body;
+        const darkModeKey = 'seerat-infographic-dark-mode';
+
+        function setDarkMode(isDark) {
+            if (isDark) {
+                body.classList.add('dark-mode');
+                darkModeToggle.innerText = 'لائٹ موڈ';
+                localStorage.setItem(darkModeKey, 'enabled');
+            } else {
+                body.classList.remove('dark-mode');
+                darkModeToggle.innerText = 'ڈارک موڈ';
+                localStorage.setItem(darkModeKey, 'disabled');
+            }
+        }
+
+        darkModeToggle.addEventListener('click', () => {
+            setDarkMode(!body.classList.contains('dark-mode'));
+        });
+
+        // Apply saved mode on load
+        const savedMode = localStorage.getItem(darkModeKey);
+        if (savedMode === 'enabled') {
+            setDarkMode(true);
+        } else {
+            setDarkMode(false); // Default to light mode if no preference or disabled
+        }
+
+
+        // --- Message Area ---
+        const messageArea = document.getElementById('message-area');
+        let messageTimeout;
+
+        function showMessage(message, type = 'info', duration = 5000) {
+             messageArea.innerText = message;
+             messageArea.className = 'infographic-section'; // Reset classes
+             if (type) messageArea.classList.add(type); // Add type class (info, success, error)
+             messageArea.style.display = 'block';
+
+             if (messageTimeout) {
+                 clearTimeout(messageTimeout);
+             }
+             messageTimeout = setTimeout(() => {
+                 messageArea.style.display = 'none';
+             }, duration);
+        }
+
+
+        // --- Initialization ---
+
+        async function setupApp() {
+            showMessage('ایپ لوڈ ہو رہی ہے...', 'info');
+            try {
+                await openDB();
+                await loadInitialData();
+                await applyUpdates();
+                await loadAndRenderAllEvents(); // Load all data after initial/updates
+                showMessage('Successfully loaded.', 'success', 20000);
+                showMessage('This app is only for testing/Education purpose the data is not factually checked and can be factually incorrect', 'info', 12000);
+                // Set up filter/search listeners
+                document.getElementById('search-input').addEventListener('input', applyFilters);
+                document.getElementById('period-filter').addEventListener('input', applyFilters);
+                document.getElementById('tag-filter').addEventListener('input', applyFilters);
+                document.getElementById('importance-filter').addEventListener('change', applyFilters);
+
+            } catch (error) {
+                console.error('App setup failed:', error);
+                showMessage(`ایپ شروع کرنے میں خرابی: ${error}`, 'error');
+            }
+        }
+
+        // Run setup when DOM is ready
+        document.addEventListener('DOMContentLoaded', setupApp);
+
+    </script>
+
+</body>
+</html>

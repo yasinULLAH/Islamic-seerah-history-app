@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سیرت النبی ﷺ - جامع انفوگرافک تاریخ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c5e1a;
+            --secondary-color: #5a3921;
+            --accent-color: #d4af37;
+            --light-bg: #f8f4e9;
+            --dark-text: #1a1100;
+            --timeline-color: var(--primary-color);
+            --map-bg: #e8e0d0;
+            --highlight-color: #ffeb3b;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Noto Nastaliq Urdu', serif;
+            background-color: var(--light-bg);
+            color: var(--dark-text);
+            line-height: 1.8;
+            direction: rtl;
+            overflow-x: hidden;
+        }
+        
+        header {
+            background: linear-gradient(to left, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+            z-index: 10;
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+        
+        .container {
+            display: flex;
+            min-height: calc(100vh - 82px);
+        }
+        
+        .sidebar {
+            width: 300px;
+            background-color: white;
+            border-left: 1px solid #ddd;
+            padding: 1.5rem;
+            overflow-y: auto;
+            box-shadow: -2px 0 8px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease;
+            z-index: 5;
+        }
+        
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+        
+        .search-box {
+            margin-bottom: 1.5rem;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Noto Nastaliq Urdu', serif;
+            font-size: 1rem;
+        }
+        
+        .filter-section {
+            margin-bottom: 1.5rem;
+        }
+        
+        .filter-section h3 {
+            margin-bottom: 0.8rem;
+            color: var(--primary-color);
+            border-bottom: 1px solid #eee;
+            padding-bottom: 0.5rem;
+        }
+        
+        .filter-options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .filter-tag {
+            background-color: #eee;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+        
+        .filter-tag:hover, .filter-tag.active {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .timeline-container {
+            position: relative;
+            margin: 3rem 0;
+            height: 600px;
+            overflow: hidden;
+            background-color: var(--map-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .timeline {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background-color: var(--timeline-color);
+            transform: translateY(-50%);
+            z-index: 1;
+        }
+        
+        .timeline-event {
+            position: absolute;
+            top: 50%;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background-color: var(--accent-color);
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+        
+        .timeline-event:hover {
+            transform: translate(-50%, -50%) scale(1.5);
+            box-shadow: 0 0 0 4px rgba(212, 175, 55, 0.3);
+        }
+        
+        .timeline-event.active {
+            background-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(44, 94, 26, 0.3);
+        }
+        
+        .timeline-year {
+            position: absolute;
+            top: 60%;
+            transform: translateX(-50%);
+            font-size: 0.9rem;
+            color: var(--secondary-color);
+        }
+        
+        .event-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: none;
+        }
+        
+        .event-card.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+        }
+        
+        .event-header {
+            background: linear-gradient(to left, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.2rem 1.5rem;
+            position: relative;
+        }
+        
+        .event-title {
+            font-size: 1.5rem;
+            margin-bottom: 0.3rem;
+        }
+        
+        .event-period {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .event-importance {
+            position: absolute;
+            left: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: var(--accent-color);
+            color: var(--dark-text);
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+        
+        .event-body {
+            padding: 1.5rem;
+        }
+        
+        .event-description {
+            margin-bottom: 1.5rem;
+        }
+        
+        .infographic-points {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .infographic-point {
+            flex: 1 1 300px;
+            background-color: var(--light-bg);
+            padding: 1rem;
+            border-radius: 6px;
+            border-right: 4px solid var(--accent-color);
+            position: relative;
+        }
+        
+        .infographic-point::before {
+            content: "•";
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            position: absolute;
+            right: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        
+        .event-details {
+            margin-top: 1.5rem;
+        }
+        
+        .detail-row {
+            display: flex;
+            margin-bottom: 0.8rem;
+        }
+        
+        .detail-label {
+            font-weight: bold;
+            min-width: 120px;
+            color: var(--primary-color);
+        }
+        
+        .detail-value {
+            flex: 1;
+        }
+        
+        .map-container {
+            height: 300px;
+            background-color: var(--map-bg);
+            border-radius: 8px;
+            margin-top: 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .map-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+        }
+        
+        .tags-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        
+        .tag {
+            background-color: #e0e0e0;
+            padding: 0.3rem 0.8rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        
+        .narrative-paths {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+        }
+        
+        .narrative-path {
+            min-width: 200px;
+            background: linear-gradient(to left, var(--secondary-color), var(--primary-color));
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+        
+        .narrative-path:hover {
+            transform: translateY(-3px);
+        }
+        
+        .narrative-path h3 {
+            margin-bottom: 0.5rem;
+        }
+        
+        .narrative-path p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+        
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 200px;
+            font-size: 1.2rem;
+            color: var(--secondary-color);
+        }
+        
+        .no-results {
+            text-align: center;
+            padding: 2rem;
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+        }
+        
+        .bookmark-btn {
+            background-color: transparent;
+            border: none;
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            cursor: pointer;
+            position: absolute;
+            left: 1.5rem;
+            top: 1.2rem;
+        }
+        
+        .bookmark-btn.bookmarked {
+            color: #ff5722;
+        }
+        
+        .legend {
+            background-color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+        }
+        
+        .legend h3 {
+            margin-bottom: 0.8rem;
+            color: var(--primary-color);
+        }
+        
+        .legend-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+        }
+        
+        .legend-icon {
+            font-size: 1.2rem;
+        }
+        
+        .toggle-sidebar {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            z-index: 100;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        
+        @media (max-width: 992px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .sidebar {
+                width: 100%;
+                transform: translateX(100%);
+                position: fixed;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                z-index: 20;
+                padding-top: 4rem;
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                padding: 1rem;
+            }
+            
+            .toggle-sidebar {
+                display: flex;
+            }
+            
+            .timeline-container {
+                height: 400px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .event-title {
+                font-size: 1.3rem;
+            }
+            
+            .timeline-container {
+                height: 300px;
+            }
+            
+            .infographic-point {
+                flex: 1 1 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>سیرت النبی ﷺ - جامع انفوگرافک تاریخ</h1>
+        <div class="subtitle">پیغمبر اسلام ﷺ کی زندگی کا بصری اور معلوماتی جائزہ</div>
+    </header>
+    
+    <div class="container">
+        <div class="sidebar" id="sidebar">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="تلاش کریں...">
+            </div>
+            
+            <div class="filter-section">
+                <h3>دور کے لحاظ سے فلٹر کریں</h3>
+                <div class="filter-options" id="periodFilters">
+                    <!-- Period filters will be added dynamically -->
+                </div>
+            </div>
+            
+            <div class="filter-section">
+                <h3>ٹیگز کے لحاظ سے فلٹر کریں</h3>
+                <div class="filter-options" id="tagFilters">
+                    <!-- Tag filters will be added dynamically -->
+                </div>
+            </div>
+            
+            <div class="filter-section">
+                <h3>اہمیت کے لحاظ سے فلٹر کریں</h3>
+                <div class="filter-options" id="importanceFilters">
+                    <div class="filter-tag" data-importance="5">انتہائی اہم</div>
+                    <div class="filter-tag" data-importance="4">بہت اہم</div>
+                    <div class="filter-tag" data-importance="3">اہم</div>
+                    <div class="filter-tag" data-importance="2">معمولی اہمیت</div>
+                    <div class="filter-tag" data-importance="1">کم اہم</div>
+                </div>
+            </div>
+            
+            <div class="legend">
+                <h3>لیجنڈ / کلید</h3>
+                <div class="legend-items">
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: var(--primary-color);"></div>
+                        <span>اہم واقعات</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background-color: var(--accent-color);"></div>
+                        <span>دوسرے واقعات</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-icon">⭐</span>
+                        <span>اہمیت اسکور</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-icon">📌</span>
+                        <span>محفوظ شدہ</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="main-content">
+            <h2>تاریخی سفر کے راستے</h2>
+            <div class="narrative-paths" id="narrativePaths">
+                <!-- Narrative paths will be added dynamically -->
+            </div>
+            
+            <h2>وقت کی لکیر</h2>
+            <div class="timeline-container">
+                <div class="timeline" id="mainTimeline"></div>
+                <!-- Timeline events will be added dynamically -->
+            </div>
+            
+            <h2>واقعات</h2>
+            <div id="eventsContainer">
+                <div class="loading">ڈیٹا لوڈ ہو رہا ہے...</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="toggle-sidebar" id="toggleSidebar">☰</div>
+    
+    <script>
+        // Database and application state
+        const dbName = "SeerahDatabase";
+        const storeName = "enriched_events";
+        let db;
+        let events = [];
+        let filteredEvents = [];
+        let activeEventId = null;
+        
+        // DOM elements
+        const sidebar = document.getElementById('sidebar');
+        const toggleSidebar = document.getElementById('toggleSidebar');
+        const searchInput = document.getElementById('searchInput');
+        const periodFilters = document.getElementById('periodFilters');
+        const tagFilters = document.getElementById('tagFilters');
+        const importanceFilters = document.getElementById('importanceFilters');
+        const narrativePaths = document.getElementById('narrativePaths');
+        const mainTimeline = document.getElementById('mainTimeline');
+        const eventsContainer = document.getElementById('eventsContainer');
+        
+        // Initialize the application
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Initialize IndexedDB
+            await initDB();
+            
+            // Load and display data
+            await loadData();
+            
+            // Set up event listeners
+            setupEventListeners();
+            
+            // Show initial view
+            updateUI();
+        });
+        
+        // Initialize IndexedDB
+        function initDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(dbName, 1);
+                
+                request.onupgradeneeded = (event) => {
+                    const db = event.target.result;
+                    if (!db.objectStoreNames.contains(storeName)) {
+                        const store = db.createObjectStore(storeName, { keyPath: 'شمار' });
+                        store.createIndex('ہجری سال / دور', 'ہجری سال / دور', { unique: false });
+                        store.createIndex('ٹیگز', 'ٹیگز', { unique: false, multiEntry: true });
+                        store.createIndex('اہمیت_اسکور', 'اہمیت_اسکور', { unique: false });
+                    }
+                };
+                
+                request.onsuccess = (event) => {
+                    db = event.target.result;
+                    resolve();
+                };
+                
+                request.onerror = (event) => {
+                    console.error('Database error:', event.target.error);
+                    reject(event.target.error);
+                };
+            });
+        }
+        
+        // Load data from CSV files and merge into IndexedDB
+        async function loadData() {
+            try {
+                // Check if data already exists in IndexedDB
+                const count = await getEventCount();
+                
+                if (count === 0) {
+                    // Load initial data
+                    const [historyData, detailsData] = await Promise.all([
+                        fetchCSV('history.csv'),
+                        fetchCSV('details.csv')
+                    ]);
+                    
+                    // Merge data
+                    const mergedData = mergeData(historyData, detailsData);
+                    
+                    // Store in IndexedDB
+                    await storeEvents(mergedData);
+                } else {
+                    // Check for updates
+                    const updateData = await fetchCSV('historyupdate.csv');
+                    if (updateData && updateData.length > 0) {
+                        await storeEvents(updateData);
+                    }
+                }
+                
+                // Load all events from IndexedDB
+                events = await getAllEvents();
+                filteredEvents = [...events];
+                
+            } catch (error) {
+                console.error('Error loading data:', error);
+                eventsContainer.innerHTML = `<div class="no-results">ڈیٹا لوڈ کرنے میں مسئلہ پیش آیا۔ براہ کرم بعد میں کوشش کریں۔</div>`;
+            }
+        }
+        
+        // Fetch CSV file and parse it
+        async function fetchCSV(filename) {
+            try {
+                // In a real implementation, this would fetch actual CSV files
+                // For this example, we'll use mock data
+                return mockCSVData(filename);
+            } catch (error) {
+                console.error(`Error fetching ${filename}:`, error);
+                return [];
+            }
+        }
+        
+        // Merge history and details data
+        function mergeData(historyData, detailsData) {
+            return historyData.map(historyItem => {
+                const detailItem = detailsData.find(d => d.شمار === historyItem.شمار);
+                return {
+                    ...historyItem,
+                    ...detailItem
+                };
+            });
+        }
+        
+        // Store events in IndexedDB
+        function storeEvents(events) {
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction(storeName, 'readwrite');
+                const store = transaction.objectStore(storeName);
+                
+                events.forEach(event => {
+                    store.put(event);
+                });
+                
+                transaction.oncomplete = () => resolve();
+                transaction.onerror = (event) => reject(event.target.error);
+            });
+        }
+        
+        // Get count of events in IndexedDB
+        function getEventCount() {
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction(storeName, 'readonly');
+                const store = transaction.objectStore(storeName);
+                const request = store.count();
+                
+                request.onsuccess = () => resolve(request.result);
+                request.onerror = (event) => reject(event.target.error);
+            });
+        }
+        
+        // Get all events from IndexedDB
+        function getAllEvents() {
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction(storeName, 'readonly');
+                const store = transaction.objectStore(storeName);
+                const request = store.getAll();
+                
+                request.onsuccess = () => resolve(request.result);
+                request.onerror = (event) => reject(event.target.error);
+            });
+        }
+        
+        // Set up event listeners
+        function setupEventListeners() {
+            // Toggle sidebar on mobile
+            toggleSidebar.addEventListener('click', () => {
+                sidebar.classList.toggle('active');
+            });
+            
+            // Search input
+            searchInput.addEventListener('input', () => {
+                filterEvents();
+            });
+            
+            // Period filters
+            periodFilters.addEventListener('click', (e) => {
+                if (e.target.classList.contains('filter-tag')) {
+                    e.target.classList.toggle('active');
+                    filterEvents();
+                }
+            });
+            
+            // Tag filters
+            tagFilters.addEventListener('click', (e) => {
+                if (e.target.classList.contains('filter-tag')) {
+                    e.target.classList.toggle('active');
+                    filterEvents();
+                }
+            });
+            
+            // Importance filters
+            importanceFilters.addEventListener('click', (e) => {
+                if (e.target.classList.contains('filter-tag')) {
+                    e.target.classList.toggle('active');
+                    filterEvents();
+                }
+            });
+            
+            // Click event on timeline (delegated)
+            mainTimeline.addEventListener('click', (e) => {
+                if (e.target.classList.contains('timeline-event')) {
+                    const eventId = parseInt(e.target.getAttribute('data-event-id'));
+                    showEventDetails(eventId);
+                }
+            });
+            
+            // Click event on narrative paths (delegated)
+            narrativePaths.addEventListener('click', (e) => {
+                const pathCard = e.target.closest('.narrative-path');
+                if (pathCard) {
+                    const pathId = pathCard.getAttribute('data-path-id');
+                    filterByNarrativePath(pathId);
+                }
+            });
+        }
+        
+        // Filter events based on search and filters
+        function filterEvents() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const activePeriods = [...periodFilters.querySelectorAll('.filter-tag.active')].map(el => el.textContent);
+            const activeTags = [...tagFilters.querySelectorAll('.filter-tag.active')].map(el => el.textContent);
+            const activeImportance = [...importanceFilters.querySelectorAll('.filter-tag.active')].map(el => parseInt(el.getAttribute('data-importance')));
+            
+            filteredEvents = events.filter(event => {
+                // Search term
+                if (searchTerm && !(
+                    event['واقعہ (اردو)'].toLowerCase().includes(searchTerm) ||
+                    event['مختصر تفصیل (اردو)'].toLowerCase().includes(searchTerm) ||
+                    event['تفصیلی وضاحت']?.toLowerCase().includes(searchTerm) ||
+                    (event['متعلقہ شخصیات']?.toLowerCase().includes(searchTerm))) {
+                    return false;
+                }
+                
+                // Period filter
+                if (activePeriods.length > 0 && !activePeriods.includes(event['ہجری سال / دور'])) {
+                    return false;
+                }
+                
+                // Tag filter
+                if (activeTags.length > 0) {
+                    const eventTags = event['ٹیگز']?.split(',') || [];
+                    if (!activeTags.some(tag => eventTags.includes(tag.trim()))) {
+                        return false;
+                    }
+                }
+                
+                // Importance filter
+                if (activeImportance.length > 0 && !activeImportance.includes(parseInt(event['اہمیت_اسکور'] || 0)) {
+                    return false;
+                }
+                
+                return true;
+            });
+            
+            updateUI();
+        }
+        
+        // Filter by narrative path
+        function filterByNarrativePath(pathId) {
+            // In a real implementation, this would filter based on predefined paths
+            // For this example, we'll simulate some paths
+            switch (pathId) {
+                case 'hijrat':
+                    filteredEvents = events.filter(event => 
+                        event['ٹیگز']?.includes('ہجرت') || 
+                        event['واقعہ (اردو)'].includes('ہجرت')
+                    );
+                    break;
+                case 'ghazwat':
+                    filteredEvents = events.filter(event => 
+                        event['ٹیگز']?.includes('غزوہ') || 
+                        event['واقعہ (اردو)'].includes('غزوہ')
+                    );
+                    break;
+                case 'early-life':
+                    filteredEvents = events.filter(event => 
+                        parseInt(event['ہجری سال / دور'].split(' ')[0]) < 1
+                    );
+                    break;
+                default:
+                    filteredEvents = [...events];
+            }
+            
+            updateUI();
+        }
+        
+        // Show details for a specific event
+        function showEventDetails(eventId) {
+            activeEventId = eventId;
+            
+            // Highlight the timeline event
+            document.querySelectorAll('.timeline-event').forEach(el => {
+                el.classList.toggle('active', parseInt(el.getAttribute('data-event-id')) === eventId);
+            });
+            
+            // Scroll to the event card
+            const eventCard = document.querySelector(`.event-card[data-event-id="${eventId}"]`);
+            if (eventCard) {
+                eventCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }
+        }
+        
+        // Update the UI based on current state
+        function updateUI() {
+            updateFilters();
+            updateNarrativePaths();
+            updateTimeline();
+            updateEventsList();
+        }
+        
+        // Update available filters based on data
+        function updateFilters() {
+            // Period filters
+            const periods = [...new Set(events.map(event => event['ہجری سال / دور']))].sort();
+            periodFilters.innerHTML = '';
+            periods.forEach(period => {
+                const filter = document.createElement('div');
+                filter.className = 'filter-tag';
+                filter.textContent = period;
+                periodFilters.appendChild(filter);
+            });
+            
+            // Tag filters
+            const allTags = events.flatMap(event => 
+                event['ٹیگز']?.split(',').map(tag => tag.trim()) || []
+            );
+            const uniqueTags = [...new Set(allTags)].filter(tag => tag);
+            tagFilters.innerHTML = '';
+            uniqueTags.forEach(tag => {
+                const filter = document.createElement('div');
+                filter.className = 'filter-tag';
+                filter.textContent = tag;
+                tagFilters.appendChild(filter);
+            });
+        }
+        
+        // Update narrative paths section
+        function updateNarrativePaths() {
+            // In a real implementation, these would be predefined paths
+            const paths = [
+                {
+                    id: 'early-life',
+                    title: 'ابتدائی زندگی',
+                    description: 'پیغمبر اسلام ﷺ کی ولادت سے لے کر بعثت تک کا سفر'
+                },
+                {
+                    id: 'hijrat',
+                    title: 'ہجرت کا سفر',
+                    description: 'مکہ سے مدینہ کی جانب ہجرت اور اس سے متعلقہ واقعات'
+                },
+                {
+                    id: 'ghazwat',
+                    title: 'غزوات و سرایا',
+                    description: 'جنگی مہمات اور اہم معرکے'
+                },
+                {
+                    id: 'treaties',
+                    title: 'اہم معاہدے',
+                    description: 'صلح حدیبیہ اور دیگر اہم معاہدات'
+                }
+            ];
+            
+            narrativePaths.innerHTML = '';
+            paths.forEach(path => {
+                const pathElement = document.createElement('div');
+                pathElement.className = 'narrative-path';
+                pathElement.setAttribute('data-path-id', path.id);
+                pathElement.innerHTML = `
+                    <h3>${path.title}</h3>
+                    <p>${path.description}</p>
+                `;
+                narrativePaths.appendChild(pathElement);
+            });
+        }
+        
+        // Update the timeline visualization
+        function updateTimeline() {
+            if (filteredEvents.length === 0) {
+                mainTimeline.innerHTML = '';
+                return;
+            }
+            
+            // Extract years for timeline
+            const years = filteredEvents.map(event => {
+                const yearMatch = event['عیسوی سال (تقریباً)'].match(/\d+/);
+                return yearMatch ? parseInt(yearMatch[0]) : 0;
+            });
+            
+            const minYear = Math.min(...years);
+            const maxYear = Math.max(...years);
+            const yearRange = maxYear - minYear;
+            
+            // Clear timeline
+            mainTimeline.innerHTML = '';
+            
+            // Add events to timeline
+            filteredEvents.forEach(event => {
+                const yearMatch = event['عیسوی سال (تقریباً)'].match(/\d+/);
+                if (!yearMatch) return;
+                
+                const year = parseInt(yearMatch[0]);
+                const position = ((year - minYear) / yearRange) * 100;
+                
+                const eventElement = document.createElement('div');
+                eventElement.className = 'timeline-event';
+                eventElement.setAttribute('data-event-id', event.شمار);
+                eventElement.style.left = `${position}%`;
+                
+                if (event['اہمیت_اسکور'] >= 4) {
+                    eventElement.style.backgroundColor = 'var(--primary-color)';
+                    eventElement.style.width = '20px';
+                    eventElement.style.height = '20px';
+                }
+                
+                const yearElement = document.createElement('div');
+                yearElement.className = 'timeline-year';
+                yearElement.textContent = event['ہجری سال / دور'];
+                yearElement.style.left = `${position}%`;
+                
+                mainTimeline.appendChild(eventElement);
+                mainTimeline.appendChild(yearElement);
+            });
+        }
+        
+        // Update the events list
+        function updateEventsList() {
+            if (filteredEvents.length === 0) {
+                eventsContainer.innerHTML = '<div class="no-results">کوئی نتائج نہیں ملے۔ براہ کرم اپنے فلٹرز کو ایڈجسٹ کریں۔</div>';
+                return;
+            }
+            
+            eventsContainer.innerHTML = '';
+            
+            filteredEvents.forEach(event => {
+                const eventCard = document.createElement('div');
+                eventCard.className = 'event-card';
+                if (event.شمار === activeEventId) {
+                    eventCard.classList.add('active');
+                }
+                eventCard.setAttribute('data-event-id', event.شمار);
+                
+                // Parse infographic points
+                const infographicPoints = event['کلیدی_نکات_انفوگرافک']?.split('|').filter(point => point.trim()) || [];
+                
+                eventCard.innerHTML = `
+                    <div class="event-header">
+                        <button class="bookmark-btn" data-event-id="${event.شمار}">📌</button>
+                        <div class="event-title">${event['واقعہ (اردو)']}</div>
+                        <div class="event-period">${event['ہجری سال / دور']} (${event['عیسوی سال (تقریباً)']})</div>
+                        <div class="event-importance">اہمیت: ${'⭐'.repeat(event['اہمیت_اسکور'] || 1)}</div>
+                    </div>
+                    <div class="event-body">
+                        <div class="event-description">
+                            <h3>مختصر تفصیل</h3>
+                            <p>${event['مختصر تفصیل (اردو)']}</p>
+                        </div>
+                        
+                        ${infographicPoints.length > 0 ? `
+                        <div class="infographic-section">
+                            <h3>کلیدی نکات</h3>
+                            <div class="infographic-points">
+                                ${infographicPoints.map(point => `
+                                    <div class="infographic-point">${point}</div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        ` : ''}
+                        
+                        <div class="event-details">
+                            <h3>تفصیلات</h3>
+                            ${event['تفصیلی وضاحت'] ? `
+                            <div class="detail-row">
+                                <div class="detail-label">تفصیلی وضاحت:</div>
+                                <div class="detail-value">${event['تفصیلی وضاحت']}</div>
+                            </div>
+                            ` : ''}
+                            
+                            ${event['متعلقہ شخصیات'] ? `
+                            <div class="detail-row">
+                                <div class="detail-label">متعلقہ شخصیات:</div>
+                                <div class="detail-value">${event['متعلقہ شخصیات']}</div>
+                            </div>
+                            ` : ''}
+                            
+                            ${event['مقام'] ? `
+                            <div class="detail-row">
+                                <div class="detail-label">مقام:</div>
+                                <div class="detail-value">${event['مقام']}</div>
+                            </div>
+                            ` : ''}
+                            
+                            ${event['نقشہ_کوآرڈینیٹس'] ? `
+                            <div class="detail-row">
+                                <div class="detail-label">نقشہ:</div>
+                                <div class="detail-value">
+                                    <div class="map-container">
+                                        <div class="map-placeholder">نقشہ دکھایا جائے گا: ${event['نقشہ_کوآرڈینیٹس']}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            ` : ''}
+                            
+                            ${event['ٹیگز'] ? `
+                            <div class="detail-row">
+                                <div class="detail-label">ٹیگز:</div>
+                                <div class="detail-value">
+                                    <div class="tags-container">
+                                        ${event['ٹیگز'].split(',').map(tag => `
+                                            <span class="tag">${tag.trim()}</span>
+                                        `).join('')}
+                                    </div>
+                                </div>
+                            </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+                
+                eventsContainer.appendChild(eventCard);
+            });
+            
+            // Add event listeners to bookmark buttons
+            document.querySelectorAll('.bookmark-btn').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    btn.classList.toggle('bookmarked');
+                    // In a real implementation, save to localStorage or IndexedDB
+                });
+            });
+            
+            // Add click event to event cards to show details
+            document.querySelectorAll('.event-card').forEach(card => {
+                card.addEventListener('click', () => {
+                    const eventId = parseInt(card.getAttribute('data-event-id'));
+                    showEventDetails(eventId);
+                });
+            });
+        }
+        
+        // Mock data for demonstration
+        function mockCSVData(filename) {
+            if (filename === 'history.csv') {
+                return [
+                    {
+                        "شمار": 1,
+                        "عیسوی سال (تقریباً)": "570 CE",
+                        "ہجری سال / دور": "عام الفیل",
+                        "واقعہ (اردو)": "ولادت باسعادت",
+                        "مختصر تفصیل (اردو)": "پیغمبر اسلام حضرت محمد ﷺ کی مکہ میں ولادت ہوئی۔"
+                    },
+                    {
+                        "شمار": 2,
+                        "عیسوی سال (تقریباً)": "610 CE",
+                        "ہجری سال / دور": "بعثت سے پہلے",
+                        "واقعہ (اردو)": "پہلی وحی کا نزول",
+                        "مختصر تفصیل (اردو)": "غار حرا میں پہلی وحی نازل ہوئی جس میں سورہ العلق کی ابتدائی آیات شامل تھیں۔"
+                    },
+                    {
+                        "شمار": 3,
+                        "عیسوی سال (تقریباً)": "622 CE",
+                        "ہجری سال / دور": "1 ہجری",
+                        "واقعہ (اردو)": "ہجرت مدینہ",
+                        "مختصر تفصیل (اردو)": "مسلمانوں نے مکہ سے مدینہ کی طرف ہجرت کی جو اسلامی تاریخ کا اہم موڑ تھا۔"
+                    },
+                    {
+                        "شمار": 4,
+                        "عیسوی سال (تقریباً)": "624 CE",
+                        "ہجری سال / دور": "2 ہجری",
+                        "واقعہ (اردو)": "غزوہ بدر",
+                        "مختصر تفصیل (اردو)": "پہلی بڑی جنگ جس میں مسلمانوں کو فتح حاصل ہوئی۔"
+                    },
+                    {
+                        "شمار": 5,
+                        "عیسوی سال (تقریباً)": "632 CE",
+                        "ہجری سال / دور": "11 ہجری",
+                        "واقعہ (اردو)": "وصال",
+                        "مختصر تفصیل (اردو)": "پیغمبر اسلام ﷺ نے مدینہ میں وفات پائی۔"
+                    }
+                ];
+            } else if (filename === 'details.csv') {
+                return [
+                    {
+                        "شمار": 1,
+                        "تفصیلی وضاحت": "حضرت محمد ﷺ کی ولادت مکہ میں بنی ہاشم کے گھرانے میں ہوئی۔ آپ کے والد کا نام عبداللہ اور والدہ کا نام آمنہ تھا۔ آپ کی ولادت عام الفیل (ہاتھی والا سال) میں ہوئی جب ابرہہ نے کعبہ پر حملہ کیا تھا۔",
+                        "متعلقہ شخصیات": "عبدالمطلب, آمنہ, حلیمہ سعدیہ",
+                        "مقام": "مکہ مکرمہ",
+                        "نقشہ_کوآرڈینیٹس": "21.3891,39.8579",
+                        "اہمیت_اسکور": "5",
+                        "تصویری_حوالہ": "",
+                        "ٹیگز": "ولادت, مکہ, ابتدائی زندگی",
+                        "کلیدی_نکات_انفوگرافک": "عام الفیل میں ولادت|یتیم پیدا ہوئے|حلیمہ سعدیہ کے پاس پرورش|مکہ میں پیدائش"
+                    },
+                    {
+                        "شمار": 2,
+                        "تفصیلی وضاحت": "جب پیغمبر اسلام ﷺ 40 سال کے ہوئے تو غار حرا میں جبرائیل علیہ السلام پہلی وحی لے کر آئے۔ پہلی آیات سورہ العلق کی ابتدائی آیات تھیں۔ اس کے بعد وحی کا سلسلہ 23 سال تک جاری رہا۔",
+                        "متعلقہ شخصیات": "حضرت خدیجہ, ورقہ بن نوفل",
+                        "مقام": "غار حرا, مکہ",
+                        "نقشہ_کوآرڈینیٹس": "21.4575,39.8561",
+                        "اہمیت_اسکور": "5",
+                        "تصویری_حوالہ": "",
+                        "ٹیگز": "وحی, نبوت, غار حرا",
+                        "کلیدی_نکات_انفوگرافک": "40 سال کی عمر میں نبوت|پہلی وحی سورہ العلق|حضرت خدیجہ کا ساتھ|ورقہ بن نوفل کی پیشگوئی"
+                    },
+                    {
+                        "شمار": 3,
+                        "تفصیلی وضاحت": "مکہ کے کفار کے ظلم و ستم کی وجہ سے مسلمانوں نے مدینہ کی طرف ہجرت کی۔ پیغمبر اسلام ﷺ نے حضرت ابوبکر کے ساتھ ہجرت کی اور مدینہ پہنچ کر پہلی اسلامی ریاست کی بنیاد رکھی۔",
+                        "متعلقہ شخصیات": "حضرت ابوبکر, انصار, مہاجرین",
+                        "مقام": "مکہ سے مدینہ",
+                        "نقشہ_کوآرڈینیٹس": "21.3891,39.8579|24.5247,39.5692",
+                        "اہمیت_اسکور": "5",
+                        "تصویری_حوالہ": "",
+                        "ٹیگز": "ہجرت, مدینہ, اسلامی ریاست",
+                        "کلیدی_نکات_انفوگرافک": "مکہ سے مدینہ تک سفر|حضرت ابوبکر کا ساتھ|غار ثور میں چھپنا|مدینہ میں استقبال"
+                    },
+                    {
+                        "شمار": 4,
+                        "تفصیلی وضاحت": "یہ پہلی بڑی جنگ تھی جس میں مسلمانوں کی تعداد 313 تھی جبکہ کفار مکہ کی تعداد 1000 کے قریب تھی۔ اللہ کے خاص فضل سے مسلمانوں کو فتح حاصل ہوئی۔",
+                        "متعلقہ شخصیات": "حضرت علی, حضرت حمزہ, ابوجہل",
+                        "مقام": "بدر",
+                        "نقشہ_کوآرڈینیٹس": "23.7833,38.7833",
+                        "اہمیت_اسکور": "4",
+                        "تصویری_حوالہ": "",
+                        "ٹیگز": "غزوہ, جنگ, فتح",
+                        "کلیدی_نکات_انفوگرافک": "313 مسلمان مقابل 1000 کفار|ابوجہل کا قتل|فرشتوں کی مدد|پہلی بڑی فتح"
+                    },
+                    {
+                        "شمار": 5,
+                        "تفصیلی وضاحت": "63 سال کی عمر میں پیغمبر اسلام ﷺ نے وفات پائی۔ آپ کی وفات سے پہلے حجۃ الوداع کے موقع پر آپ نے اہم خطبہ دیا تھا جو انسانوں کے حقوق کا اولین چارٹر سمجھا جاتا ہے۔",
+                        "متعلقہ شخصیات": "حضرت ابوبکر, حضرت عائشہ, حضرت علی",
+                        "مقام": "مدینہ منورہ",
+                        "نقشہ_کوآرڈینیٹس": "24.5247,39.5692",
+                        "اہمیت_اسکور": "5",
+                        "تصویری_حوالہ": "",
+                        "ٹیگز": "وصال, مدینہ, حجۃ الوداع",
+                        "کلیدی_نکات_انفوگرافک": "63 سال کی عمر|حجۃ الوداع کا خطبہ|امت کے لیے آخری وصیتیں|مدینہ میں دفن"
+                    }
+                ];
+            } else if (filename === 'historyupdate.csv') {
+                return []; // No updates in this example
+            }
+            return [];
+        }
+    </script>
+</body>
+</html>

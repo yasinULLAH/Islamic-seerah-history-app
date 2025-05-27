@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حیاتِ محمد ﷺ - واقعات</title>
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Noto Nastaliq Urdu', 'Jameel Noori Nastaleeq', 'Urdu Typesetting', Tahoma, sans-serif;
+            line-height: 1.8;
+            background-color: #f4f4f4;
+            color: #333;
+            direction: rtl;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body.dark-mode {
+            background-color: #333;
+            color: #f4f4f4;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            border-radius: 8px;
+            transition: background-color 0.3s;
+        }
+
+        body.dark-mode .container {
+            background-color: #444;
+            box-shadow: 0 0 10px rgba(255,255,255,0.1);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        body.dark-mode header {
+            border-bottom: 1px solid #555;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            color: #555;
+        }
+        body.dark-mode header h1 {
+            color: #ddd;
+        }
+
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 25px;
+            align-items: center;
+        }
+
+        .controls input[type="search"],
+        .controls select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+            font-size: 1em;
+            flex-grow: 1;
+        }
+        body.dark-mode .controls input[type="search"],
+        body.dark-mode .controls select {
+            background-color: #555;
+            color: #f4f4f4;
+            border-color: #666;
+        }
+
+
+        .dark-mode-toggle {
+            padding: 10px 15px;
+            background-color: #6c757d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.9em;
+        }
+        body.dark-mode .dark-mode-toggle {
+            background-color: #f8f9fa;
+            color: #333;
+        }
+
+        #timeline-container {
+            margin-bottom: 30px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+            overflow-x: auto;
+            white-space: nowrap; /* Keep timeline items in one line */
+        }
+        body.dark-mode #timeline-container {
+            background-color: #3a3a3a;
+        }
+
+        .timeline-item {
+            display: inline-block;
+            padding: 8px 12px;
+            margin: 0 5px;
+            background-color: #e9ecef;
+            color: #495057;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .timeline-item:hover, .timeline-item.active {
+            background-color: #007bff;
+            color: white;
+        }
+        body.dark-mode .timeline-item {
+            background-color: #5a5a5a;
+            color: #ccc;
+        }
+        body.dark-mode .timeline-item:hover, body.dark-mode .timeline-item.active {
+            background-color: #0056b3;
+            color: white;
+        }
+
+
+        .event-list {
+            display: grid;
+            grid-template-columns: 1fr; /* Default one column */
+            gap: 20px;
+        }
+
+        .event-card {
+            background-color: #fdfdfd;
+            border: 1px solid #eee;
+            border-right: 5px solid #007bff;
+            padding: 15px 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            transition: transform 0.2s ease-in-out;
+        }
+        .event-card:hover {
+            transform: translateY(-3px);
+        }
+
+        body.dark-mode .event-card {
+            background-color: #4f4f4f;
+            border-color: #5f5f5f;
+            border-right-color: #0056b3;
+        }
+
+        .event-card h3 {
+            font-size: 1.4em;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        body.dark-mode .event-card h3 {
+            color: #eee;
+        }
+
+        .event-card p {
+            margin-bottom: 5px;
+            font-size: 0.95em;
+        }
+        .event-card .meta-info {
+            font-size: 0.85em;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        body.dark-mode .event-card .meta-info {
+            color: #bbb;
+        }
+        .event-card .details {
+            font-size: 1em;
+        }
+
+        #status-message {
+            text-align: center;
+            padding: 20px;
+            font-size: 1.1em;
+        }
+
+        /* Responsive adjustments */
+        @media (min-width: 768px) {
+            /* Keep one column for better readability of cards, or uncomment for two columns */
+            /* .event-list {
+                grid-template-columns: repeat(2, 1fr);
+            } */
+        }
+        @media (max-width: 600px) {
+            .controls {
+                flex-direction: column;
+            }
+            .controls input[type="search"], .controls select, .dark-mode-toggle {
+                width: 100%;
+            }
+            header h1 {
+                font-size: 2em;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>حیاتِ محمد ﷺ - اہم واقعات</h1>
+            <div class="controls">
+                <input type="search" id="search-input" placeholder="واقعہ تلاش کریں...">
+                <select id="filter-period">
+                    <option value="all">تمام ادوار</option>
+                    <option value="قبل از نبوت">قبل از نبوت</option>
+                    <option value="نبوی">دورِ نبوی (مکی)</option> <!-- Assuming "نبوی" in CSV primarily means Makki pre-Hijrah -->
+                    <option value="ہجری">دورِ نبوی (مدنی)</option> <!-- Assuming "ہجری" means Madani post-Hijrah -->
+                </select>
+                <button class="dark-mode-toggle" id="dark-mode-button">ڈارک موڈ</button>
+            </div>
+        </header>
+
+        <div id="timeline-container">
+            <!-- Timeline items will be generated here by JS -->
+        </div>
+
+        <div id="status-message">لوڈ ہو رہا ہے...</div>
+        <div class="event-list" id="event-list-container">
+            <!-- Event cards will be generated here by JS -->
+        </div>
+    </div>
+
+    <script>
+        const DB_NAME = 'MuhammadsLifeDB';
+        const DB_VERSION = 1;
+        const STORE_NAME = 'eventsStore';
+        const HISTORY_CSV_PATH = 'history.csv';
+        const HISTORY_UPDATE_CSV_PATH = 'historyupdate.csv';
+
+        const eventListContainer = document.getElementById('event-list-container');
+        const searchInput = document.getElementById('search-input');
+        const filterPeriodSelect = document.getElementById('filter-period');
+        const statusMessage = document.getElementById('status-message');
+        const timelineContainer = document.getElementById('timeline-container');
+        const darkModeButton = document.getElementById('dark-mode-button');
+
+        let db;
+        let allEventsCache = []; // To store all events for faster filtering after initial load
+
+        // --- IndexedDB Functions ---
+        function initDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, DB_VERSION);
+
+                request.onupgradeneeded = (event) => {
+                    const dbInstance = event.target.result;
+                    if (!dbInstance.objectStoreNames.contains(STORE_NAME)) {
+                        const store = dbInstance.createObjectStore(STORE_NAME, { keyPath: 'shumar' });
+                        store.createIndex('gYear', 'gYear', { unique: false });
+                        store.createIndex('hPeriod', 'hPeriod', { unique: false });
+                        store.createIndex('eventUrdu', 'eventUrdu', { unique: false });
+                    }
+                };
+
+                request.onsuccess = (event) => {
+                    db = event.target.result;
+                    resolve(db);
+                };
+
+                request.onerror = (event) => {
+                    console.error("Database error: ", event.target.errorCode);
+                    reject("Database error: " + event.target.errorCode);
+                };
+            });
+        }
+
+        function addDataToDB(dataArray) {
+            return new Promise((resolve, reject) => {
+                if (!db) {
+                    reject("Database not initialized.");
+                    return;
+                }
+                const transaction = db.transaction([STORE_NAME], 'readwrite');
+                const store = transaction.objectStore(STORE_NAME);
+                let itemsAdded = 0;
+
+                dataArray.forEach(item => {
+                    // 'put' will add or update if key exists. Useful for updates.
+                    const request = store.put(item); 
+                    request.onsuccess = () => {
+                        itemsAdded++;
+                        if (itemsAdded === dataArray.length) {
+                           // All items processed for this batch
+                        }
+                    };
+                    request.onerror = (event) => {
+                        console.warn("Error adding item: ", item, event.target.error);
+                    };
+                });
+
+                transaction.oncomplete = () => {
+                    resolve(`Added/updated ${itemsAdded} items.`);
+                };
+
+                transaction.onerror = (event) => {
+                    reject("Transaction error: " + event.target.error);
+                };
+            });
+        }
+
+        function getAllEventsFromDB() {
+            return new Promise((resolve, reject) => {
+                if (!db) {
+                    reject("Database not initialized.");
+                    return;
+                }
+                const transaction = db.transaction([STORE_NAME], 'readonly');
+                const store = transaction.objectStore(STORE_NAME);
+                const request = store.getAll();
+
+                request.onsuccess = (event) => {
+                    const sortedEvents = event.target.result.sort((a, b) => parseInt(a.shumar) - parseInt(b.shumar));
+                    resolve(sortedEvents);
+                };
+
+                request.onerror = (event) => {
+                    reject("Error fetching data: " + event.target.error);
+                };
+            });
+        }
+        
+        function clearStore() {
+            return new Promise((resolve, reject) => {
+                if (!db) return reject("DB not initialized");
+                const transaction = db.transaction([STORE_NAME], 'readwrite');
+                const store = transaction.objectStore(STORE_NAME);
+                const request = store.clear();
+                request.onsuccess = () => resolve("Store cleared");
+                request.onerror = (e) => reject("Error clearing store: " + e.target.error);
+            });
+        }
+
+
+        // --- CSV Parsing ---
+        function parseCSV(csvText) {
+            const lines = csvText.trim().split('\n');
+            if (lines.length < 2) return []; // No data or only header
+
+            const headers = lines[0].split(',').map(h => h.trim());
+            const data = [];
+
+            for (let i = 1; i < lines.length; i++) {
+                const values = lines[i].split(',');
+                if (values.length === headers.length) {
+                    const entry = {};
+                    headers.forEach((header, index) => {
+                        let value = values[index] ? values[index].trim() : '';
+                        // Clean potential quotes from CSV values
+                        if (value.startsWith('"') && value.endsWith('"')) {
+                            value = value.substring(1, value.length - 1);
+                        }
+                        entry[header] = value;
+                    });
+                    // Rename for easier JS access and provide typed values
+                    data.push({
+                        shumar: parseInt(entry['شمار']),
+                        gYear: entry['عیسوی سال (تقریباً)'], // Keep as string for display, can parse if needed for logic
+                        hPeriod: entry['ہجری سال / دور'],
+                        eventUrdu: entry['واقعہ (اردو)'],
+                        detailsUrdu: entry['مختصر تفصیل (اردو)']
+                    });
+                }
+            }
+            return data;
+        }
+
+        // --- UI Rendering ---
+        function renderEvents(events) {
+            eventListContainer.innerHTML = ''; // Clear existing
+            if (!events || events.length === 0) {
+                eventListContainer.innerHTML = '<p style="text-align:center;">کوئی واقعات نہیں ملے۔</p>';
+                return;
+            }
+
+            events.forEach(event => {
+                const card = document.createElement('div');
+                card.className = 'event-card';
+                card.innerHTML = `
+                    <h3>${event.eventUrdu} (شمار: ${event.shumar})</h3>
+                    <p class="meta-info">
+                        <strong>عیسوی سال:</strong> ${event.gYear} | 
+                        <strong>دور/ہجری:</strong> ${event.hPeriod}
+                    </p>
+                    <p class="details">${event.detailsUrdu}</p>
+                `;
+                eventListContainer.appendChild(card);
+            });
+        }
+
+        function renderTimeline(events) {
+            timelineContainer.innerHTML = '';
+            const periods = new Set();
+            
+            // Extract representative years or periods for timeline
+            // This is a simplified timeline based on the "hPeriod" field
+            events.forEach(event => {
+                // Create simpler period groups for timeline
+                let periodGroup = event.hPeriod;
+                if (event.hPeriod.toLowerCase().includes('قبل از نبوت')) periodGroup = "قبل از نبوت";
+                else if (event.hPeriod.toLowerCase().includes('نبوی')) periodGroup = "دورِ نبوی (مکی)";
+                else if (event.hPeriod.match(/\d+\s*ہجری/)) periodGroup = "دورِ نبوی (مدنی)";
+                periods.add(periodGroup);
+            });
+
+            const sortedPeriods = Array.from(periods).sort((a,b) => {
+                // Custom sort for logical timeline order
+                const order = {"قبل از نبوت": 1, "دورِ نبوی (مکی)": 2, "دورِ نبوی (مدنی)": 3};
+                return (order[a] || 99) - (order[b] || 99);
+            });
+
+
+            sortedPeriods.forEach(period => {
+                const item = document.createElement('span');
+                item.className = 'timeline-item';
+                item.textContent = period;
+                item.dataset.period = period; // For filtering
+                item.addEventListener('click', () => {
+                    filterPeriodSelect.value = period; // Sync dropdown
+                    applyFilters();
+                    // Highlight active timeline item
+                    document.querySelectorAll('.timeline-item').forEach(el => el.classList.remove('active'));
+                    item.classList.add('active');
+                });
+                timelineContainer.appendChild(item);
+            });
+        }
+
+
+        // --- Data Loading and Initialization ---
+        async function loadAndProcessData() {
+            try {
+                statusMessage.textContent = 'ڈیٹا بیس شروع کیا جا رہا ہے...';
+                await initDB();
+
+                const firstLoadDone = localStorage.getItem('muhammadLifeFirstLoadDone');
+
+                if (!firstLoadDone) {
+                    statusMessage.textContent = 'پہلی بار تاریخ لوڈ کی جا رہی ہے (history.csv)...';
+                    const response = await fetch(HISTORY_CSV_PATH);
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status} while fetching ${HISTORY_CSV_PATH}`);
+                    const csvText = await response.text();
+                    if (csvText.trim() === "") throw new Error(`${HISTORY_CSV_PATH} is empty.`);
+                    
+                    const data = parseCSV(csvText);
+                    if (data.length > 0) {
+                        await addDataToDB(data);
+                        localStorage.setItem('muhammadLifeFirstLoadDone', 'true');
+                        statusMessage.textContent = `ابتدائی ${data.length} واقعات لوڈ ہو گئے.`;
+                    } else {
+                        statusMessage.textContent = 'ابتدائی تاریخ کی فائل (history.csv) سے کوئی ڈیٹا نہیں ملا۔';
+                    }
+                } else {
+                    statusMessage.textContent = 'ڈیٹا بیس سے واقعات لوڈ کیے جا رہے ہیں۔';
+                }
+
+                // Always check for updates
+                statusMessage.textContent += ' اپڈیٹ فائل (historyupdate.csv) چیک کی جا رہی ہے...';
+                try {
+                    const updateResponse = await fetch(HISTORY_UPDATE_CSV_PATH);
+                    if (updateResponse.ok) {
+                        const updateCsvText = await updateResponse.text();
+                        if (updateCsvText.trim() !== "") {
+                            const updateData = parseCSV(updateCsvText);
+                            if (updateData.length > 0) {
+                                await addDataToDB(updateData); // addDataToDB uses 'put', so it can update
+                                statusMessage.textContent += ` ${updateData.length} اپڈیٹ شدہ/نئے واقعات شامل ہوئے۔`;
+                                // Idea: To prevent re-processing same update, you could store a hash of updateCsvText
+                                // and only process if the hash is new. For simplicity, this is omitted.
+                                // You'd need to manage historyupdate.csv on the server (e.g., empty it after it's "consumed")
+                            } else {
+                               statusMessage.textContent += ' اپڈیٹ فائل خالی ہے۔';
+                            }
+                        } else {
+                             statusMessage.textContent += ' اپڈیٹ فائل خالی ہے۔';
+                        }
+                    } else {
+                        statusMessage.textContent += ' کوئی اپڈیٹ فائل (historyupdate.csv) نہیں ملی یا رسائی ممکن نہیں۔';
+                    }
+                } catch (updateError) {
+                     console.warn('Error fetching or processing update CSV:', updateError);
+                     statusMessage.textContent += ' اپڈیٹ فائل (historyupdate.csv) لوڈ کرنے میں خرابی۔';
+                }
+                
+
+                allEventsCache = await getAllEventsFromDB();
+                if (allEventsCache.length > 0) {
+                    renderEvents(allEventsCache);
+                    renderTimeline(allEventsCache); // Render timeline based on all events
+                    statusMessage.style.display = 'none';
+                } else {
+                    statusMessage.textContent = 'کوئی واقعات نہیں ملے۔ براہ کرم یقینی بنائیں کہ history.csv فائل موجود ہے اور اس میں ڈیٹا ہے۔';
+                }
+
+            } catch (error) {
+                console.error('Error during data loading and processing:', error);
+                statusMessage.textContent = `خرابی: ${error.message}. تفصیلات کے لئے کنسول دیکھیں۔`;
+                eventListContainer.innerHTML = ''; // Clear any partial rendering
+            }
+        }
+
+        // --- Filtering and Search ---
+        function applyFilters() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const selectedPeriod = filterPeriodSelect.value;
+
+            let filteredEvents = allEventsCache;
+
+            if (selectedPeriod !== "all") {
+                filteredEvents = filteredEvents.filter(event => {
+                    // Match based on how periods are grouped in the dropdown/timeline
+                    if (selectedPeriod === "قبل از نبوت") return event.hPeriod.toLowerCase().includes("قبل از نبوت");
+                    if (selectedPeriod === "دورِ نبوی (مکی)") return event.hPeriod.toLowerCase().includes("نبوی") && !event.hPeriod.toLowerCase().includes("ہجری");
+                    if (selectedPeriod === "دورِ نبوی (مدنی)") return event.hPeriod.match(/\d+\s*ہجری/);
+                    return false; // Should not happen if values match
+                });
+                 // Update timeline active state based on dropdown
+                document.querySelectorAll('.timeline-item').forEach(el => {
+                    el.classList.toggle('active', el.dataset.period === selectedPeriod);
+                });
+
+            } else {
+                 document.querySelectorAll('.timeline-item').forEach(el => el.classList.remove('active'));
+            }
+
+
+            if (searchTerm) {
+                filteredEvents = filteredEvents.filter(event =>
+                    event.eventUrdu.toLowerCase().includes(searchTerm) ||
+                    event.detailsUrdu.toLowerCase().includes(searchTerm)
+                );
+            }
+            renderEvents(filteredEvents);
+        }
+        
+        // --- Dark Mode ---
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            if (document.body.classList.contains('dark-mode')) {
+                localStorage.setItem('darkMode', 'enabled');
+                darkModeButton.textContent = 'لائٹ موڈ';
+            } else {
+                localStorage.setItem('darkMode', 'disabled');
+                darkModeButton.textContent = 'ڈارک موڈ';
+            }
+        }
+
+
+        // --- Event Listeners ---
+        searchInput.addEventListener('input', applyFilters);
+        filterPeriodSelect.addEventListener('change', applyFilters);
+        darkModeButton.addEventListener('click', toggleDarkMode);
+
+        // --- Initialize ---
+        document.addEventListener('DOMContentLoaded', () => {
+            if (localStorage.getItem('darkMode') === 'enabled') {
+                document.body.classList.add('dark-mode');
+                darkModeButton.textContent = 'لائٹ موڈ';
+            }
+            loadAndProcessData();
+        });
+
+    </script>
+</body>
+</html>

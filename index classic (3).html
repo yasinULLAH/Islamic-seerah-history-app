@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سیرت النبی ﷺ - اہم واقعات</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400..700&display=swap');
+
+        :root {
+            --background-color: #f4f4f4;
+            --text-color: #333;
+            --card-background: #fff;
+            --card-border: #ddd;
+            --header-background: #8c0000;
+            --header-color: #fff;
+            --accent-color: #8c0000;
+            --timeline-background: #eee;
+            --timeline-border: #ccc;
+            --timeline-segment-background: #ccc;
+            --timeline-segment-color: #333;
+            --input-background: #fff;
+            --input-border: #ccc;
+            --button-background: #8c0000;
+            --button-color: #fff;
+            --button-hover-background: #6a0000;
+        }
+
+        body.dark-mode {
+            --background-color: #1a1a1a;
+            --text-color: #eee;
+            --card-background: #333;
+            --card-border: #555;
+            --header-background: #8c0000; /* Keep header color consistent or adjust */
+            --header-color: #fff;
+            --accent-color: #ffb3b3;
+            --timeline-background: #2a2a2a;
+            --timeline-border: #444;
+            --timeline-segment-background: #555;
+            --timeline-segment-color: #eee;
+            --input-background: #444;
+            --input-border: #666;
+            --button-background: #ffb3b3;
+            --button-color: #333;
+            --button-hover-background: #ff9999;
+        }
+
+        body {
+            font-family: 'Noto Nastaliq Urdu', serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+
+        header {
+            background-color: var(--header-background);
+            color: var(--header-color);
+            padding: 15px 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2em;
+        }
+
+        .controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: var(--card-background);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .controls label {
+            font-weight: bold;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .controls input[type="text"],
+        .controls select {
+            padding: 10px;
+            border: 1px solid var(--input-border);
+            border-radius: 4px;
+            font-family: 'Noto Nastaliq Urdu', serif;
+            font-size: 1em;
+            background-color: var(--input-background);
+            color: var(--text-color);
+            flex-grow: 1; /* Allow inputs to grow */
+            min-width: 150px; /* Minimum width before wrapping */
+        }
+
+        .controls button {
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            background-color: var(--button-background);
+            color: var(--button-color);
+            font-family: 'Noto Nastaliq Urdu', serif;
+            font-size: 1em;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .controls button:hover {
+            background-color: var(--button-hover-background);
+        }
+
+        .infographics {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: var(--card-background);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+        }
+
+        .infographics h2 {
+            margin-top: 0;
+            color: var(--accent-color);
+            font-size: 1.5em;
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+        }
+
+        .timeline {
+            display: flex;
+            width: 100%;
+            height: 40px;
+            background-color: var(--timeline-background);
+            border: 1px solid var(--timeline-border);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+
+        .timeline-segment {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--timeline-segment-background);
+            color: var(--timeline-segment-color);
+            font-size: 0.9em;
+            font-weight: bold;
+            border-left: 1px solid var(--timeline-border);
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+            text-align: center;
+            padding: 0 5px;
+        }
+
+        .timeline-segment:first-child {
+            border-left: none;
+        }
+
+        .timeline-segment:hover {
+            background-color: var(--accent-color);
+            color: var(--button-color);
+        }
+
+        .stats ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .stats li {
+            background-color: var(--timeline-background);
+            padding: 8px 12px;
+            border-radius: 4px;
+            font-size: 0.9em;
+            border: 1px solid var(--timeline-border);
+        }
+
+        .event-list {
+            display: grid;
+            gap: 20px;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        }
+
+        .event-card {
+            background-color: var(--card-background);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            padding: 15px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            transition: transform 0.2s ease;
+        }
+
+        .event-card:hover {
+            transform: translateY(-3px);
+        }
+
+        .event-card h3 {
+            margin-top: 0;
+            color: var(--accent-color);
+            font-size: 1.3em;
+            margin-bottom: 5px;
+        }
+
+        .event-card p {
+            margin-bottom: 5px;
+            font-size: 0.95em;
+        }
+
+        .event-card .meta {
+            font-size: 0.85em;
+            color: #666; /* Adjust for dark mode */
+            margin-bottom: 10px;
+        }
+         body.dark-mode .event-card .meta {
+            color: #bbb;
+         }
+
+
+        #loading-message {
+            text-align: center;
+            font-size: 1.2em;
+            color: #666;
+            margin-top: 50px;
+        }
+         body.dark-mode #loading-message {
+            color: #bbb;
+         }
+
+        #no-results-message {
+             text-align: center;
+            font-size: 1.2em;
+            color: #666;
+            margin-top: 20px;
+            display: none; /* Hidden by default */
+        }
+         body.dark-mode #no-results-message {
+            color: #bbb;
+         }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px auto;
+                padding: 0 10px;
+            }
+
+            header h1 {
+                font-size: 1.5em;
+            }
+
+            .controls {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .controls input[type="text"],
+            .controls select,
+            .controls button {
+                 width: 100%; /* Full width on small screens */
+                 box-sizing: border-box; /* Include padding and border in element's total width */
+            }
+
+            .event-list {
+                grid-template-columns: 1fr; /* Stack cards on small screens */
+            }
+
+            .timeline {
+                 height: auto; /* Allow height to adjust */
+                 flex-direction: column; /* Stack segments vertically */
+            }
+             .timeline-segment {
+                 width: 100%;
+                 padding: 10px 5px;
+                 border-left: none;
+                 border-top: 1px solid var(--timeline-border);
+             }
+             .timeline-segment:first-child {
+                 border-top: none;
+             }
+        }
+
+         footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            font-size: 0.9em;
+            color: #666;
+         }
+          body.dark-mode footer {
+            color: #bbb;
+         }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>سیرت النبی ﷺ - اہم واقعات</h1>
+    </header>
+
+    <div class="container">
+        <div class="controls">
+            <div>
+                <label for="search-input">تلاش کریں:</label>
+                <input type="text" id="search-input" placeholder="واقعہ یا تفصیل میں تلاش کریں...">
+            </div>
+             <div>
+                <label for="filter-period">دور کے لحاظ سے فلٹر کریں:</label>
+                <select id="filter-period">
+                    <option value="">تمام ادوار</option>
+                    <!-- Options will be populated by JS -->
+                </select>
+             </div>
+             <div>
+                 <label> </label> <!-- Placeholder for alignment -->
+                 <button id="theme-toggle">ڈارک موڈ</button>
+             </div>
+        </div>
+
+        <div class="infographics">
+            <h2>اعداد و شمار اور ٹائم لائن</h2>
+            <div class="timeline" id="timeline-container">
+                <!-- Timeline segments will be populated by JS -->
+            </div>
+            <div class="stats">
+                <h3>واقعات کی تعداد بلحاظ دور:</h3>
+                <ul id="stats-list">
+                    <!-- Stats will be populated by JS -->
+                </ul>
+            </div>
+        </div>
+
+
+        <div id="loading-message">ڈیٹا لوڈ ہو رہا ہے...</div>
+        <div id="no-results-message">کوئی نتیجہ نہیں ملا۔</div>
+        <div class="event-list" id="event-list">
+            <!-- Event cards will be rendered here -->
+        </div>
+    </div>
+
+    <footer>
+        <p>تیار کردہ: یاسین اللہ (پاکستانی)</p>
+         <p>ڈیٹا IndexedDB میں محفوظ ہے۔</p>
+         <!-- Note about backup/restore limitation -->
+         <p style="font-size: 0.8em; color: #888;">(نوٹ: اس ایپ میں ڈیٹا بیک اپ/ریسٹور کا فیچر شامل نہیں ہے۔ ڈیٹا آپ کے براؤزر میں محفوظ رہتا ہے۔)</p>
+    </footer>
+
+    <script>
+        // Author: Yasin Ullah (Pakistani)
+
+        // IndexedDB Configuration
+        const dbName = 'SeerahEventsDB';
+        const storeName = 'events';
+        const dbVersion = 1;
+        let db;
+
+        // DOM Elements
+        const eventListDiv = document.getElementById('event-list');
+        const loadingMessageDiv = document.getElementById('loading-message');
+        const noResultsMessageDiv = document.getElementById('no-results-message');
+        const searchInput = document.getElementById('search-input');
+        const filterPeriodSelect = document.getElementById('filter-period');
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const timelineContainer = document.getElementById('timeline-container');
+        const statsList = document.getElementById('stats-list');
+
+        let allEvents = []; // Array to hold all events fetched from DB
+
+        // --- IndexedDB Functions ---
+
+        /**
+         * Opens the IndexedDB database. Creates object store if it doesn't exist.
+         * @returns {Promise<IDBDatabase>} A promise that resolves with the database instance.
+         */
+        function openDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(dbName, dbVersion);
+
+                request.onupgradeneeded = (event) => {
+                    db = event.target.result;
+                    // Create object store with auto-incrementing key
+                    if (!db.objectStoreNames.contains(storeName)) {
+                        db.createObjectStore(storeName, { keyPath: 'id', autoIncrement: true });
+                        console.log(`IndexedDB: Object store '${storeName}' created.`);
+                    }
+                };
+
+                request.onsuccess = (event) => {
+                    db = event.target.result;
+                    console.log('IndexedDB: Database opened successfully');
+                    resolve(db);
+                };
+
+                request.onerror = (event) => {
+                    console.error('IndexedDB: Database error:', event.target.errorCode);
+                    reject(event.target.error);
+                };
+            });
+        }
+
+        /**
+         * Adds an array of event objects to the IndexedDB object store.
+         * Uses a transaction. Skips adding if data already exists (simple check based on shumar).
+         * Note: With auto-increment keyPath 'id', this function simply adds new records.
+         * If shumar needs to be unique and prevent duplicates from historyupdate.csv,
+         * a more complex check (e.g., using an index on shumar) would be needed.
+         * For this implementation, we assume appending is desired, even if shumar values overlap.
+         * @param {Array<Object>} events - Array of event objects to add.
+         * @returns {Promise<void>} A promise that resolves when the transaction is complete.
+         */
+        function addDataToDB(events) {
+             if (!db) {
+                console.error("IndexedDB: Database not open.");
+                return Promise.reject("Database not open");
+            }
+
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction([storeName], 'readwrite');
+                const store = transaction.objectStore(storeName);
+
+                let addedCount = 0;
+                events.forEach(event => {
+                    // Add the event object. IndexedDB will assign a unique 'id'.
+                    // We store all original fields including 'شمار'.
+                     const addRequest = store.add(event);
+
+                     addRequest.onsuccess = () => {
+                         addedCount++;
+                     };
+
+                     addRequest.onerror = (event) => {
+                         console.warn("IndexedDB: Error adding event (may be duplicate shumar if not using auto-increment, or other issue):", event.target.error);
+                         // Don't reject the whole transaction on a single error
+                     };
+                });
+
+                transaction.oncomplete = () => {
+                    console.log(`IndexedDB: Transaction complete. Attempted to add ${events.length} events.`);
+                    resolve();
+                };
+
+                transaction.onerror = (event) => {
+                    console.error('IndexedDB: Transaction error:', event.target.error);
+                    reject(event.target.error);
+                };
+
+                 transaction.onabort = (event) => {
+                    console.warn('IndexedDB: Transaction aborted:', event.target.error);
+                    reject(event.target.error);
+                };
+            });
+        }
+
+        /**
+         * Retrieves all event objects from the IndexedDB object store.
+         * @returns {Promise<Array<Object>>} A promise that resolves with an array of all events.
+         */
+        function getAllEvents() {
+             if (!db) {
+                console.error("IndexedDB: Database not open.");
+                return Promise.reject("Database not open");
+            }
+
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction([storeName], 'readonly');
+                const store = transaction.objectStore(storeName);
+                const request = store.getAll();
+
+                request.onsuccess = (event) => {
+                    console.log(`IndexedDB: Retrieved ${event.target.result.length} events.`);
+                    resolve(event.target.result);
+                };
+
+                request.onerror = (event) => {
+                    console.error('IndexedDB: Error getting all events:', event.target.error);
+                    reject(event.target.error);
+                };
+            });
+        }
+
+        /**
+         * Checks if the object store is empty.
+         * @returns {Promise<boolean>} A promise that resolves with true if empty, false otherwise.
+         */
+        function isStoreEmpty() {
+             if (!db) {
+                console.error("IndexedDB: Database not open.");
+                return Promise.reject("Database not open");
+            }
+
+            return new Promise((resolve, reject) => {
+                const transaction = db.transaction([storeName], 'readonly');
+                const store = transaction.objectStore(storeName);
+                const countRequest = store.count();
+
+                countRequest.onsuccess = () => {
+                    resolve(countRequest.result === 0);
+                };
+
+                countRequest.onerror = (event) => {
+                    console.error('IndexedDB: Error counting objects:', event.target.error);
+                    reject(event.target.error);
+                };
+            });
+        }
+
+
+        // --- Data Loading and Parsing ---
+
+        /**
+         * Parses a CSV string into an array of objects.
+         * Assumes the first row is the header.
+         * @param {string} csvString - The CSV data as a string.
+         * @returns {Array<Object>} An array of objects representing the CSV rows.
+         */
+        function parseCSV(csvString) {
+            const lines = csvString.trim().split('\n');
+            if (lines.length === 0) return [];
+
+            const headers = lines[0].split(',').map(header => header.trim());
+            const data = [];
+
+            for (let i = 1; i < lines.length; i++) {
+                const values = lines[i].split(',');
+                 if (values.length !== headers.length) {
+                     console.warn(`CSV Parse Warning: Skipping row ${i + 1} due to incorrect column count. Expected ${headers.length}, got ${values.length}.`);
+                     continue; // Skip rows that don't match header count
+                 }
+                const item = {};
+                headers.forEach((header, index) => {
+                    item[header] = values[index].trim();
+                });
+                data.push(item);
+            }
+            console.log(`CSV Parsed: ${data.length} rows found.`);
+            return data;
+        }
+
+        /**
+         * Fetches a CSV file from the given URL.
+         * @param {string} url - The URL of the CSV file.
+         * @returns {Promise<string|null>} A promise that resolves with the CSV string, or null if fetch fails (e.g., file not found).
+         */
+        async function fetchCSV(url) {
+            try {
+                const response = await fetch(url);
+                if (!response.ok) {
+                    // Handle 404 specifically, as historyupdate.csv might not exist
+                    if (response.status === 404) {
+                        console.log(`Fetch CSV: File not found at ${url}. This is expected for historyupdate.csv if no updates.`);
+                        return null;
+                    }
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                const csvString = await response.text();
+                console.log(`Fetch CSV: Successfully fetched ${url}`);
+                return csvString;
+            } catch (error) {
+                console.error(`Fetch CSV: Failed to fetch ${url}:`, error);
+                return null; // Return null on any fetch error
+            }
+        }
+
+        /**
+         * Loads data from CSV files into IndexedDB and then displays it.
+         * Checks if main data needs initial load. Always checks for update data.
+         */
+        async function loadData() {
+            loadingMessageDiv.style.display = 'block';
+            eventListDiv.innerHTML = ''; // Clear previous list
+            noResultsMessageDiv.style.display = 'none';
+
+            try {
+                await openDB();
+                const empty = await isStoreEmpty();
+
+                if (empty) {
+                    console.log("IndexedDB is empty. Loading initial data from history.csv...");
+                    const historyCsvString = await fetchCSV('history.csv');
+                    if (historyCsvString) {
+                        const initialEvents = parseCSV(historyCsvString);
+                        if (initialEvents.length > 0) {
+                             // Add a temporary 'source' property for debugging/tracking if needed, or just add the data as is
+                             // initialEvents.forEach(e => e.source = 'history');
+                            await addDataToDB(initialEvents);
+                            console.log("Initial data from history.csv added to DB.");
+                        } else {
+                             console.warn("history.csv was empty or could not be parsed.");
+                        }
+                    } else {
+                        console.error("Failed to fetch history.csv. Cannot load initial data.");
+                        loadingMessageDiv.textContent = 'ڈیٹا لوڈ کرنے میں ناکامی۔ براہ کرم فائلیں چیک کریں۔';
+                         return; // Stop if initial load fails
+                    }
+                } else {
+                    console.log("IndexedDB contains data.");
+                }
+
+                // Always check for historyupdate.csv and append
+                console.log("Checking for historyupdate.csv...");
+                const updateCsvString = await fetchCSV('historyupdate.csv');
+                if (updateCsvString) {
+                    const updateEvents = parseCSV(updateCsvString);
+                     if (updateEvents.length > 0) {
+                        // updateEvents.forEach(e => e.source = 'historyupdate');
+                        await addDataToDB(updateEvents);
+                        console.log("Data from historyupdate.csv added to DB.");
+                         // Note: IndexedDB's auto-increment handles potential key conflicts.
+                         // If shumar needs to be strictly unique and prevent duplicates,
+                         // additional logic to check for existing shumar values before adding would be required.
+                     } else {
+                        console.log("historyupdate.csv was found but is empty or could not be parsed.");
+                     }
+                } else {
+                    console.log("historyupdate.csv not found or failed to fetch. No update data to add.");
+                }
+
+                // After loading/updating, retrieve all data and render
+                allEvents = await getAllEvents();
+                console.log(`Total events loaded from DB: ${allEvents.length}`);
+
+                // Populate filter options based on periods in data
+                populateFilterOptions(allEvents);
+
+                // Build infographics
+                buildInfographics(allEvents);
+
+                // Initial render
+                filterEvents(); // Render all initially
+
+            } catch (error) {
+                console.error('Error during data loading process:', error);
+                loadingMessageDiv.textContent = 'ڈیٹا لوڈ کرنے میں خرابی پیش آئی۔';
+            } finally {
+                loadingMessageDiv.style.display = 'none';
+            }
+        }
+
+        // --- Rendering and Filtering ---
+
+        /**
+         * Creates the HTML string for a single event card.
+         * @param {Object} event - The event object.
+         * @returns {string} The HTML string for the card.
+         */
+        function createEventCard(event) {
+            return `
+                <div class="event-card">
+                    <div class="meta">
+                        ${event['عیسوی سال (تقریباً)'] ? `عیسوی: ${event['عیسوی سال (تقریباً)']}` : ''}
+                        ${event['عیسوی سال (تقریباً)'] && event['ہجری سال / دور'] ? ' | ' : ''}
+                        ${event['ہجری سال / دور'] ? `دور: ${event['ہجری سال / دور']}` : ''}
+                    </div>
+                    <h3>${event['واقعہ (اردو)']}</h3>
+                    <p>${event['مختصر تفصیل (اردو)']}</p>
+                </div>
+            `;
+        }
+
+        /**
+         * Renders the given array of events to the DOM.
+         * @param {Array<Object>} eventsToRender - The array of event objects to display.
+         */
+        function renderEvents(eventsToRender) {
+            const fragment = document.createDocumentFragment();
+            if (eventsToRender.length === 0) {
+                 noResultsMessageDiv.style.display = 'block';
+            } else {
+                 noResultsMessageDiv.style.display = 'none';
+                eventsToRender.forEach(event => {
+                    const cardHtml = createEventCard(event);
+                    const tempDiv = document.createElement('div');
+                    tempDiv.innerHTML = cardHtml;
+                    fragment.appendChild(tempDiv.firstElementChild);
+                });
+            }
+
+            // Clear current list and append new cards
+            eventListDiv.innerHTML = '';
+            eventListDiv.appendChild(fragment);
+        }
+
+        /**
+         * Filters the global `allEvents` array based on current search and filter inputs
+         * and then calls `renderEvents` with the filtered results.
+         */
+        function filterEvents() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const selectedPeriod = filterPeriodSelect.value;
+
+            const filtered = allEvents.filter(event => {
+                const matchesSearch = searchTerm === '' ||
+                                      (event['واقعہ (اردو)'] && event['واقعہ (اردو)'].toLowerCase().includes(searchTerm)) ||
+                                      (event['مختصر تفصیل (اردو)'] && event['مختصر تفصیل (اردو)'].toLowerCase().includes(searchTerm));
+
+                const matchesPeriod = selectedPeriod === '' ||
+                                      (event['ہجری سال / دور'] && event['ہجری سال / دور'] === selectedPeriod);
+
+                return matchesSearch && matchesPeriod;
+            });
+
+            renderEvents(filtered);
+        }
+
+        /**
+         * Populates the filter dropdown with unique periods from the event data.
+         * @param {Array<Object>} events - The array of all event objects.
+         */
+        function populateFilterOptions(events) {
+            const periods = new Set();
+            events.forEach(event => {
+                if (event['ہجری سال / دور']) {
+                    periods.add(event['ہجری سال / دور']);
+                }
+            });
+
+            // Clear existing options except the default "تمام ادوار"
+            filterPeriodSelect.innerHTML = '<option value="">تمام ادوار</option>';
+
+            // Add unique periods
+            // Sort periods alphabetically or in a custom order if needed
+            const sortedPeriods = Array.from(periods).sort(); // Simple alphabetical sort
+            sortedPeriods.forEach(period => {
+                const option = document.createElement('option');
+                option.value = period;
+                option.textContent = period;
+                filterPeriodSelect.appendChild(option);
+            });
+        }
+
+
+        // --- Infographics ---
+
+        /**
+         * Builds and displays the timeline and stats based on the event data.
+         * @param {Array<Object>} events - The array of all event objects.
+         */
+        function buildInfographics(events) {
+            const periodCounts = {};
+            const periods = new Set(); // Use a set to get unique periods in order of appearance (or sort later)
+
+            events.forEach(event => {
+                const period = event['ہجری سال / دور'] || 'نامعلوم دور';
+                periodCounts[period] = (periodCounts[period] || 0) + 1;
+                periods.add(period);
+            });
+
+            // Build Timeline (simple divs)
+            timelineContainer.innerHTML = ''; // Clear existing timeline
+            const uniquePeriods = Array.from(periods); // Convert Set to Array
+            // Optional: Sort uniquePeriods if a specific timeline order is desired, e.g., ['قبل از نبوت', 'نبوی', 'ہجری']
+            // For now, just use the order from the Set (roughly insertion order) or sort alphabetically
+             uniquePeriods.sort(); // Simple alphabetical sort for timeline segments
+
+            uniquePeriods.forEach(period => {
+                const segment = document.createElement('div');
+                segment.classList.add('timeline-segment');
+                segment.textContent = period;
+                segment.title = `${period}: ${periodCounts[period] || 0} واقعات`; // Add tooltip
+                 segment.dataset.period = period; // Store period value for filtering
+                timelineContainer.appendChild(segment);
+            });
+
+             // Add click listeners to timeline segments for filtering
+             timelineContainer.querySelectorAll('.timeline-segment').forEach(segment => {
+                 segment.addEventListener('click', () => {
+                     const periodToFilter = segment.dataset.period;
+                     filterPeriodSelect.value = periodToFilter; // Set the filter dropdown
+                     filterEvents(); // Trigger filtering
+                      // Optional: Scroll to event list
+                      eventListDiv.scrollIntoView({ behavior: 'smooth' });
+                 });
+             });
+
+
+            // Build Stats List
+            statsList.innerHTML = ''; // Clear existing stats
+            // Sort periods for stats list
+             const sortedStatPeriods = Object.keys(periodCounts).sort(); // Simple alphabetical sort
+             sortedStatPeriods.forEach(period => {
+                const li = document.createElement('li');
+                li.textContent = `${period}: ${periodCounts[period]}`;
+                statsList.appendChild(li);
+            });
+        }
+
+
+        // --- Theme Toggle ---
+
+        /**
+         * Toggles between light and dark mode.
+         */
+        function toggleTheme() {
+            const isDarkMode = document.body.classList.toggle('dark-mode');
+            const themeText = isDarkMode ? 'لائٹ موڈ' : 'ڈارک موڈ';
+            themeToggleBtn.textContent = themeText;
+            localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+        }
+
+        /**
+         * Applies the saved theme preference from localStorage on page load.
+         */
+        function applySavedTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme === 'dark') {
+                document.body.classList.add('dark-mode');
+                themeToggleBtn.textContent = 'لائٹ موڈ';
+            } else {
+                // Default is light mode, ensure class is not present
+                 document.body.classList.remove('dark-mode');
+                 themeToggleBtn.textContent = 'ڈارک موڈ';
+            }
+        }
+
+
+        // --- Event Listeners ---
+
+        /**
+         * Sets up all necessary event listeners.
+         */
+        function setupEventListeners() {
+            searchInput.addEventListener('input', filterEvents);
+            filterPeriodSelect.addEventListener('change', filterEvents);
+            themeToggleBtn.addEventListener('click', toggleTheme);
+        }
+
+        // --- Initialization ---
+
+        // Apply saved theme immediately on script load
+        applySavedTheme();
+
+        // Wait for the DOM to be fully loaded before attempting to load data or setup listeners
+        document.addEventListener('DOMContentLoaded', () => {
+            setupEventListeners();
+            loadData(); // Start the data loading process
+        });
+
+        // --- Backup/Restore Note ---
+        // A full backup/restore feature (e.g., exporting/importing JSON file)
+        // is complex in a single-file, vanilla JS context due to browser security
+        // restrictions on file system access. This app relies on the browser's
+        // IndexedDB persistence for data "restore" on subsequent visits.
+        // Implementing export/import would require significant additional code
+        // for file handling via Blob/URL.
+        console.log("Note: Data is stored in your browser's IndexedDB. No user-facing backup/restore feature is included in this single-file version.");
+
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,802 @@
+<!DOCTYPE html>
+<html lang="ur" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سیرت النبی ﷺ - جامع انفوگرافک تاریخ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Nastaliq Urdu', serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.8;
+            font-size: 16px;
+            direction: rtl;
+            text-align: right;
+        }
+        .container {
+            width: 95%;
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 15px;
+        }
+        header {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            padding: 20px 0;
+            text-align: center;
+            border-bottom: 5px solid #1abc9c;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        .controls {
+            padding: 15px;
+            background-color: #ffffff;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+        }
+        .controls input[type="text"], .controls select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-family: 'Noto Nastaliq Urdu', serif;
+            font-size: 1em;
+            flex-grow: 1;
+        }
+        .controls button {
+            padding: 10px 15px;
+            background-color: #1abc9c;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'Noto Nastaliq Urdu', serif;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+        .controls button:hover {
+            background-color: #16a085;
+        }
+        #timelineContainer {
+            position: relative;
+            width: 100%;
+            height: 200px; 
+            background-color: #ecf0f1;
+            border-radius: 8px;
+            overflow-x: auto;
+            overflow-y: hidden;
+            white-space: nowrap;
+            padding: 20px 0;
+            border: 1px solid #bdc3c7;
+        }
+        .timeline-axis {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%; 
+            height: 4px;
+            background-color: #7f8c8d;
+            transform: translateY(-50%);
+        }
+        .timeline-event {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 10px;
+            height: 10px;
+            background-color: #3498db;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s ease, background-color 0.2s ease;
+            z-index: 10;
+        }
+        .timeline-event:hover {
+            transform: translateY(-50%) scale(1.5);
+            background-color: #2980b9;
+        }
+        .timeline-event .event-tooltip {
+            visibility: hidden;
+            width: 160px;
+            background-color: #34495e;
+            color: #fff;
+            text-align: center;
+            border-radius: 6px;
+            padding: 5px 0;
+            position: absolute;
+            z-index: 1;
+            bottom: 150%; 
+            left: 50%;
+            margin-left: -80px; 
+            opacity: 0;
+            transition: opacity 0.3s;
+            font-size: 0.9em;
+        }
+        .timeline-event:hover .event-tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        #eventDetailModal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6);
+            direction: rtl;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 25px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 700px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            position: relative;
+        }
+        .close-btn {
+            color: #aaa;
+            position: absolute;
+            left: 25px; 
+            top: 10px;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close-btn:hover, .close-btn:focus {
+            color: black;
+            text-decoration: none;
+        }
+        .modal-content h2 {
+            color: #2c3e50;
+            border-bottom: 2px solid #1abc9c;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        .modal-section { margin-bottom: 15px; }
+        .modal-section strong { color: #16a085; }
+        .key-points ul {
+            list-style: none;
+            padding-right: 0; 
+        }
+        .key-points li {
+            background-color: #e9f7ef;
+            padding: 8px 12px;
+            margin-bottom: 5px;
+            border-right: 3px solid #1abc9c; 
+            border-radius: 4px;
+        }
+        .tab-buttons button {
+            background-color: #ddd; color: black; float: right; border: none; outline: none; cursor: pointer; padding: 14px 16px; transition: 0.3s; font-size: 1em;
+             font-family: 'Noto Nastaliq Urdu', serif; border-radius: 4px 4px 0 0;
+        }
+        .tab-buttons button:hover { background-color: #ccc; }
+        .tab-buttons button.active { background-color: #1abc9c; color:white;}
+        .tab-content { display: none; padding: 10px 15px; border: 1px solid #ccc; border-top: none; border-radius: 0 0 4px 4px; }
+        #mainContentTabs { clear: both; margin-top: 20px; }
+
+        #glossaryContainer, #legendContainer { /* Removed map and chart placeholders */
+            padding: 20px;
+            background-color: #ffffff;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        #glossaryContainer h3, #legendContainer h3 { margin-top: 0; color: #2c3e50; }
+
+        .bookmark-btn {
+            background-color: #f39c12; color: white; border: none; padding: 5px 10px; border-radius: 4px; cursor: pointer; font-size: 0.9em; margin-right: 10px;
+        }
+        .bookmark-btn.bookmarked { background-color: #e67e22; }
+        
+        #loadingIndicator {
+            text-align: center; padding: 20px; font-size: 1.2em; color: #3498db;
+        }
+
+        .infographic-module {
+            border: 1px solid #ddd; padding: 15px; margin-bottom:10px; border-radius:5px; background: #fff;
+        }
+        .infographic-module h3 { margin-top:0; color: #16a085; }
+
+        #journeys button { margin-left: 5px; background-color: #3498db; }
+        #journeys button:hover { background-color: #2980b9; }
+
+        @media (max-width: 768px) {
+            header h1 { font-size: 2em; }
+            .controls { flex-direction: column; }
+            .controls input[type="text"], .controls select, .controls button { width: 100%; margin-bottom: 10px; }
+            .modal-content { width: 95%; margin: 10% auto; }
+        }
+        .search-highlight { background-color: yellow; }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>سیرت النبی ﷺ - جامع انفوگرافک تاریخ</h1>
+    </header>
+
+    <div class="container">
+        <div class="controls">
+            <input type="text" id="searchInput" placeholder=" تلاش کریں (واقعہ، شخصیت، ٹیگ)...">
+            <select id="filterTag">
+                <option value="">ٹیگ کے لحاظ سے فلٹر کریں</option>
+            </select>
+            <select id="filterPeriod">
+                <option value="">دور کے لحاظ سے فلٹر کریں</option>
+            </select>
+            <button id="searchBtn">تلاش</button>
+            <button id="resetBtn">ری سیٹ</button>
+            <div id="journeys">
+                <button data-journey="hijrat">سفرِ ہجرت</button>
+                <button data-journey="ghazwat">اہم غزوات</button>
+            </div>
+             <button id="showBookmarksBtn">محفوظ کردہ واقعات</button>
+        </div>
+
+        <div id="loadingIndicator">ڈیٹا لوڈ ہو رہا ہے۔۔۔</div>
+
+        <div id="mainContentTabs">
+            <div class="tab-buttons">
+                <button class="tab-link active" onclick="oT(event, 'tabTimeline')">ٹائم لائن منظر</button>
+                <button class="tab-link" onclick="oT(event, 'tabList')">فہرست منظر</button>
+                <button class="tab-link" onclick="oT(event, 'tabGlossary')">اصطلاحات</button>
+                <button class="tab-link" onclick="oT(event, 'tabLegend')">علامات کلید</button>
+            </div>
+
+            <div id="tabTimeline" class="tab-content" style="display: block;">
+                <h3>مرکزی ٹائم لائن</h3>
+                <div id="timelineContainerWrapper" style="width:100%; overflow-x:auto;">
+                    <div id="timelineContainer">
+                        <div class="timeline-axis"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tabList" class="tab-content">
+                <h3>واقعات کی فہرست</h3>
+                <div id="eventListContainer"></div>
+            </div>
+            
+            <div id="tabGlossary" class="tab-content">
+                <div id="glossaryContainer">
+                    <h3>اہم اسلامی اصطلاحات، شخصیات اور مقامات</h3>
+                    <div id="glossaryContent"></div>
+                </div>
+            </div>
+
+            <div id="tabLegend" class="tab-content">
+                 <div id="legendContainer">
+                    <h3>انفوگرافک لیجنڈ/کلید</h3>
+                    <p>یہاں انفوگرافک میں استعمال ہونے والی علامات، رنگوں اور بصری زبان کی وضاحت کی جائے گی۔</p>
+                    <ul>
+                        <li><span style="display:inline-block; width:12px; height:12px; background-color:#3498db; border-radius:50%; margin-left: 5px;"></span> عام واقعہ</li>
+                        <li><span style="display:inline-block; width:12px; height:12px; background-color:#e74c3c; border-radius:50%; margin-left: 5px;"></span> اہم واقعہ (اسکور > 7)</li>
+                        <li><span style="font-weight:bold; color:#16a085;">کلیدی نکات:</span> واقعہ کے اہم ترین پہلو۔</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        </div>
+
+    <div id="eventDetailModal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script>
+        const dbN = 'SeerahInfographicDB';
+        const storeN = 'enriched_events';
+        let db;
+        let allEvts = [];
+        let currentFilters = {};
+
+        // Sample CSV data with ASCII keys
+        const histCSV = `sNum,gYear,hYearPeriod,eventU,shortDescU
+1,570,قبل از نبوت,ولادت با سعادت,مکہ مکرمہ میں نبی اکرم ﷺ کی پیدائش ہوئی۔
+2,610,1 نبوی,پہلی وحی,غار حرا میں پہلی وحی کا نزول ہوا۔
+3,613,3 نبوی,دعوت ذوالعشیرہ,قریبی رشتہ داروں کو اسلام کی دعوت دی۔
+4,615,5 نبوی,ہجرت حبشہ اولیٰ,صحابہ کی پہلی جماعت نے حبشہ کی طرف ہجرت کی۔
+5,619,10 نبوی,عام الحزن,حضرت خدیجہ اور ابو طالب کی وفات کا سال۔
+6,620,11 نبوی,معراج شریف,نبی اکرم ﷺ کو آسمانوں کی سیر کرائی گئی۔
+7,622,1 نبوی/1 ہجری,ہجرت مدینہ,نبی اکرم ﷺ اور صحابہ کرام کی مکہ سے مدینہ ہجرت۔
+8,624,2 ہجری,غزوہ بدر,اسلام کی پہلی فیصلہ کن جنگ مسلمانوں اور کفار مکہ کے درمیان۔
+9,625,3 ہجری,غزوہ احد,مسلمانوں اور کفار مکہ کے درمیان دوسری بڑی جنگ۔
+10,627,5 ہجری,غزوہ خندق,مسلمانوں نے مدینہ کے گرد خندق کھود کر دفاع کیا۔
+11,628,6 ہجری,صلح حدیبیہ,مسلمانوں اور قریش مکہ کے درمیان دس سالہ امن معاہدہ۔
+12,630,8 ہجری,فتح مکہ,مسلمانوں نے بغیر کسی بڑی لڑائی کے مکہ فتح کیا۔
+13,632,10 ہجری,حجۃ الوداع,نبی اکرم ﷺ کا آخری حج اور خطبہ۔
+14,632,11 ہجری,وفات النبی ﷺ,نبی اکرم ﷺ کا وصال مدینہ منورہ میں ہوا۔`;
+
+        const detailCSV = `sNum,detailDescU,personsU,locationU,mapCoords,score,imgRef,tagsU,keyPointsU
+1,پیغمبر اسلام حضرت محمد مصطفیٰ ﷺ کی ولادت باسعادت بروز پیر، مشہور قول کے مطابق 12 ربیع الاول عام الفیل کو مکہ مکرمہ میں ہوئی۔ آپ ﷺ کے والد ماجد حضرت عبداللہ بن عبدالمطلب آپ کی ولادت سے قبل ہی وفات پا چکے تھے۔,آمنہ بنت وہب|عبداللہ بن عبدالمطلب| عبدالمطلب|ابو طالب,مکہ مکرمہ,21.4225|39.8262,10,birth.jpg,پیدائش|مکہ|نبوت سے قبل,نور کی آمد|بشارتیں|یتیمی|بنی سعد میں پرورش
+2,چالیس سال کی عمر میں جب آپ ﷺ غار حرا میں عبادت میں مصروف تھے، حضرت جبرائیل علیہ السلام اللہ کا پیغام لے کر حاضر ہوئے اور قرآن کی پہلی آیات (سورۃ العلق کی ابتدائی آیات) آپ ﷺ پر نازل فرمائیں۔,جبرائیل علیہ السلام|ورقہ بن نوفل,غار حرا (جبل نور),21.4575|39.8593,10,wahi.jpg,وحی|نبوت|قرآن|اقراء,آغاز نبوت|خوف و استقامت|وحی کا سلسلہ|پہلی مسلمان حضرت خدیجہؓ
+3,نبوت کے تیسرے سال اللہ تعالیٰ نے حکم دیا کہ اپنے قریبی رشتہ داروں کو اسلام کی دعوت دیں۔ آپ ﷺ نے کوہ صفا پر اپنے خاندان بنو ہاشم کو جمع کیا اور انہیں اسلام کی دعوت دی۔,حضرت علیؓ|بنو ہاشم,مکہ مکرمہ (کوہ صفا),21.4230|39.8270,7,dawat.jpg,دعوت|خاندان|آغاز اسلام,علانیہ دعوت کا پہلا مرحلہ|ابو لہب کی مخالفت|صبر و استقامت
+4,مکہ میں کفار کے مظالم بڑھنے پر نبی اکرم ﷺ نے صحابہ کرام کو حبشہ کی طرف ہجرت کی اجازت دی۔ یہ پہلی ہجرت تھی جس میں تقریباً 11 مرد اور 4 خواتین شامل تھیں۔,حضرت عثمانؓ و رقیہؓ|جعفر بن ابی طالبؓ,حبشہ (ایتھوپیا),8.9700|38.7500,8,habsha1.jpg,ہجرت|صحابہ|مظالم سے نجات,اسلام کا پھیلاؤ|نجاشی بادشاہ کا عدل|قریش کا تعاقب
+5,یہ سال نبی اکرم ﷺ کے لیے بہت غمگین ثابت ہوا۔ اس سال آپ کی محبوب زوجہ حضرت خدیجہ بنت خویلدؓ اور آپ کے شفیق چچا ابو طالب، جنہوں نے ہر مشکل میں آپ کا ساتھ دیا تھا، وفات پا گئے۔,حضرت خدیجہؓ|ابو طالب,مکہ مکرمہ,21.4225|39.8262,9,am_al_huzn.jpg,غم|وفات|آزمائش,دو بڑے سہارے ختم|مشرکین کی جرأت میں اضافہ|طائف کا سفر
+6,نبوت کے گیارہویں سال رجب کی 27 تاریخ کو نبی اکرم ﷺ کو معراج کا عظیم معجزہ عطا ہوا۔ آپ ﷺ کو مسجد حرام سے مسجد اقصیٰ لے جایا گیا اور پھر وہاں سے آسمانوں کی سیر کرائی گئی جہاں آپ نے اللہ تعالی سے ملاقات کی اور پانچ نمازوں کا تحفہ ملا۔,جبرائیل علیہ السلام,مسجد الحرام سے مسجد اقصیٰ پھر آسمانوں تک,21.4225|39.8262 (مکہ) / 31.7761|35.2358 (یروشلم),10,meraj.jpg,معراج|اسراء|نماز|معجزہ,جسمانی و روحانی سفر|انبیاء سے ملاقات|سدرۃ المنتہیٰ|نماز کی فرضیت
+7,کفار مکہ کے مظالم اور قتل کی سازشوں کے بعد اللہ کے حکم سے نبی اکرم ﷺ نے حضرت ابوبکر صدیقؓ کے ہمراہ مکہ سے مدینہ کی طرف ہجرت فرمائی۔ یہ اسلامی تاریخ کا ایک اہم موڑ تھا اور اسی سے اسلامی کیلنڈر کا آغاز ہوا۔,حضرت ابوبکر صدیقؓ|علی بن ابی طالبؓ|سراقہ بن مالک,مکہ سے مدینہ (یثرب),24.4686|39.6142 (مدینہ),10,hijrat.jpg,ہجرت|مدینہ|ریاست کا قیام|انصار و مہاجرین,اسلامی ریاست کی بنیاد|مواخات|یثرب کا نام مدینۃ النبیﷺ|ہجری کیلنڈر کا آغاز
+8,ہجرت کے دوسرے سال رمضان المبارک میں بدر کے مقام پر مسلمانوں اور کفار مکہ کے درمیان پہلی فیصلہ کن جنگ ہوئی۔ مسلمانوں کی تعداد کم ہونے کے باوجود اللہ کی مدد سے انہیں فتح نصیب ہوئی۔,ابو جہل|حمزہ بن عبدالمطلبؓ|عبیدہ بن حارثؓ,بدر,23.7655|38.7900,9,badr.jpg,غزوہ|جنگ|فتح|رمضان,حق و باطل کا معرکہ|فرشتوں کا نزول|کفار کے سرداروں کا قتل|اسیران جنگ
+9,ہجرت کے تیسرے سال شوال میں احد پہاڑ کے دامن میں یہ جنگ ہوئی۔ ابتدائی فتح کے بعد تیراندازوں کی غلطی کی وجہ سے مسلمانوں کو نقصان اٹھانا پڑا۔ حضرت حمزہؓ سمیت 70 صحابہ شہید ہوئے۔,حضرت حمزہؓ|خالد بن ولید (قبل از اسلام)|ابو سفیان,احد (مدینہ کے قریب),24.5027|39.6122,8,uhud.jpg,غزوہ|شہادت|آزمائش|سبق,اطاعت امیر کی اہمیت|منافقین کا کردار|نبیﷺ کا زخمی ہونا|ثابت قدمی
+10,ہجرت کے پانچویں سال شوال میں کفار مکہ نے مختلف قبائل کو جمع کر کے مدینہ پر حملہ کیا۔ حضرت سلمان فارسیؓ کے مشورے پر مسلمانوں نے مدینہ کے گرد خندق کھود کر دفاع کیا اور دشمن ناکام واپس ہوا۔,سلمان فارسیؓ|نعیم بن مسعودؓ,مدینہ منورہ,24.4686|39.6142,9,khandaq.jpg,غزوہ|احزاب|خندق|دفاع,دفاعی حکمت عملی|سخت موسم اور محاصرہ|بنو قریظہ کی عہد شکنی|اللہ کی مدد (آندھی)
+11,ہجرت کے چھٹے سال ذی القعدہ میں نبی اکرم ﷺ چودہ سو صحابہ کے ہمراہ عمرہ کی نیت سے مکہ روانہ ہوئے لیکن حدیبیہ کے مقام پر کفار نے روک دیا۔ یہاں ایک معاہدہ طے پایا جو ظاہری طور پر مسلمانوں کے خلاف تھا لیکن درحقیقت ایک بڑی فتح ثابت ہوا۔,عثمان بن عفانؓ (سفیر)|سہیل بن عمرو,حدیبیہ (مکہ کے قریب),21.3700|39.7000,10,hudaibiyah.jpg,صلح|معاہدہ|عمرہ|فتح مبین,سفارت کاری|بیعت رضوان|دس سالہ جنگ بندی|اسلام کے عالمگیر دعوت کی راہ ہموار
+12,صلح حدیبیہ کی خلاف ورزی پر نبی اکرم ﷺ دس ہزار صحابہ کے لشکر کے ساتھ مکہ روانہ ہوئے۔ بغیر کسی بڑی مزاحمت کے مکہ فتح ہوگیا۔ آپ ﷺ نے عام معافی کا اعلان کیا اور کعبہ کو بتوں سے پاک کیا۔,ابو سفیان (بعد از اسلام)|عباس بن عبدالمطلبؓ,مکہ مکرمہ,21.4225|39.8262,10,fath_makkah.jpg,فتح|رحمت|عام معافی|کعبہ کی تطہیر,عظیم الشان فتح|طاقت کے باوجود عفو و درگزر|کعبہ میں داخلہ|لوگوں کا اسلام میں داخل ہونا
+13,ہجرت کے دسویں سال نبی اکرم ﷺ نے ایک لاکھ سے زائد صحابہ کے ہمراہ اپنا آخری حج ادا کیا۔ عرفات کے میدان میں آپ ﷺ نے تاریخی خطبہ دیا جس میں انسانی حقوق، مساوات اور دین کی تکمیل کا اعلان فرمایا۔,جابر بن عبداللہؓ (راوی)|تمام ازواج مطہرات,میدان عرفات (مکہ کے قریب),21.3543|39.9841,10,hajjatul_wida.jpg,حج|خطبہ|وداع| تکمیل دین,اسلام کے بنیادی اصولوں کا خلاصہ|انسانیت کا منشور|خواتین کے حقوق|سود کی حرمت
+14,حجۃ الوداع سے واپسی کے بعد نبی اکرم ﷺ بیمار ہوئے اور 12 ربیع الاول 11 ہجری کو مدینہ منورہ میں حضرت عائشہؓ کے حجرے میں وصال فرمایا۔ آپ ﷺ کو وہیں دفن کیا گیا۔,حضرت عائشہؓ|حضرت فاطمہؓ|حضرت ابوبکر صدیقؓ|حضرت عمر فاروقؓ,مدینہ منورہ (مسجد نبوی),24.4672|39.6111,10,wafat.jpg,وفات|وصال|ربیع الاول|غم,امت کے لیے سب سے بڑا صدمہ|خلافت کا مسئلہ|تدفین|صحابہ کا ردعمل`;
+
+        const histUpdCSV = `sNum,gYear,hYearPeriod,eventU,shortDescU
+15,616,6 نبوی,بائیکاٹ شعب ابی طالب,قریش نے بنو ہاشم اور بنو مطلب کا سماجی و معاشی بائیکاٹ کیا۔`;
+        const detailUpdCSV = `sNum,detailDescU,personsU,locationU,mapCoords,score,imgRef,tagsU,keyPointsU
+15,مشرکین مکہ نے نبی اکرم ﷺ اور آپ کے حامیوں، بنو ہاشم اور بنو مطلب، کا مکمل سماجی اور معاشی بائیکاٹ کر دیا۔ یہ بائیکاٹ تقریباً تین سال تک جاری رہا اور اس دوران مسلمانوں کو شدید مشکلات کا سامنا کرنا پڑا۔ وہ شعب ابی طالب نامی گھاٹی میں محصور ہوگئے۔,ابو طالب|بنو ہاشم|بنو مطلب,شعب ابی طالب (مکہ),21.4200|39.8300,8,boycott.jpg,بائیکاٹ|محاصرہ|صبر|آزمائش,سخت ترین آزمائش|فاقہ کشی|معاہدہ کی منسوخی دیمک کے ذریعے|ثابت قدمی کی مثال`;
+
+
+        document.addEventListener('DOMContentLoaded', initApp);
+
+        function initApp() {
+            setupEventListeners();
+            initDB().then(() => {
+                loadAndProcessData();
+                loadGlossary();
+            }).catch(err => {
+                console.error("Database initialization failed:", err);
+                document.getElementById('loadingIndicator').textContent = 'ڈیٹا بیس شروع کرنے میں ناکامی۔ براہ کرم یقینی بنائیں کہ براؤزر میں IndexedDB فعال ہے اور پرانا ڈیٹا بیس (اگر موجود ہو) حذف کر دیا گیا ہے۔';
+            });
+        }
+        
+        function oT(evt, tabName) {
+            let i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tab-link");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+            if(tabName === 'tabTimeline') rdrT(allEvts);
+        }
+
+        function setupEventListeners() {
+            document.getElementById('searchBtn').addEventListener('click', performSearch);
+            document.getElementById('resetBtn').addEventListener('click', resetSearchAndFilters);
+            document.querySelector('.close-btn').addEventListener('click', closeModal);
+            window.addEventListener('click', (event) => {
+                if (event.target == document.getElementById('eventDetailModal')) {
+                    closeModal();
+                }
+            });
+            document.getElementById('filterTag').addEventListener('change', applyFilters);
+            document.getElementById('filterPeriod').addEventListener('change', applyFilters);
+            document.getElementById('searchInput').addEventListener('keyup', (event) => {
+                 if (event.key === 'Enter') performSearch();
+            });
+            document.getElementById('showBookmarksBtn').addEventListener('click', showBookmarkedEvents);
+
+            document.querySelectorAll('#journeys button').forEach(btn => {
+                btn.addEventListener('click', (e) => startJourney(e.target.dataset.journey));
+            });
+        }
+
+        function initDB() {
+            return new Promise((resolve, reject) => {
+                // IMPORTANT: Ensure you have deleted the old 'SeerahInfographicDB' from your browser's developer tools before running this.
+                const request = indexedDB.open(dbN, 2); // Incremented version to ensure onupgradeneeded runs for schema change
+                request.onupgradeneeded = event => {
+                    db = event.target.result;
+                    if (db.objectStoreNames.contains(storeN)) { // If old store exists with same name, delete it
+                        db.deleteObjectStore(storeN);
+                    }
+                    const store = db.createObjectStore(storeN, { keyPath: 'sNum' });
+                    store.createIndex('gYearIdx', 'gYear', { unique: false });
+                    store.createIndex('hYearPeriodIdx', 'hYearPeriod', { unique: false });
+                    store.createIndex('eventUIdx', 'eventU', { unique: false });
+                    store.createIndex('tagsUIdx', 'tagsU', { unique: false, multiEntry: true }); 
+                    store.createIndex('personsUIdx', 'personsU', { unique: false, multiEntry: true });
+                    store.createIndex('locationUIdx', 'locationU', {unique: false});
+                    store.createIndex('scoreIdx', 'score', {unique: false});
+                };
+                request.onsuccess = event => {
+                    db = event.target.result;
+                    resolve();
+                };
+                request.onerror = event => {
+                    console.error("DB error:", event.target.error); 
+                    reject(event.target.error);
+                };
+            });
+        }
+
+        function parseCSV(csvText) {
+            const lines = csvText.trim().split('\n');
+            const headers = lines[0].split(',');
+            return lines.slice(1).map(line => {
+                const values = line.split(','); 
+                let obj = {};
+                headers.forEach((header, i) => obj[header.trim()] = values[i] ? values[i].trim() : '');
+                return obj;
+            });
+        }
+
+        async function loadAndProcessData() {
+            document.getElementById('loadingIndicator').style.display = 'block';
+            try {
+                const tx = db.transaction(storeN, 'readonly');
+                const store = tx.objectStore(storeN);
+                const countReq = store.count();
+                countReq.onsuccess = async () => {
+                    if (countReq.result === 0) {
+                        await populateInitialData();
+                    }
+                    await applyUpdates(); 
+                    fetchAllEventsFromDB();
+                };
+                countReq.onerror = (e) => {
+                     console.error("Error counting records:", e.target.error);
+                     document.getElementById('loadingIndicator').textContent = 'ڈیٹا لوڈ کرنے میں خرابی۔';
+                }
+            } catch (error) {
+                console.error("Error in loadAndProcessData:", error);
+                document.getElementById('loadingIndicator').textContent = 'ڈیٹا پروسیسنگ میں خرابی۔';
+            }
+        }
+
+        async function populateInitialData() {
+            const historyData = parseCSV(histCSV);
+            const detailsData = parseCSV(detailCSV);
+            const detailsMap = new Map(detailsData.map(d => [d['sNum'], d]));
+
+            const enrichedEvents = historyData.map(hEvent => {
+                const detail = detailsMap.get(hEvent['sNum']);
+                return { ...hEvent, ...detail };
+            });
+
+            const tx = db.transaction(storeN, 'readwrite');
+            const store = tx.objectStore(storeN);
+            for (const event of enrichedEvents) {
+                if (event['tagsU'] && typeof event['tagsU'] === 'string') event['tagsU'] = event['tagsU'].split('|');
+                if (event['personsU'] && typeof event['personsU'] === 'string') event['personsU'] = event['personsU'].split('|');
+                store.put(event);
+            }
+            await new Promise((resolve, reject) => { 
+                tx.oncomplete = resolve;
+                tx.onerror = (e) => reject(e.target.error);
+            });
+        }
+
+        async function applyUpdates() {
+            const historyUpdateData = parseCSV(histUpdCSV);
+            const detailUpdateData = parseCSV(detailUpdCSV);
+            const detailUpdatesMap = new Map(detailUpdateData.map(d => [d['sNum'], d]));
+
+            if (historyUpdateData.length === 0 && detailUpdateData.length === 0) return;
+
+            const tx = db.transaction(storeN, 'readwrite');
+            const store = tx.objectStore(storeN);
+            
+            for (const hEvent of historyUpdateData) {
+                 const detail = detailUpdatesMap.get(hEvent['sNum']);
+                 const fullEvent = { ...hEvent, ...detail }; 
+                 if (fullEvent['tagsU'] && typeof fullEvent['tagsU'] === 'string') fullEvent['tagsU'] = fullEvent['tagsU'].split('|');
+                 if (fullEvent['personsU'] && typeof fullEvent['personsU'] === 'string') fullEvent['personsU'] = fullEvent['personsU'].split('|');
+                 store.put(fullEvent);
+            }
+            await new Promise((resolve, reject) => { 
+                tx.oncomplete = resolve;
+                tx.onerror = (e) => reject(e.target.error);
+            });
+        }
+
+        function fetchAllEventsFromDB(filterFn = null) {
+            const tx = db.transaction(storeN, 'readonly');
+            const store = tx.objectStore(storeN);
+            const req = store.getAll();
+            req.onsuccess = () => {
+                allEvts = req.result.sort((a, b) => parseInt(a['gYear']) - parseInt(b['gYear']) || parseInt(a['sNum']) - parseInt(b['sNum']) );
+                populateFilters(allEvts);
+                rdrUI(allEvts, filterFn);
+                document.getElementById('loadingIndicator').style.display = 'none';
+            };
+            req.onerror = (e) => {
+                console.error("Error fetching all events:", e.target.error);
+                document.getElementById('loadingIndicator').textContent = 'تمام واقعات بازیافت کرنے میں خرابی۔';
+            };
+        }
+        
+        function rdrUI(events, filterFn = null) {
+            let filteredEvents = events;
+            if (filterFn) {
+                filteredEvents = events.filter(filterFn);
+            } else { 
+                filteredEvents = applyAllCurrentFilters(events);
+            }
+            rdrT(filteredEvents);
+            rdrEL(filteredEvents);
+        }
+        
+        function applyAllCurrentFilters(eventsToFilter) {
+            let filtered = eventsToFilter;
+            const searchTerm = currentFilters.search ? currentFilters.search.toLowerCase() : '';
+            const selectedTag = currentFilters.tag;
+            const selectedPeriod = currentFilters.period;
+
+            if (searchTerm) {
+                filtered = filtered.filter(e =>
+                    (e['eventU'] && e['eventU'].toLowerCase().includes(searchTerm)) ||
+                    (e['shortDescU'] && e['shortDescU'].toLowerCase().includes(searchTerm)) ||
+                    (e['detailDescU'] && e['detailDescU'].toLowerCase().includes(searchTerm)) ||
+                    (Array.isArray(e['tagsU']) && e['tagsU'].some(t => t.toLowerCase().includes(searchTerm))) ||
+                    (Array.isArray(e['personsU']) && e['personsU'].some(p => p.toLowerCase().includes(searchTerm)))
+                );
+            }
+            if (selectedTag) {
+                filtered = filtered.filter(e => Array.isArray(e['tagsU']) && e['tagsU'].includes(selectedTag));
+            }
+            if (selectedPeriod) {
+                filtered = filtered.filter(e => e['hYearPeriod'] && e['hYearPeriod'].startsWith(selectedPeriod));
+            }
+            return filtered;
+        }
+
+        function populateFilters(events) {
+            const tags = new Set();
+            const periods = new Set();
+            events.forEach(event => {
+                if (event['tagsU'] && Array.isArray(event['tagsU'])) {
+                    event['tagsU'].forEach(tag => tags.add(tag));
+                }
+                if (event['hYearPeriod']) {
+                    const periodMatch = event['hYearPeriod'].match(/^([^\d\s]+)|(\d+\s+(نبوی|ہجری))/);
+                    if(periodMatch){
+                        if(periodMatch[1]) periods.add(periodMatch[1]); 
+                        else if(periodMatch[2]) periods.add(periodMatch[2]); 
+                    }
+                }
+            });
+
+            const tagFilter = document.getElementById('filterTag');
+            tagFilter.innerHTML = '<option value="">ٹیگ کے لحاظ سے فلٹر کریں</option>'; 
+            tags.forEach(tag => {
+                const option = document.createElement('option');
+                option.value = tag;
+                option.textContent = tag;
+                tagFilter.appendChild(option);
+            });
+
+            const periodFilter = document.getElementById('filterPeriod');
+            periodFilter.innerHTML = '<option value="">دور کے لحاظ سے فلٹر کریں</option>'; 
+            Array.from(periods).sort().forEach(period => {
+                const option = document.createElement('option');
+                option.value = period;
+                option.textContent = period;
+                periodFilter.appendChild(option);
+            });
+        }
+        
+        function rdrT(events) {
+            const tlC = document.getElementById('timelineContainer');
+            tlC.innerHTML = '<div class="timeline-axis"></div>'; 
+            if (!events || events.length === 0) {
+                 tlC.innerHTML += '<p style="text-align:center; width:100%;">کوئی واقعات نہیں ملے۔</p>';
+                 return;
+            }
+
+            const years = events.map(e => parseInt(e['gYear']));
+            const minYear = Math.min(...years);
+            const maxYear = Math.max(...years);
+            const totalDuration = Math.max(1, maxYear - minYear); 
+
+            const estimatedContentWidth = events.length * 60; 
+            tlC.style.width = `${Math.max(document.getElementById('timelineContainerWrapper').offsetWidth, estimatedContentWidth)}px`;
+            document.querySelector('.timeline-axis').style.width = `${Math.max(document.getElementById('timelineContainerWrapper').offsetWidth, estimatedContentWidth)}px`;
+
+            events.forEach((event) => { 
+                const year = parseInt(event['gYear']);
+                const relativePos = totalDuration === 0 ? 0.5 : (year - minYear) / totalDuration;
+                const leftPercentage = relativePos * 95 + 2.5; 
+
+                const eventDot = document.createElement('div');
+                eventDot.className = 'timeline-event';
+                eventDot.style.left = `calc(${leftPercentage}% - 5px)`; 
+                eventDot.dataset.id = event['sNum'];
+                
+                if (parseInt(event['score']) > 7) {
+                    eventDot.style.backgroundColor = '#e74c3c'; 
+                    eventDot.style.width = '12px';
+                    eventDot.style.height = '12px';
+                }
+
+                const tooltip = document.createElement('span');
+                tooltip.className = 'event-tooltip';
+                tooltip.textContent = `${event['eventU']} (${event['gYear']})`;
+                eventDot.appendChild(tooltip);
+
+                eventDot.addEventListener('click', () => showEventDetail(event['sNum']));
+                tlC.appendChild(eventDot);
+            });
+        }
+
+        function rdrEL(events) {
+            const listContainer = document.getElementById('eventListContainer');
+            listContainer.innerHTML = '';
+            if (!events || events.length === 0) {
+                 listContainer.innerHTML = '<p>کوئی واقعات نہیں ملے۔</p>';
+                 return;
+            }
+            events.forEach(event => {
+                const div = document.createElement('div');
+                div.className = 'infographic-module';
+                div.innerHTML = `
+                    <h3>${event['eventU']} (${event['hYearPeriod']})</h3>
+                    <p>${event['shortDescU']}</p>
+                    <p><strong>عیسوی سال:</strong> ${event['gYear']}</p>
+                    <button onclick="showEventDetail('${event['sNum']}')">تفصیلات دیکھیں</button>
+                    ${renderBookmarkButton(event['sNum'], false)}
+                `;
+                const searchTerm = currentFilters.search ? currentFilters.search.toLowerCase() : '';
+                if (searchTerm && div.innerHTML) { 
+                    div.innerHTML = div.innerHTML.replace(new RegExp(searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'gi'), (match) => `<span class="search-highlight">${match}</span>`);
+                }
+                listContainer.appendChild(div);
+            });
+        }
+
+        function showEventDetail(id) {
+            const tx = db.transaction(storeN, 'readonly');
+            const store = tx.objectStore(storeN);
+            const req = store.get(id.toString()); 
+            req.onsuccess = () => {
+                const event = req.result;
+                if (event) {
+                    const modalBody = document.getElementById('modalBody');
+                    let keyPointsHTML = '';
+                    if (event['keyPointsU'] && typeof event['keyPointsU'] === 'string') {
+                        const points = event['keyPointsU'].split('|');
+                        keyPointsHTML = `<div class="modal-section key-points"><strong>کلیدی نکات:</strong><ul>${points.map(p => `<li>${p}</li>`).join('')}</ul></div>`;
+                    }
+
+                    modalBody.innerHTML = `
+                        <h2>${event['eventU']}</h2>
+                        ${renderBookmarkButton(event['sNum'], true)}
+                        <p class="modal-section"><strong>عیسوی سال (تقریباً):</strong> ${event['gYear']}</p>
+                        <p class="modal-section"><strong>ہجری سال / دور:</strong> ${event['hYearPeriod']}</p>
+                        <p class="modal-section"><strong>مختصر تفصیل:</strong> ${event['shortDescU']}</p>
+                        <p class="modal-section"><strong>تفصیلی وضاحت:</strong> ${event['detailDescU'] || 'دستیاب نہیں'}</p>
+                        ${keyPointsHTML}
+                        <p class="modal-section"><strong>متعلقہ شخصیات:</strong> ${(Array.isArray(event['personsU']) ? event['personsU'].join(', ') : event['personsU']) || 'درج نہیں'}</p>
+                        <p class="modal-section"><strong>مقام:</strong> ${event['locationU'] || 'درج نہیں'}</p>
+                        <p class="modal-section"><strong>اہمیت اسکور:</strong> ${event['score'] || 'درج نہیں'}</p>
+                        <p class="modal-section"><strong>ٹیگز:</strong> ${(Array.isArray(event['tagsU']) ? event['tagsU'].join(', ') : event['tagsU']) || 'درج نہیں'}</p>
+                        ${event['mapCoords'] ? `<p class="modal-section"><strong>(نقشہ کوآرڈینیٹس: ${event['mapCoords']})</strong></p>` : ''}
+                        `;
+                    document.getElementById('eventDetailModal').style.display = 'block';
+                }
+            };
+            req.onerror = (e) => console.error("Error fetching event by ID:", e.target.error);
+        }
+        
+        function closeModal() {
+            document.getElementById('eventDetailModal').style.display = 'none';
+        }
+
+        function performSearch() {
+            currentFilters.search = document.getElementById('searchInput').value;
+            rdrUI(allEvts);
+        }
+        
+        function applyFilters() {
+            currentFilters.tag = document.getElementById('filterTag').value;
+            currentFilters.period = document.getElementById('filterPeriod').value;
+            rdrUI(allEvts);
+        }
+
+        function resetSearchAndFilters() {
+            document.getElementById('searchInput').value = '';
+            document.getElementById('filterTag').value = '';
+            document.getElementById('filterPeriod').value = '';
+            currentFilters = {};
+            rdrUI(allEvts);
+        }
+
+        function getBookmarks() {
+            return JSON.parse(localStorage.getItem('seerahBookmarks') || '[]');
+        }
+
+        function toggleBookmark(eventId) {
+            let bookmarks = getBookmarks();
+            const eventIdStr = eventId.toString();
+            if (bookmarks.includes(eventIdStr)) {
+                bookmarks = bookmarks.filter(id => id !== eventIdStr);
+            } else {
+                bookmarks.push(eventIdStr);
+            }
+            localStorage.setItem('seerahBookmarks', JSON.stringify(bookmarks));
+            const modalBtn = document.querySelector(`#modalBody .bookmark-btn[data-id="${eventIdStr}"]`);
+            if(modalBtn) modalBtn.classList.toggle('bookmarked', bookmarks.includes(eventIdStr));
+             const listBtn = document.querySelector(`#eventListContainer .bookmark-btn[data-id="${eventIdStr}"]`);
+            if(listBtn) listBtn.classList.toggle('bookmarked', bookmarks.includes(eventIdStr));
+        }
+
+        function renderBookmarkButton(eventId, isModal) {
+            const bookmarks = getBookmarks();
+            const eventIdStr = eventId.toString();
+            const isBookmarked = bookmarks.includes(eventIdStr);
+            return `<button class="bookmark-btn ${isBookmarked ? 'bookmarked' : ''}" data-id="${eventIdStr}" onclick="toggleBookmark('${eventIdStr}')">${isBookmarked ? 'محفوظ شدہ' : 'محفوظ کریں'}</button>`;
+        }
+        
+        function showBookmarkedEvents() {
+            const bookmarks = getBookmarks();
+            if (bookmarks.length === 0) {
+                alert("کوئی واقعہ محفوظ نہیں کیا گیا ہے۔");
+                return;
+            }
+            const bookmarkedEventsFilterFn = (event) => bookmarks.includes(event['sNum'].toString());
+            rdrUI(allEvts, bookmarkedEventsFilterFn);
+            oT({currentTarget: document.querySelector('.tab-link[onclick*="tabList"]')}, 'tabList');
+        }
+
+        const journeysData = {
+            "hijrat": {
+                name: "سفرِ ہجرت",
+                events: ["7"] 
+            },
+            "ghazwat": {
+                name: "اہم غزوات",
+                events: ["8", "9", "10"] 
+            }
+        };
+
+        function startJourney(journeyKey) {
+            const journey = journeysData[journeyKey];
+            if (!journey) return;
+            
+            alert(`سفر شروع: ${journey.name}`);
+            const journeyEventFilterFn = (event) => journey.events.includes(event['sNum'].toString());
+            rdrUI(allEvts, journeyEventFilterFn);
+            oT({currentTarget: document.querySelector('.tab-link[onclick*="tabList"]')}, 'tabList');
+        }
+        
+        const glossaryTerms = {
+            "وحی": "اللہ کا پیغام جو نبیوں پر فرشتوں کے ذریعے نازل ہوتا ہے۔",
+            "صحابہ": "وہ لوگ جو نبی اکرم ﷺ پر ایمان لائے، آپ ﷺ کی صحبت اختیار کی اور ایمان پر وفات پائی۔",
+            "ہجرت": "اللہ کی رضا کے لیے اپنا وطن چھوڑ کر دوسری جگہ منتقل ہونا۔ اسلامی تاریخ میں مکہ سے مدینہ کی طرف ہجرت بہت اہم ہے۔",
+            "غزوہ": "وہ جنگ جس میں نبی اکرم ﷺ نے خود شرکت فرمائی۔",
+            "سریہ": "وہ جنگی مہم جس میں نبی اکرم ﷺ نے خود شرکت نہیں فرمائی بلکہ کسی صحابی کو امیر بنا کر بھیجا۔",
+            "خلافت": "نبی اکرم ﷺ کے بعد اسلامی ریاست کے سربراہ کا نظام۔",
+            "انصار": "مدینہ کے وہ مسلمان جنہوں نے مکہ سے ہجرت کر کے آنے والے مسلمانوں (مہاجرین) کی مدد کی۔",
+            "مہاجرین": "وہ مسلمان جنہوں نے مکہ سے مدینہ ہجرت کی۔"
+        };
+
+        function loadGlossary() {
+            const glossaryContent = document.getElementById('glossaryContent');
+            glossaryContent.innerHTML = '';
+            let html = '<ul>';
+            for (const term in glossaryTerms) {
+                html += `<li><strong>${term}:</strong> ${glossaryTerms[term]}</li>`;
+            }
+            html += '</ul>';
+            glossaryContent.innerHTML = html;
+        }
+
+    </script>
+</body>
+</html>
